@@ -16,7 +16,7 @@ export function ModeTabs({ mode, onChange, t }: ModeTabsProps) {
   ];
 
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
       {tabs.map((tab) => {
         const active = tab.id === mode;
         return (
@@ -25,16 +25,28 @@ export function ModeTabs({ mode, onChange, t }: ModeTabsProps) {
             type="button"
             onClick={() => onChange(tab.id)}
             aria-pressed={active}
-            className={`rounded-2xl border-2 px-6 py-5 text-left transition-colors ${
-              active
-                ? "border-teal-500 bg-teal-100 dark:border-teal-400 dark:bg-teal-900/40"
-                : "border-zinc-200 bg-white hover:border-zinc-300 dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-zinc-700"
-            }`}
+            className="press rounded-[var(--radius-card)] border px-6 py-5 text-left transition-colors"
+            style={{
+              borderColor: active ? "var(--accent-line)" : "var(--border)",
+              background: active ? "var(--accent-soft)" : "var(--bg-surface)",
+              boxShadow: active
+                ? "var(--glow-accent-sm)"
+                : "var(--shadow-sm), var(--edge-highlight)",
+            }}
           >
-            <div className="text-lg font-semibold text-zinc-900 dark:text-zinc-50">
+            <div
+              className="text-lg"
+              style={{
+                fontFamily: "var(--font-display)",
+                fontWeight: "var(--fw-bold)",
+                color: active ? "var(--accent)" : "var(--text-strong)",
+              }}
+            >
               {tab.title}
             </div>
-            <div className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">{tab.desc}</div>
+            <div className="mt-1 text-sm" style={{ color: "var(--text-secondary)" }}>
+              {tab.desc}
+            </div>
           </button>
         );
       })}

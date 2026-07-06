@@ -1,26 +1,200 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Space+Mono:wght@400;700&display=swap');
 @import "tailwindcss";
 
+/* ============================================================
+   DESIGN SYSTEM (ported from Podium) — dark "stadium-night" base
+   + electric accent + medal palette. Three swappable accent
+   themes: Volt (default), Sunset, Royal. Set on a wrapper:
+   <div data-theme="sunset"> … </div>
+   ============================================================ */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* ---- Base surfaces (stadium night) ---- */
+  --bg-base:        #0B0E14;
+  --bg-surface:     #12161F;
+  --bg-surface-2:   #1A1F2B;
+  --bg-surface-3:   #232A38;
+  --bg-overlay:     rgba(6, 9, 14, 0.72);
+
+  /* ---- Hairlines & borders ---- */
+  --border:         rgba(255, 255, 255, 0.08);
+  --border-strong:  rgba(255, 255, 255, 0.16);
+  --border-accent:  color-mix(in oklch, var(--accent) 55%, transparent);
+
+  /* ---- Text ---- */
+  --text-strong:    #FFFFFF;
+  --text-primary:   #E9EDF3;
+  --text-secondary: #9BA5B4;
+  --text-tertiary:  #626C7C;
+  --text-disabled:  #454E5C;
+  --text-inverse:   #0B0E14;
+
+  /* ---- Accent (Volt — electric green) ---- */
+  --accent:         #00E676;
+  --accent-hover:   #24F08C;
+  --accent-press:   #00C464;
+  --accent-soft:    rgba(0, 230, 118, 0.14);
+  --accent-line:    rgba(0, 230, 118, 0.32);
+  --on-accent:      #05230F;
+
+  /* ---- Secondary pop (used for live / highlights) ---- */
+  --pop:            #FF3D71;
+  --pop-soft:       rgba(255, 61, 113, 0.14);
+
+  /* ---- Semantic ---- */
+  --success:        #00E676;
+  --success-soft:   rgba(0, 230, 118, 0.14);
+  --danger:         #FF4D5E;
+  --danger-soft:    rgba(255, 77, 94, 0.14);
+  --warning:        #FFB020;
+  --warning-soft:   rgba(255, 176, 32, 0.15);
+  --info:           #3D9DFF;
+  --info-soft:      rgba(61, 157, 255, 0.14);
+  --live:           #FF3D71;
+
+  /* ---- Semantic aliases (use these in components) ---- */
+  --surface-app:      var(--bg-base);
+  --surface-card:     var(--bg-surface);
+  --surface-raised:   var(--bg-surface-2);
+  --surface-input:    var(--bg-surface-3);
+  --text-body:        var(--text-primary);
+  --text-muted:       var(--text-secondary);
+  --brand:            var(--accent);
+  --focus-ring:       color-mix(in oklch, var(--accent) 60%, transparent);
+
+  /* ---- Typography ---- */
+  --font-display: 'Sora', 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-ui:      'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-mono:    'Space Mono', 'SFMono-Regular', ui-monospace, monospace;
+
+  --fw-regular:   400;
+  --fw-medium:    500;
+  --fw-semibold:  600;
+  --fw-bold:      700;
+  --fw-extrabold: 800;
+
+  --text-2xs:  11px;
+  --text-xs:   12px;
+  --text-sm:   14px;
+  --text-base: 16px;
+  --text-md:   18px;
+  --text-lg:   20px;
+  --text-xl:   24px;
+  --text-2xl:  30px;
+  --text-3xl:  38px;
+  --text-4xl:  48px;
+  --text-5xl:  60px;
+  --text-6xl:  72px;
+
+  --lh-tight:  1.05;
+  --lh-snug:   1.2;
+  --lh-normal: 1.45;
+  --lh-relaxed:1.6;
+
+  /* ---- Spacing (4px base grid) ---- */
+  --space-0:   0;
+  --space-1:   2px;
+  --space-2:   4px;
+  --space-3:   8px;
+  --space-4:   12px;
+  --space-5:   16px;
+  --space-6:   20px;
+  --space-7:   24px;
+  --space-8:   32px;
+  --space-9:   40px;
+  --space-10:  48px;
+  --gutter:        16px;
+  --gap-card:      12px;
+  --pad-card:      16px;
+  --pad-card-lg:   20px;
+  --tap-min:       44px;
+
+  /* ---- Radius ---- */
+  --radius-xs:   6px;
+  --radius-sm:   10px;
+  --radius-md:   14px;
+  --radius-lg:   20px;
+  --radius-xl:   28px;
+  --radius-2xl:  36px;
+  --radius-full: 999px;
+  --radius-button: 14px;
+  --radius-input:  14px;
+  --radius-card:   20px;
+  --radius-sheet:  28px;
+  --radius-chip:   999px;
+  --radius-badge:  999px;
+
+  /* ---- Elevation & glow ---- */
+  --shadow-sm:  0 1px 2px rgba(0,0,0,0.4);
+  --shadow-md:  0 6px 20px rgba(0,0,0,0.45);
+  --shadow-lg:  0 18px 48px rgba(0,0,0,0.55);
+  --shadow-sheet: 0 -12px 40px rgba(0,0,0,0.5);
+  --edge-highlight: inset 0 1px 0 rgba(255,255,255,0.05);
+  --glow-accent: 0 8px 28px color-mix(in oklch, var(--accent) 40%, transparent);
+  --glow-accent-sm: 0 4px 16px color-mix(in oklch, var(--accent) 32%, transparent);
+  --glow-pop:    0 8px 28px color-mix(in oklch, var(--pop) 40%, transparent);
+  --ring: 0 0 0 3px var(--focus-ring);
+
+  /* ---- Motion ---- */
+  --dur-instant: 90ms;
+  --dur-fast:    140ms;
+  --dur-base:    220ms;
+  --dur-slow:    380ms;
+  --ease-out:    cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: var(--bg-base);
+  --color-foreground: var(--text-primary);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  background: var(--bg-base);
+  color: var(--text-primary);
+  font-family: var(--font-ui);
+  -webkit-font-smoothing: antialiased;
+}
+
+button, input, textarea {
+  font-family: inherit;
+  color: inherit;
+}
+
+/* ---- Reusable composite styles (from Podium components) ---- */
+.surface-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm), var(--edge-highlight);
+}
+
+.press {
+  transition: transform var(--dur-instant) var(--ease-out);
+  -webkit-tap-highlight-color: transparent;
+}
+.press:active {
+  transform: scale(0.96);
+}
+
+@keyframes podium-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: .35; transform: scale(.7); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

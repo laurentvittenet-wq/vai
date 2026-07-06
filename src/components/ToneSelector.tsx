@@ -22,11 +22,14 @@ export function ToneSelector({ value, onChange, lang }: ToneSelectorProps) {
             aria-checked={active}
             title={tone.description[lang]}
             onClick={() => onChange(tone.id)}
-            className={`rounded-full border px-4 py-2 text-sm font-medium transition-colors ${
-              active
-                ? "border-zinc-900 bg-zinc-900 text-white dark:border-zinc-50 dark:bg-zinc-50 dark:text-zinc-900"
-                : "border-zinc-300 bg-white text-zinc-700 hover:border-zinc-400 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:border-zinc-600"
-            }`}
+            className="press rounded-[var(--radius-chip)] border px-4 py-2 text-sm transition-colors"
+            style={{
+              fontWeight: "var(--fw-semibold)",
+              borderColor: active ? "transparent" : "var(--border-strong)",
+              background: active ? "var(--accent)" : "var(--bg-surface-2)",
+              color: active ? "var(--on-accent)" : "var(--text-primary)",
+              boxShadow: active ? "var(--glow-accent-sm)" : "none",
+            }}
           >
             {tone.label[lang]}
           </button>
