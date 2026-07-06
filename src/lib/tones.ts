@@ -4,7 +4,8 @@ export type ToneId =
   | "sarcastique"
   | "chirurgical"
   | "decale"
-  | "journalistique";
+  | "journalistique"
+  | "passif_agressif_elegant";
 
 export interface Tone {
   id: ToneId;
@@ -59,6 +60,14 @@ export const TONES: Tone[] = [
     description: {
       fr: "Neutre, factuel, structuré comme une dépêche de presse.",
       en: "Neutral, factual, structured like a press wire.",
+    },
+  },
+  {
+    id: "passif_agressif_elegant",
+    label: { fr: "Passif-agressif élégant", en: "Elegant passive-aggressive" },
+    description: {
+      fr: "Poli en surface, l'agacement se devine entre les lignes, jamais dit frontalement.",
+      en: "Polite on the surface, the irritation shows between the lines, never stated head-on.",
     },
   },
 ];
