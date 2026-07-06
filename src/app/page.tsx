@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Logo } from "@/components/Logo";
 import { ModeTabs } from "@/components/ModeTabs";
 import { ToneSelector } from "@/components/ToneSelector";
 import { MicButton } from "@/components/MicButton";
@@ -102,16 +103,19 @@ export default function Home() {
     <div className="min-h-full" style={{ background: "var(--bg-base)" }}>
       <header style={{ borderBottom: "1px solid var(--border)", background: "var(--bg-surface)" }}>
         <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-          <div>
-            <span
-              className="text-lg"
-              style={{ fontFamily: "var(--font-display)", fontWeight: "var(--fw-extrabold)", color: "var(--text-strong)" }}
-            >
-              {t.appName}
-            </span>
-            <span className="ml-2 text-xs" style={{ color: "var(--text-tertiary)" }}>
-              {t.version}
-            </span>
+          <div className="flex items-center gap-3">
+            <Logo size={32} />
+            <div>
+              <span
+                className="text-lg"
+                style={{ fontFamily: "var(--font-display)", fontWeight: "var(--fw-extrabold)", color: "var(--text-strong)" }}
+              >
+                {t.appName}
+              </span>
+              <span className="ml-2 text-xs" style={{ color: "var(--text-tertiary)" }}>
+                {t.version}
+              </span>
+            </div>
           </div>
           <div className="flex items-center gap-2">
             <button
