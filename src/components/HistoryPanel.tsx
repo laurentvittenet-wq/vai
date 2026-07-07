@@ -34,7 +34,7 @@ export function HistoryPanel({ open, items, onClose, onClear, onSelect, t, lang 
       >
         <div className="mb-4 flex items-center justify-between">
           <h2
-            className="text-lg"
+            className="text-base"
             style={{ fontFamily: "var(--font-display)", fontWeight: "var(--fw-bold)", color: "var(--text-strong)" }}
           >
             {t.historyTitle}
@@ -42,7 +42,7 @@ export function HistoryPanel({ open, items, onClose, onClear, onSelect, t, lang 
           <button
             type="button"
             onClick={onClose}
-            className="press rounded-[var(--radius-chip)] border px-3 py-1 text-sm"
+            className="press rounded-[var(--radius-chip)] border px-3 py-1 text-xs"
             style={{ borderColor: "var(--border-strong)", color: "var(--text-secondary)" }}
           >
             {t.historyClose}
@@ -50,7 +50,7 @@ export function HistoryPanel({ open, items, onClose, onClear, onSelect, t, lang 
         </div>
 
         {items.length === 0 ? (
-          <p className="text-sm" style={{ color: "var(--text-tertiary)" }}>
+          <p className="text-xs" style={{ color: "var(--text-tertiary)" }}>
             {t.historyEmpty}
           </p>
         ) : (
@@ -85,7 +85,7 @@ export function HistoryPanel({ open, items, onClose, onClear, onSelect, t, lang 
                     )}
                     <span>{new Date(item.createdAt).toLocaleString(lang === "fr" ? "fr-FR" : "en-US")}</span>
                   </div>
-                  <p className="line-clamp-2 text-sm" style={{ color: "var(--text-primary)" }}>
+                  <p className="line-clamp-2 text-xs" style={{ color: "var(--text-primary)" }}>
                     {item.output}
                   </p>
                 </button>
@@ -98,7 +98,7 @@ export function HistoryPanel({ open, items, onClose, onClear, onSelect, t, lang 
           <button
             type="button"
             onClick={onClear}
-            className="press mt-4 rounded-[var(--radius-md)] border px-4 py-2 text-sm"
+            className="press mt-4 rounded-[var(--radius-md)] border px-4 py-1.5 text-xs"
             style={{
               fontWeight: "var(--fw-semibold)",
               borderColor: "var(--danger-soft)",

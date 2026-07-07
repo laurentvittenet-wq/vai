@@ -46,9 +46,9 @@ export const STRINGS: Record<Lang, Strings> = {
     heroSubtitle:
       "Diplomatico prend tes pensées les plus létales et les emballe dans un cocon de papier bulle.",
     modeReformulateTitle: "Reformuler",
-    modeReformulateDesc: "J'ai un truc à dire (en mode brut) → version acceptable",
+    modeReformulateDesc: "J'ai un scud à envoyer",
     modeReplyTitle: "Répondre",
-    modeReplyDesc: "J'ai reçu un message agaçant → réponse posée",
+    modeReplyDesc: "J'ai eu un mail agaçant",
     chooseTone: "Choisis ta tonalité",
     inputLabelReformulate: "Ce que tu veux vraiment dire",
     inputLabelReply: "Le message que tu as reçu",

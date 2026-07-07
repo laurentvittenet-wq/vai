@@ -102,17 +102,17 @@ export default function Home() {
   return (
     <div className="min-h-full" style={{ background: "var(--bg-base)" }}>
       <header style={{ borderBottom: "1px solid var(--border)", background: "var(--bg-surface)" }}>
-        <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-          <div className="flex items-center gap-3">
-            <Logo size={32} />
+        <div className="mx-auto flex max-w-5xl items-center justify-between px-5 py-3">
+          <div className="flex items-center gap-2">
+            <Logo size={26} />
             <div>
               <span
-                className="text-lg"
+                className="text-sm"
                 style={{ fontFamily: "var(--font-display)", fontWeight: "var(--fw-extrabold)", color: "var(--text-strong)" }}
               >
                 {t.appName}
               </span>
-              <span className="ml-2 text-xs" style={{ color: "var(--text-tertiary)" }}>
+              <span className="ml-1.5 text-[10px]" style={{ color: "var(--text-tertiary)" }}>
                 {t.version}
               </span>
             </div>
@@ -121,7 +121,7 @@ export default function Home() {
             <button
               type="button"
               onClick={() => setHistoryOpen(true)}
-              className="press rounded-[var(--radius-chip)] border px-4 py-1.5 text-sm"
+              className="press rounded-[var(--radius-chip)] border px-3 py-1 text-xs"
               style={{ borderColor: "var(--border-strong)", color: "var(--text-primary)", fontWeight: "var(--fw-semibold)" }}
             >
               {t.historyBtn}
@@ -129,7 +129,7 @@ export default function Home() {
             <button
               type="button"
               onClick={() => setLang(lang === "fr" ? "en" : "fr")}
-              className="press rounded-[var(--radius-chip)] border px-4 py-1.5 text-sm"
+              className="press rounded-[var(--radius-chip)] border px-3 py-1 text-xs"
               style={{ borderColor: "var(--border-strong)", color: "var(--text-primary)", fontWeight: "var(--fw-semibold)" }}
             >
               {t.langBtn}
@@ -138,16 +138,16 @@ export default function Home() {
         </div>
       </header>
 
-      <main className="mx-auto max-w-5xl px-6 py-10">
-        <section className="mb-10">
+      <main className="mx-auto max-w-5xl px-5 py-6">
+        <section className="mb-6">
           <span
-            className="mb-4 inline-block rounded-[var(--radius-chip)] px-3 py-1 text-xs"
+            className="mb-2 inline-block rounded-[var(--radius-chip)] px-2.5 py-0.5 text-[10px]"
             style={{ background: "var(--accent-soft)", color: "var(--accent)", fontWeight: "var(--fw-semibold)" }}
           >
             {t.badge}
           </span>
           <h1
-            className="max-w-2xl text-3xl sm:text-4xl"
+            className="max-w-2xl text-xl sm:text-2xl"
             style={{
               fontFamily: "var(--font-display)",
               fontWeight: "var(--fw-extrabold)",
@@ -158,18 +158,18 @@ export default function Home() {
           >
             {t.heroTitle}
           </h1>
-          <p className="mt-3 max-w-xl" style={{ color: "var(--text-secondary)" }}>
+          <p className="mt-2 max-w-xl text-sm" style={{ color: "var(--text-secondary)" }}>
             {t.heroSubtitle}
           </p>
         </section>
 
-        <section className="mb-8">
+        <section className="mb-5">
           <ModeTabs mode={mode} onChange={setMode} t={t} />
         </section>
 
-        <section className="mb-6">
+        <section className="mb-4">
           <h2
-            className="mb-3 text-xs uppercase"
+            className="mb-2 text-[10px] uppercase"
             style={{ fontWeight: "var(--fw-semibold)", letterSpacing: "var(--ls-caps)", color: "var(--text-tertiary)" }}
           >
             {t.chooseTone}
@@ -177,11 +177,11 @@ export default function Home() {
           <ToneSelector value={tone} onChange={setTone} lang={lang} />
         </section>
 
-        <section className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-          <div className="surface-card rounded-[var(--radius-card)] p-5">
+        <section className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+          <div className="surface-card rounded-[var(--radius-card)] p-4">
             <div className="mb-2 flex items-center justify-between">
               <h3
-                className="text-xs uppercase"
+                className="text-[10px] uppercase"
                 style={{ fontWeight: "var(--fw-semibold)", letterSpacing: "var(--ls-caps)", color: "var(--text-tertiary)" }}
               >
                 {mode === "reformulate" ? t.inputLabelReformulate : t.inputLabelReply}
@@ -201,23 +201,23 @@ export default function Home() {
               placeholder={
                 mode === "reformulate" ? t.inputPlaceholderReformulate : t.inputPlaceholderReply
               }
-              rows={10}
-              className="w-full resize-none rounded-[var(--radius-input)] border p-3 text-sm outline-none"
+              rows={8}
+              className="w-full resize-none rounded-[var(--radius-input)] border p-2.5 text-xs outline-none"
               style={{
                 borderColor: "var(--border)",
                 background: "var(--bg-surface-3)",
                 color: "var(--text-primary)",
               }}
             />
-            <div className="mt-3 flex items-center justify-between">
-              <span className="text-xs" style={{ color: "var(--text-tertiary)" }}>
+            <div className="mt-2 flex items-center justify-between">
+              <span className="text-[10px]" style={{ color: "var(--text-tertiary)" }}>
                 {inputText.length} / {MAX_TEXT_LENGTH} {t.charCount}
               </span>
               <button
                 type="button"
                 onClick={handleSubmit}
                 disabled={loading}
-                className="press inline-flex items-center gap-2 rounded-[var(--radius-button)] px-5 py-2 text-sm disabled:cursor-not-allowed disabled:opacity-60"
+                className="press inline-flex items-center gap-2 rounded-[var(--radius-button)] px-4 py-1.5 text-xs disabled:cursor-not-allowed disabled:opacity-60"
                 style={{
                   background: "var(--accent)",
                   color: "var(--on-accent)",
@@ -229,16 +229,16 @@ export default function Home() {
               </button>
             </div>
             {error && (
-              <p className="mt-3 text-sm" style={{ color: "var(--danger)" }}>
+              <p className="mt-2 text-xs" style={{ color: "var(--danger)" }}>
                 {error}
               </p>
             )}
           </div>
 
-          <div className="surface-card rounded-[var(--radius-card)] p-5">
+          <div className="surface-card rounded-[var(--radius-card)] p-4">
             <div className="mb-2 flex items-center justify-between">
               <h3
-                className="text-xs uppercase"
+                className="text-[10px] uppercase"
                 style={{ fontWeight: "var(--fw-semibold)", letterSpacing: "var(--ls-caps)", color: "var(--text-tertiary)" }}
               >
                 {t.outputLabel}
@@ -247,14 +247,14 @@ export default function Home() {
                 type="button"
                 onClick={handleCopy}
                 disabled={!outputText}
-                className="press rounded-[var(--radius-chip)] border px-3 py-1 text-sm disabled:cursor-not-allowed disabled:opacity-40"
+                className="press rounded-[var(--radius-chip)] border px-2.5 py-1 text-xs disabled:cursor-not-allowed disabled:opacity-40"
                 style={{ borderColor: "var(--border-strong)", color: "var(--text-primary)", fontWeight: "var(--fw-semibold)" }}
               >
                 {copied ? t.copiedBtn : t.copyBtn}
               </button>
             </div>
             <div
-              className="min-h-[16rem] whitespace-pre-wrap rounded-[var(--radius-input)] border p-3 text-sm"
+              className="min-h-[14rem] whitespace-pre-wrap rounded-[var(--radius-input)] border p-2.5 text-xs"
               style={{ borderColor: "var(--border)", background: "var(--bg-surface-2)", color: "var(--text-primary)" }}
             >
               {outputText || (

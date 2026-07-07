@@ -24,7 +24,7 @@ export function MicButton({
       disabled={!isSupported}
       title={isSupported ? (isListening ? stopLabel : startLabel) : unsupportedLabel}
       aria-pressed={isListening}
-      className="press inline-flex items-center gap-2 rounded-[var(--radius-chip)] border px-3 py-1.5 text-sm transition-colors disabled:cursor-not-allowed disabled:opacity-40"
+      className="press inline-flex items-center gap-1.5 rounded-[var(--radius-chip)] border px-2.5 py-1 text-xs transition-colors disabled:cursor-not-allowed disabled:opacity-40"
       style={{
         fontWeight: "var(--fw-semibold)",
         borderColor: isListening ? "transparent" : "var(--border-strong)",

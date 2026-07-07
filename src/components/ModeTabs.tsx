@@ -16,7 +16,7 @@ export function ModeTabs({ mode, onChange, t }: ModeTabsProps) {
   ];
 
   return (
-    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+    <div className="grid grid-cols-2 gap-2">
       {tabs.map((tab) => {
         const active = tab.id === mode;
         return (
@@ -25,7 +25,7 @@ export function ModeTabs({ mode, onChange, t }: ModeTabsProps) {
             type="button"
             onClick={() => onChange(tab.id)}
             aria-pressed={active}
-            className="press rounded-[var(--radius-card)] border px-6 py-5 text-left transition-colors"
+            className="press rounded-[var(--radius-card)] border px-4 py-3 text-left transition-colors"
             style={{
               borderColor: active ? "var(--accent-line)" : "var(--border)",
               background: active ? "var(--accent-soft)" : "var(--bg-surface)",
@@ -34,17 +34,24 @@ export function ModeTabs({ mode, onChange, t }: ModeTabsProps) {
                 : "var(--shadow-sm), var(--edge-highlight)",
             }}
           >
-            <div
-              className="text-lg"
-              style={{
-                fontFamily: "var(--font-display)",
-                fontWeight: "var(--fw-bold)",
-                color: active ? "var(--accent)" : "var(--text-strong)",
-              }}
-            >
-              {tab.title}
+            <div className="flex items-center justify-between gap-2">
+              <span
+                className="text-sm"
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontWeight: "var(--fw-bold)",
+                  color: active ? "var(--accent)" : "var(--text-strong)",
+                }}
+              >
+                {tab.title}
+              </span>
+              {active && (
+                <span className="text-xs" style={{ color: "var(--accent)" }}>
+                  ✔️
+                </span>
+              )}
             </div>
-            <div className="mt-1 text-sm" style={{ color: "var(--text-secondary)" }}>
+            <div className="mt-0.5 text-xs" style={{ color: "var(--text-secondary)" }}>
               {tab.desc}
             </div>
           </button>

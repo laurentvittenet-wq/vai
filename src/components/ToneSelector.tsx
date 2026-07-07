@@ -11,7 +11,7 @@ interface ToneSelectorProps {
 
 export function ToneSelector({ value, onChange, lang }: ToneSelectorProps) {
   return (
-    <div className="flex flex-wrap gap-2" role="radiogroup">
+    <div className="flex flex-wrap gap-1.5" role="radiogroup">
       {TONES.map((tone) => {
         const active = tone.id === value;
         return (
@@ -22,7 +22,7 @@ export function ToneSelector({ value, onChange, lang }: ToneSelectorProps) {
             aria-checked={active}
             title={tone.description[lang]}
             onClick={() => onChange(tone.id)}
-            className="press rounded-[var(--radius-chip)] border px-4 py-2 text-sm transition-colors"
+            className="press inline-flex items-center gap-1 rounded-[var(--radius-chip)] border px-3 py-1.5 text-xs transition-colors"
             style={{
               fontWeight: "var(--fw-semibold)",
               borderColor: active ? "transparent" : "var(--border-strong)",
@@ -31,6 +31,7 @@ export function ToneSelector({ value, onChange, lang }: ToneSelectorProps) {
               boxShadow: active ? "var(--glow-accent-sm)" : "none",
             }}
           >
+            {active && <span>✔️</span>}
             {tone.label[lang]}
           </button>
         );
