@@ -42,7 +42,7 @@ export const STRINGS: Record<Lang, Strings> = {
     historyBtn: "Historique",
     langBtn: "EN",
     badge: "Nouveau",
-    heroTitle: "Dis ce que tu penses. Formulé pour être entendu.",
+    heroTitle: "Balance tes scuds, je fournis les silencieux.",
     heroSubtitle:
       "Diplomatico reformule le fond de ta pensée en une version plus acceptable, sans jamais trahir ton propos.",
     modeReformulateTitle: "Reformuler",
