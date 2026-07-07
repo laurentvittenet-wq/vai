@@ -29,7 +29,7 @@ export function PeaceWallPage() {
             Le Mur de la Paix
           </h1>
           <p className="mt-2 max-w-xl text-sm" style={{ color: "var(--text-secondary)" }}>
-            Des scuds désamorcés, partagés anonymement par l&apos;équipe. Clique sur un scud flouté pour le révéler.
+            Des scuds désamorcés, partagés anonymement par l&apos;équipe. Clique sur une carte pour la retourner et voir la proposition.
           </p>
         </section>
 

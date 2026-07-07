@@ -11,7 +11,7 @@ import {
 export function PeaceWallGallery() {
   const [items, setItems] = useState<PeaceWallItem[]>([]);
   const [loading, setLoading] = useState(true);
-  const [revealed, setRevealed] = useState<Set<string>>(new Set());
+  const [flipped, setFlipped] = useState<Set<string>>(new Set());
   const [liking, setLiking] = useState<Set<string>>(new Set());
   const [deleting, setDeleting] = useState<Set<string>>(new Set());
 
@@ -28,8 +28,8 @@ export function PeaceWallGallery() {
     };
   }, []);
 
-  const toggleReveal = (id: string) => {
-    setRevealed((prev) => {
+  const toggleFlip = (id: string) => {
+    setFlipped((prev) => {
       const next = new Set(prev);
       if (next.has(id)) {
         next.delete(id);
@@ -99,7 +99,7 @@ export function PeaceWallGallery() {
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {items.map((item) => {
-        const isRevealed = revealed.has(item.id);
+        const isFlipped = flipped.has(item.id);
         return (
           <div
             key={item.id}
@@ -111,47 +111,78 @@ export function PeaceWallGallery() {
               disabled={deleting.has(item.id)}
               title="Supprimer ce scud"
               aria-label="Supprimer ce scud"
-              className="press absolute right-2 top-2 flex h-5 w-5 items-center justify-center rounded-[var(--radius-full)] text-xs disabled:cursor-not-allowed disabled:opacity-50"
+              className="press absolute right-2 top-2 z-10 flex h-5 w-5 items-center justify-center rounded-[var(--radius-full)] text-xs disabled:cursor-not-allowed disabled:opacity-50"
               style={{ color: "var(--text-tertiary)" }}
             >
               ✕
             </button>
-            <div>
-              <span
-                className="text-[10px] uppercase"
-                style={{ fontWeight: "var(--fw-semibold)", letterSpacing: "var(--ls-caps)", color: "var(--text-tertiary)" }}
-              >
-                Le scud
-              </span>
+            <div style={{ perspective: "1000px" }}>
               <button
                 type="button"
-                onClick={() => toggleReveal(item.id)}
-                title={isRevealed ? "Cliquer pour flouter à nouveau" : "Cliquer pour révéler"}
-                className="mt-1 block w-full rounded-[var(--radius-input)] border p-2.5 text-left text-xs"
-                style={{
-                  borderColor: "var(--border)",
-                  background: "var(--bg-surface-3)",
-                  color: "var(--text-primary)",
-                  filter: isRevealed ? "none" : "blur(5px)",
-                  transition: "filter var(--dur-instant) var(--ease-out)",
-                }}
+                onClick={() => toggleFlip(item.id)}
+                title={isFlipped ? "Cliquer pour revenir au scud" : "Cliquer pour voir la proposition"}
+                className="block w-full text-left"
+                style={{ height: "9rem" }}
               >
-                {item.scudText}
+                <div
+                  style={{
+                    position: "relative",
+                    width: "100%",
+                    height: "100%",
+                    transition: "transform 0.5s",
+                    transformStyle: "preserve-3d",
+                    transform: isFlipped ? "rotateY(180deg)" : "rotateY(0deg)",
+                  }}
+                >
+                  <div
+                    className="text-xs"
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      overflowY: "auto",
+                      backfaceVisibility: "hidden",
+                      WebkitBackfaceVisibility: "hidden",
+                      borderRadius: "var(--radius-input)",
+                      border: "1px solid var(--border)",
+                      background: "var(--bg-surface-3)",
+                      color: "var(--text-primary)",
+                      padding: "0.625rem",
+                    }}
+                  >
+                    <span
+                      className="mb-1 block text-[10px] uppercase"
+                      style={{ fontWeight: "var(--fw-semibold)", letterSpacing: "var(--ls-caps)", color: "var(--text-tertiary)" }}
+                    >
+                      Le scud
+                    </span>
+                    {item.scudText}
+                  </div>
+                  <div
+                    className="text-xs"
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      overflowY: "auto",
+                      backfaceVisibility: "hidden",
+                      WebkitBackfaceVisibility: "hidden",
+                      transform: "rotateY(180deg)",
+                      borderRadius: "var(--radius-input)",
+                      border: "1px solid var(--border)",
+                      background: "var(--bg-surface-2)",
+                      color: "var(--text-primary)",
+                      padding: "0.625rem",
+                    }}
+                  >
+                    <span
+                      className="mb-1 block text-[10px] uppercase"
+                      style={{ fontWeight: "var(--fw-semibold)", letterSpacing: "var(--ls-caps)", color: "var(--accent)" }}
+                    >
+                      Version Diplomatico
+                    </span>
+                    {item.diplomaticText}
+                  </div>
+                </div>
               </button>
-            </div>
-            <div>
-              <span
-                className="text-[10px] uppercase"
-                style={{ fontWeight: "var(--fw-semibold)", letterSpacing: "var(--ls-caps)", color: "var(--accent)" }}
-              >
-                Version Diplomatico
-              </span>
-              <p
-                className="mt-1 rounded-[var(--radius-input)] border p-2.5 text-xs"
-                style={{ borderColor: "var(--border)", background: "var(--bg-surface-2)", color: "var(--text-primary)" }}
-              >
-                {item.diplomaticText}
-              </p>
             </div>
             <div className="mt-auto flex items-center justify-between pt-1">
               <div className="flex flex-wrap gap-1">
