@@ -44,7 +44,7 @@ export const STRINGS: Record<Lang, Strings> = {
     badge: "Nouveau",
     heroTitle: "Balance tes scuds, je fournis les silencieux.",
     heroSubtitle:
-      "Diplomatico reformule le fond de ta pensée en une version plus acceptable, sans jamais trahir ton propos.",
+      "Diplomatico prend tes pensées les plus létales et les emballe dans un cocon de papier bulle.",
     modeReformulateTitle: "Reformuler",
     modeReformulateDesc: "J'ai un truc à dire (en mode brut) → version acceptable",
     modeReplyTitle: "Répondre",
