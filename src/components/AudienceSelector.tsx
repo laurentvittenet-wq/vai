@@ -20,7 +20,7 @@ export function AudienceSelector({ value, onChange }: AudienceSelectorProps) {
             aria-checked={active}
             title={audience.description}
             onClick={() => onChange(audience.id)}
-            className="press rounded-[var(--radius-chip)] border px-2 py-1 text-[10px] transition-colors"
+            className="press rounded-[var(--radius-chip)] border px-3 py-0.5 text-[10px] transition-colors"
             style={{
               fontWeight: "var(--fw-semibold)",
               borderColor: active ? "transparent" : "var(--border-strong)",
