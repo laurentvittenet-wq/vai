@@ -230,7 +230,7 @@ export function DiplomaticoApp() {
         <section className="surface-card mb-5 rounded-[var(--radius-card)] p-4">
           <h2
             className="mb-2 text-[10px] uppercase"
-            style={{ fontWeight: "var(--fw-semibold)", letterSpacing: "var(--ls-caps)", color: "var(--text-tertiary)" }}
+            style={{ fontWeight: "var(--fw-semibold)", letterSpacing: "var(--ls-caps)", color: "var(--text-strong)" }}
           >
             {t.chooseTone}
           </h2>
@@ -245,7 +245,7 @@ export function DiplomaticoApp() {
             <div className="mb-2 flex items-center justify-between">
               <h3
                 className="text-[10px] uppercase"
-                style={{ fontWeight: "var(--fw-semibold)", letterSpacing: "var(--ls-caps)", color: "var(--text-tertiary)" }}
+                style={{ fontWeight: "var(--fw-semibold)", letterSpacing: "var(--ls-caps)", color: "var(--text-strong)" }}
               >
                 {mode === "reformulate" ? t.inputLabelReformulate : t.inputLabelReply}
               </h3>
