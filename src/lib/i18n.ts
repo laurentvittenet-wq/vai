@@ -58,7 +58,7 @@ export const STRINGS: Record<Lang, Strings> = {
     inputLabelReply: "Le message que tu as reçu",
     inputPlaceholderReformulate: "Écris ou dicte ce que tu as vraiment envie de dire…",
     inputPlaceholderReply: "Colle ici le message agaçant que tu as reçu…",
-    outputLabel: "Version civilisée",
+    outputLabel: "Ma proposition",
     outputPlaceholder: "Ta version civilisée apparaîtra ici. Respire un coup.",
     charCount: "caractères",
     submitBtn: "Civiliser",
