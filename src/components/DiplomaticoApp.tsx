@@ -333,9 +333,8 @@ export function DiplomaticoApp() {
                 }}
               >
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 2v6" />
-                  <path d="M8 8h8l1.5 5.5a1 1 0 0 1-1 1.5H7.5a1 1 0 0 1-1-1.5L8 8Z" />
-                  <path d="M12 15v7" />
+                  <path d="M12 17v5" />
+                  <path d="M9 10.8a2 2 0 0 1-1.1 1.8l-1.8.9A2 2 0 0 0 5 15.3V17h14v-1.7a2 2 0 0 0-1.1-1.8l-1.8-.9a2 2 0 0 1-1.1-1.8V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1Z" />
                 </svg>
                 {shared ? "Ajouté au Mur !" : sharing ? "Partage en cours…" : "Épingler"}
               </button>
