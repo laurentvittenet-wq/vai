@@ -12,39 +12,21 @@ export interface HistoryItem {
   createdAt: number;
 }
 
-const STORAGE_KEY = "diplomatico:history";
-const MAX_ITEMS = 30;
-
-export function loadHistory(): HistoryItem[] {
-  if (typeof window === "undefined") return [];
+export async function fetchHistory(): Promise<HistoryItem[]> {
   try {
-    const raw = window.localStorage.getItem(STORAGE_KEY);
-    if (!raw) return [];
-    const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) ? parsed : [];
+    const res = await fetch("/api/history");
+    if (!res.ok) return [];
+    const data = await res.json();
+    return Array.isArray(data.items) ? data.items : [];
   } catch {
     return [];
   }
 }
 
-export function saveHistory(items: HistoryItem[]) {
-  if (typeof window === "undefined") return;
-  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(items.slice(0, MAX_ITEMS)));
-}
-
-export function addHistoryItem(
-  items: HistoryItem[],
-  item: Omit<HistoryItem, "id" | "createdAt">
-): HistoryItem[] {
-  const next: HistoryItem[] = [
-    { ...item, id: crypto.randomUUID(), createdAt: Date.now() },
-    ...items,
-  ].slice(0, MAX_ITEMS);
-  saveHistory(next);
-  return next;
-}
-
-export function clearHistory(): HistoryItem[] {
-  saveHistory([]);
-  return [];
+export async function clearHistoryRemote(): Promise<void> {
+  try {
+    await fetch("/api/history", { method: "DELETE" });
+  } catch {
+    // Non-blocking: the UI already clears locally.
+  }
 }

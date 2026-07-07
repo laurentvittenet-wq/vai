@@ -2,6 +2,8 @@ import { isMode } from "@/lib/modes";
 import { buildSystemPrompt } from "@/lib/prompts";
 import { getTone } from "@/lib/tones";
 import { DEFAULT_INTENSITY, getIntensity } from "@/lib/intensity";
+import { getSupabaseClient } from "@/lib/supabase";
+import type { HistoryItem } from "@/lib/history";
 
 export const runtime = "nodejs";
 
@@ -22,6 +24,44 @@ interface AnthropicContentBlock {
 
 interface AnthropicResponse {
   content?: AnthropicContentBlock[];
+}
+
+async function persistHistoryItem(
+  item: Omit<HistoryItem, "id" | "createdAt">
+): Promise<HistoryItem> {
+  const supabase = getSupabaseClient();
+  const fallback: HistoryItem = { ...item, id: crypto.randomUUID(), createdAt: Date.now() };
+
+  if (!supabase) {
+    return fallback;
+  }
+
+  const { data, error } = await supabase
+    .from("history_items")
+    .insert({
+      mode: item.mode,
+      tone: item.tone,
+      intensity: item.intensity,
+      input: item.input,
+      output: item.output,
+    })
+    .select("*")
+    .single();
+
+  if (error || !data) {
+    console.error("Failed to persist history item", error);
+    return fallback;
+  }
+
+  return {
+    id: data.id as string,
+    mode: data.mode as HistoryItem["mode"],
+    tone: data.tone as HistoryItem["tone"],
+    intensity: data.intensity as HistoryItem["intensity"],
+    input: data.input as string,
+    output: data.output as string,
+    createdAt: new Date(data.created_at as string).getTime(),
+  };
 }
 
 export async function POST(request: Request) {
@@ -109,7 +149,16 @@ export async function POST(request: Request) {
       );
     }
 
-    return Response.json({ result: result.trim() });
+    const trimmedResult = result.trim();
+    const historyItem = await persistHistoryItem({
+      mode,
+      tone: tone.id,
+      intensity: intensity.id,
+      input: text,
+      output: trimmedResult,
+    });
+
+    return Response.json({ result: trimmedResult, historyItem });
   } catch (err) {
     console.error("Civilize request failed", err);
     return Response.json(

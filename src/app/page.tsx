@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Logo } from "@/components/Logo";
 import { ModeTabs } from "@/components/ModeTabs";
 import { ToneSelector } from "@/components/ToneSelector";
@@ -12,12 +12,7 @@ import type { Mode } from "@/lib/modes";
 import type { ToneId } from "@/lib/tones";
 import { DEFAULT_INTENSITY, type IntensityLevel } from "@/lib/intensity";
 import { useSpeechRecognition } from "@/lib/useSpeechRecognition";
-import {
-  addHistoryItem,
-  clearHistory,
-  loadHistory,
-  type HistoryItem,
-} from "@/lib/history";
+import { fetchHistory, clearHistoryRemote, type HistoryItem } from "@/lib/history";
 
 const MAX_TEXT_LENGTH = 4000;
 
@@ -32,10 +27,20 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
   const [historyOpen, setHistoryOpen] = useState(false);
-  const [history, setHistory] = useState<HistoryItem[]>(() => loadHistory());
+  const [history, setHistory] = useState<HistoryItem[]>([]);
 
   const t = STRINGS[lang];
   const speech = useSpeechRecognition(lang === "fr" ? "fr-FR" : "en-US");
+
+  useEffect(() => {
+    let cancelled = false;
+    fetchHistory().then((items) => {
+      if (!cancelled) setHistory(items);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const handleMicClick = () => {
     if (speech.isListening) {
@@ -68,15 +73,9 @@ export default function Home() {
         return;
       }
       setOutputText(data.result);
-      setHistory(
-        addHistoryItem(history, {
-          mode,
-          tone,
-          intensity,
-          input: inputText,
-          output: data.result,
-        })
-      );
+      if (data.historyItem) {
+        setHistory((prev) => [data.historyItem, ...prev]);
+      }
     } catch {
       setError(t.errorGeneric);
     } finally {
@@ -100,8 +99,9 @@ export default function Home() {
     setHistoryOpen(false);
   };
 
-  const handleClearHistory = () => {
-    setHistory(clearHistory());
+  const handleClearHistory = async () => {
+    setHistory([]);
+    await clearHistoryRemote();
   };
 
   return (
