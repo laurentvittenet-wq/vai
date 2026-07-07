@@ -10,11 +10,21 @@ interface HistoryPanelProps {
   onClose: () => void;
   onClear: () => void;
   onSelect: (item: HistoryItem) => void;
+  onDeleteItem: (id: string) => void;
   t: Strings;
   lang: Lang;
 }
 
-export function HistoryPanel({ open, items, onClose, onClear, onSelect, t, lang }: HistoryPanelProps) {
+export function HistoryPanel({
+  open,
+  items,
+  onClose,
+  onClear,
+  onSelect,
+  onDeleteItem,
+  t,
+  lang,
+}: HistoryPanelProps) {
   if (!open) return null;
 
   return (
@@ -58,37 +68,54 @@ export function HistoryPanel({ open, items, onClose, onClear, onSelect, t, lang 
             {items.map((item) => {
               const tone = TONES.find((tn) => tn.id === item.tone);
               return (
-                <button
+                <div
                   key={item.id}
-                  type="button"
-                  onClick={() => onSelect(item)}
-                  className="press block w-full rounded-[var(--radius-md)] border p-3 text-left"
+                  className="relative rounded-[var(--radius-md)] border"
                   style={{ borderColor: "var(--border)", background: "var(--bg-surface-2)" }}
                 >
-                  <div
-                    className="mb-1 flex items-center gap-2 text-xs"
-                    style={{ color: "var(--text-tertiary)" }}
+                  <button
+                    type="button"
+                    onClick={() => onSelect(item)}
+                    className="press block w-full p-3 pr-9 text-left"
                   >
-                    <span
-                      className="rounded-[var(--radius-chip)] px-2 py-0.5"
-                      style={{ background: "var(--bg-surface-3)", color: "var(--text-secondary)" }}
+                    <div
+                      className="mb-1 flex items-center gap-2 text-xs"
+                      style={{ color: "var(--text-tertiary)" }}
                     >
-                      {item.mode === "reformulate" ? t.modeReformulateTitle : t.modeReplyTitle}
-                    </span>
-                    {tone && (
                       <span
                         className="rounded-[var(--radius-chip)] px-2 py-0.5"
                         style={{ background: "var(--bg-surface-3)", color: "var(--text-secondary)" }}
                       >
-                        {tone.label[lang]}
+                        {item.mode === "reformulate" ? t.modeReformulateTitle : t.modeReplyTitle}
                       </span>
-                    )}
-                    <span>{new Date(item.createdAt).toLocaleString(lang === "fr" ? "fr-FR" : "en-US")}</span>
-                  </div>
-                  <p className="line-clamp-2 text-xs" style={{ color: "var(--text-primary)" }}>
-                    {item.output}
-                  </p>
-                </button>
+                      {tone && (
+                        <span
+                          className="rounded-[var(--radius-chip)] px-2 py-0.5"
+                          style={{ background: "var(--bg-surface-3)", color: "var(--text-secondary)" }}
+                        >
+                          {tone.label[lang]}
+                        </span>
+                      )}
+                      <span>{new Date(item.createdAt).toLocaleString(lang === "fr" ? "fr-FR" : "en-US")}</span>
+                    </div>
+                    <p className="line-clamp-2 text-xs" style={{ color: "var(--text-primary)" }}>
+                      {item.output}
+                    </p>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onDeleteItem(item.id);
+                    }}
+                    title={t.historyDeleteItem}
+                    aria-label={t.historyDeleteItem}
+                    className="press absolute right-2 top-2 flex h-5 w-5 items-center justify-center rounded-[var(--radius-full)] text-xs"
+                    style={{ color: "var(--text-tertiary)" }}
+                  >
+                    ✕
+                  </button>
+                </div>
               );
             })}
           </div>

@@ -31,6 +31,7 @@ export interface Strings {
   historyEmpty: string;
   historyClear: string;
   historyClose: string;
+  historyDeleteItem: string;
   errorEmptyText: string;
   errorGeneric: string;
   micUnsupported: string;
@@ -67,8 +68,9 @@ export const STRINGS: Record<Lang, Strings> = {
     copiedBtn: "Copié !",
     historyTitle: "Historique",
     historyEmpty: "Rien pour l'instant. Ta première reformulation apparaîtra ici.",
-    historyClear: "Vider l'historique",
+    historyClear: "Vider tout",
     historyClose: "Fermer",
+    historyDeleteItem: "Supprimer cet élément",
     errorEmptyText: "Écris ou dicte d'abord ce que tu veux reformuler.",
     errorGeneric: "Une erreur est survenue. Réessaie.",
     micUnsupported: "La dictée vocale n'est pas prise en charge par ce navigateur.",
@@ -103,8 +105,9 @@ export const STRINGS: Record<Lang, Strings> = {
     copiedBtn: "Copied!",
     historyTitle: "History",
     historyEmpty: "Nothing yet. Your first rephrasing will show up here.",
-    historyClear: "Clear history",
+    historyClear: "Clear all",
     historyClose: "Close",
+    historyDeleteItem: "Delete this item",
     errorEmptyText: "Write or dictate what you want to rephrase first.",
     errorGeneric: "Something went wrong. Try again.",
     micUnsupported: "Voice dictation isn't supported by this browser.",

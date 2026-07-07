@@ -30,3 +30,11 @@ export async function clearHistoryRemote(): Promise<void> {
     // Non-blocking: the UI already clears locally.
   }
 }
+
+export async function deleteHistoryItemRemote(id: string): Promise<void> {
+  try {
+    await fetch(`/api/history/${encodeURIComponent(id)}`, { method: "DELETE" });
+  } catch {
+    // Non-blocking: the UI already removes it locally.
+  }
+}

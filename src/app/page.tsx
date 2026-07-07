@@ -12,7 +12,12 @@ import type { Mode } from "@/lib/modes";
 import type { ToneId } from "@/lib/tones";
 import { DEFAULT_INTENSITY, type IntensityLevel } from "@/lib/intensity";
 import { useSpeechRecognition } from "@/lib/useSpeechRecognition";
-import { fetchHistory, clearHistoryRemote, type HistoryItem } from "@/lib/history";
+import {
+  fetchHistory,
+  clearHistoryRemote,
+  deleteHistoryItemRemote,
+  type HistoryItem,
+} from "@/lib/history";
 
 const MAX_TEXT_LENGTH = 4000;
 
@@ -102,6 +107,11 @@ export default function Home() {
   const handleClearHistory = async () => {
     setHistory([]);
     await clearHistoryRemote();
+  };
+
+  const handleDeleteHistoryItem = async (id: string) => {
+    setHistory((prev) => prev.filter((item) => item.id !== id));
+    await deleteHistoryItemRemote(id);
   };
 
   return (
@@ -282,6 +292,7 @@ export default function Home() {
         onClose={() => setHistoryOpen(false)}
         onClear={handleClearHistory}
         onSelect={handleHistorySelect}
+        onDeleteItem={handleDeleteHistoryItem}
         t={t}
         lang={lang}
       />
