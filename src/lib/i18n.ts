@@ -19,7 +19,6 @@ export interface Strings {
   inputPlaceholderReformulate: string;
   inputPlaceholderReply: string;
   outputLabel: string;
-  outputPlaceholder: string;
   charCount: string;
   submitBtn: string;
   submitBtnLoading: string;
@@ -59,7 +58,6 @@ export const STRINGS: Record<Lang, Strings> = {
     inputPlaceholderReformulate: "Écris ou dicte ce que tu as vraiment envie de dire…",
     inputPlaceholderReply: "Colle ici le message agaçant que tu as reçu…",
     outputLabel: "Ma proposition",
-    outputPlaceholder: "Ta version civilisée apparaîtra ici. Respire un coup.",
     charCount: "caractères",
     submitBtn: "Civiliser",
     submitBtnLoading: "Civilisation en cours…",
@@ -97,7 +95,6 @@ export const STRINGS: Record<Lang, Strings> = {
     inputPlaceholderReformulate: "Type or dictate what you really want to say…",
     inputPlaceholderReply: "Paste the annoying message you received here…",
     outputLabel: "Civilized version",
-    outputPlaceholder: "Your civilized version will appear here. Take a breath.",
     charCount: "characters",
     submitBtn: "Civilize",
     submitBtnLoading: "Civilizing…",

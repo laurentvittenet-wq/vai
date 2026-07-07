@@ -320,11 +320,7 @@ export function DiplomaticoApp() {
               className="min-h-[14rem] whitespace-pre-wrap rounded-[var(--radius-input)] border p-2.5 text-xs"
               style={{ borderColor: "var(--border)", background: "var(--bg-surface-2)", color: "var(--text-primary)" }}
             >
-              {outputText || (
-                <span className="italic" style={{ color: "var(--text-tertiary)" }}>
-                  {t.outputPlaceholder}
-                </span>
-              )}
+              {outputText}
             </div>
             {outputText && (
               <button
