@@ -302,7 +302,7 @@ export function DiplomaticoApp() {
             <div className="mb-2 flex items-center justify-between">
               <h3
                 className="text-[10px] uppercase"
-                style={{ fontWeight: "var(--fw-semibold)", letterSpacing: "var(--ls-caps)", color: "var(--text-tertiary)" }}
+                style={{ fontWeight: "var(--fw-semibold)", letterSpacing: "var(--ls-caps)", color: "var(--text-strong)" }}
               >
                 {t.outputLabel}
               </h3>
