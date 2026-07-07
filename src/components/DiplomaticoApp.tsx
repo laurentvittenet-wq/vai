@@ -152,10 +152,16 @@ export function DiplomaticoApp() {
             <button
               type="button"
               onClick={() => setHistoryOpen(true)}
-              className="press rounded-[var(--radius-chip)] border px-3 py-1 text-xs"
-              style={{ borderColor: "var(--border-strong)", color: "var(--text-primary)", fontWeight: "var(--fw-semibold)" }}
+              title={t.historyBtn}
+              aria-label={t.historyBtn}
+              className="press inline-flex h-7 w-7 items-center justify-center rounded-[var(--radius-chip)] border"
+              style={{ borderColor: "var(--border-strong)", color: "var(--text-primary)" }}
             >
-              {t.historyBtn}
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M3 3v5h5" />
+                <path d="M3.05 13a9 9 0 1 0 2.13-6.36L3 8" />
+                <path d="M12 7v5l4 2" />
+              </svg>
             </button>
             <button
               type="button"
@@ -169,10 +175,15 @@ export function DiplomaticoApp() {
               type="button"
               onClick={handleLogout}
               disabled={signingOut}
-              className="press rounded-[var(--radius-chip)] border px-3 py-1 text-xs disabled:cursor-not-allowed disabled:opacity-60"
-              style={{ borderColor: "var(--danger-soft)", color: "var(--danger)", fontWeight: "var(--fw-semibold)" }}
+              title={lang === "fr" ? "Verrouiller" : "Lock"}
+              aria-label={lang === "fr" ? "Verrouiller" : "Lock"}
+              className="press inline-flex h-7 w-7 items-center justify-center rounded-[var(--radius-chip)] border disabled:cursor-not-allowed disabled:opacity-60"
+              style={{ borderColor: "var(--danger-soft)", color: "var(--danger)" }}
             >
-              {lang === "fr" ? "Verrouiller" : "Lock"}
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="5" y="11" width="14" height="10" rx="2" />
+                <path d="M8 11V7a4 4 0 0 1 8 0v4" />
+              </svg>
             </button>
           </div>
         </div>
