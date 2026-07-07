@@ -189,12 +189,6 @@ export function DiplomaticoApp() {
 
       <main className="mx-auto max-w-5xl px-5 py-6">
         <section className="mb-6">
-          <span
-            className="mb-2 inline-block rounded-[var(--radius-chip)] px-2.5 py-0.5 text-[10px]"
-            style={{ background: "var(--accent-soft)", color: "var(--accent)", fontWeight: "var(--fw-semibold)" }}
-          >
-            {t.badge}
-          </span>
           <h1
             className="max-w-2xl text-xl sm:text-2xl"
             style={{
@@ -205,7 +199,24 @@ export function DiplomaticoApp() {
               color: "var(--text-strong)",
             }}
           >
-            {t.heroTitle}
+            Balance tes scuds,
+            <br />
+            je fournis les silencieux
+            <span style={{ position: "relative", display: "inline-block", width: "0.5em" }}>
+              <span
+                aria-hidden="true"
+                style={{
+                  position: "absolute",
+                  bottom: 4,
+                  left: 6,
+                  width: 7,
+                  height: 7,
+                  borderRadius: "50%",
+                  background: "var(--accent)",
+                  boxShadow: "var(--glow-accent-sm)",
+                }}
+              />
+            </span>
           </h1>
           <p className="mt-2 max-w-xl text-sm" style={{ color: "var(--text-secondary)" }}>
             {t.heroSubtitle}
