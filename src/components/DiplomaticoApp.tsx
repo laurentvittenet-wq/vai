@@ -1,19 +1,25 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { Logo } from "@/components/Logo";
+import { AppHeader } from "@/components/AppHeader";
 import { ModeTabs } from "@/components/ModeTabs";
 import { ToneSelector } from "@/components/ToneSelector";
 import { IntensitySlider } from "@/components/IntensitySlider";
+import { AudienceSelector } from "@/components/AudienceSelector";
 import { MicButton } from "@/components/MicButton";
 import { ResetButton } from "@/components/ResetButton";
+import { PanicButton } from "@/components/PanicButton";
+import { ToxicityGauge } from "@/components/ToxicityGauge";
+import { TriggerWordList } from "@/components/TriggerWordList";
 import { HistoryPanel } from "@/components/HistoryPanel";
 import { STRINGS, type Lang } from "@/lib/i18n";
 import type { Mode } from "@/lib/modes";
 import type { ToneId } from "@/lib/tones";
 import { DEFAULT_INTENSITY, type IntensityLevel } from "@/lib/intensity";
+import { DEFAULT_AUDIENCE, type AudienceLevel } from "@/lib/audience";
+import { PANIC_MESSAGE } from "@/lib/panicMessage";
 import { useSpeechRecognition } from "@/lib/useSpeechRecognition";
+import { sharePeaceWallItem } from "@/lib/peaceWall";
 import {
   fetchHistory,
   clearHistoryRemote,
@@ -28,11 +34,11 @@ const MAX_TEXT_LENGTH = 4000;
 const SHOW_HISTORY_BUTTON = false;
 
 export function DiplomaticoApp() {
-  const router = useRouter();
   const lang: Lang = "fr";
   const [mode, setMode] = useState<Mode>("reformulate");
   const [tone, setTone] = useState<ToneId>("serieux");
   const [intensity, setIntensity] = useState<IntensityLevel>(DEFAULT_INTENSITY);
+  const [audience, setAudience] = useState<AudienceLevel>(DEFAULT_AUDIENCE);
   const [inputText, setInputText] = useState("");
   const [outputText, setOutputText] = useState("");
   const [loading, setLoading] = useState(false);
@@ -40,7 +46,8 @@ export function DiplomaticoApp() {
   const [copied, setCopied] = useState(false);
   const [historyOpen, setHistoryOpen] = useState(false);
   const [history, setHistory] = useState<HistoryItem[]>([]);
-  const [signingOut, setSigningOut] = useState(false);
+  const [sharing, setSharing] = useState(false);
+  const [shared, setShared] = useState(false);
 
   const t = STRINGS[lang];
   const speech = useSpeechRecognition("fr-FR");
@@ -74,11 +81,12 @@ export function DiplomaticoApp() {
 
     setLoading(true);
     setOutputText("");
+    setShared(false);
     try {
       const res = await fetch("/api/civilize", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ mode, tone, intensity, text: inputText }),
+        body: JSON.stringify({ mode, tone, intensity, audience, text: inputText }),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -94,6 +102,25 @@ export function DiplomaticoApp() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handlePanic = () => {
+    setError(null);
+    setShared(false);
+    setOutputText(PANIC_MESSAGE);
+  };
+
+  const handleShare = async () => {
+    if (!inputText.trim() || !outputText.trim() || sharing) return;
+    setSharing(true);
+    const ok = await sharePeaceWallItem({
+      scudText: inputText,
+      diplomaticText: outputText,
+      toneCategory: tone,
+      intensityLevel: intensity,
+    });
+    setSharing(false);
+    setShared(ok);
   };
 
   const handleCopy = async () => {
@@ -126,66 +153,29 @@ export function DiplomaticoApp() {
     setInputText("");
     setOutputText("");
     setError(null);
+    setShared(false);
   };
 
-  const handleLogout = async () => {
-    setSigningOut(true);
-    await fetch("/api/auth", { method: "DELETE" });
-    router.refresh();
-  };
+  const historyButton = SHOW_HISTORY_BUTTON ? (
+    <button
+      type="button"
+      onClick={() => setHistoryOpen(true)}
+      title={t.historyBtn}
+      aria-label={t.historyBtn}
+      className="press inline-flex h-7 w-7 items-center justify-center rounded-[var(--radius-chip)] border"
+      style={{ borderColor: "var(--border-strong)", color: "var(--text-primary)" }}
+    >
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M3 3v5h5" />
+        <path d="M3.05 13a9 9 0 1 0 2.13-6.36L3 8" />
+        <path d="M12 7v5l4 2" />
+      </svg>
+    </button>
+  ) : null;
 
   return (
     <div className="min-h-full" style={{ background: "var(--bg-base)" }}>
-      <header style={{ borderBottom: "1px solid var(--border)", background: "var(--bg-surface)" }}>
-        <div className="mx-auto flex max-w-5xl items-center justify-between px-5 py-3">
-          <div className="flex items-center gap-2">
-            <Logo size={26} />
-            <div>
-              <span
-                className="text-sm"
-                style={{ fontFamily: "var(--font-display)", fontWeight: "var(--fw-extrabold)", color: "var(--text-strong)" }}
-              >
-                {t.appName}
-              </span>
-              <span className="ml-1.5 text-[10px]" style={{ color: "var(--text-tertiary)" }}>
-                {t.version}
-              </span>
-            </div>
-          </div>
-          <div className="flex items-center gap-2">
-            {SHOW_HISTORY_BUTTON && (
-              <button
-                type="button"
-                onClick={() => setHistoryOpen(true)}
-                title={t.historyBtn}
-                aria-label={t.historyBtn}
-                className="press inline-flex h-7 w-7 items-center justify-center rounded-[var(--radius-chip)] border"
-                style={{ borderColor: "var(--border-strong)", color: "var(--text-primary)" }}
-              >
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M3 3v5h5" />
-                  <path d="M3.05 13a9 9 0 1 0 2.13-6.36L3 8" />
-                  <path d="M12 7v5l4 2" />
-                </svg>
-              </button>
-            )}
-            <button
-              type="button"
-              onClick={handleLogout}
-              disabled={signingOut}
-              title="Verrouiller"
-              aria-label="Verrouiller"
-              className="press inline-flex h-7 w-7 items-center justify-center rounded-[var(--radius-chip)] border disabled:cursor-not-allowed disabled:opacity-60"
-              style={{ borderColor: "var(--danger-soft)", color: "var(--danger)" }}
-            >
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <rect x="5" y="11" width="14" height="10" rx="2" />
-                <path d="M8 11V7a4 4 0 0 1 8 0v4" />
-              </svg>
-            </button>
-          </div>
-        </div>
-      </header>
+      <AppHeader active="home" extraActions={historyButton} />
 
       <main className="mx-auto max-w-5xl px-5 py-6">
         <section className="mb-6">
@@ -238,6 +228,15 @@ export function DiplomaticoApp() {
           <div className="mt-3">
             <IntensitySlider value={intensity} onChange={setIntensity} lang={lang} label={t.chooseIntensity} />
           </div>
+          <div className="mt-3">
+            <span
+              className="mb-1.5 block text-[10px] uppercase"
+              style={{ fontWeight: "var(--fw-semibold)", letterSpacing: "var(--ls-caps)", color: "var(--text-tertiary)" }}
+            >
+              Destinataire
+            </span>
+            <AudienceSelector value={audience} onChange={setAudience} />
+          </div>
         </section>
 
         <section className="grid grid-cols-1 gap-4 lg:grid-cols-2">
@@ -250,6 +249,7 @@ export function DiplomaticoApp() {
                 {mode === "reformulate" ? t.inputLabelReformulate : t.inputLabelReply}
               </h3>
               <div className="flex items-center gap-2">
+                <PanicButton onClick={handlePanic} />
                 <ResetButton onClick={handleReset} label={t.resetBtn} />
                 <MicButton
                   isListening={speech.isListening}
@@ -275,6 +275,8 @@ export function DiplomaticoApp() {
                 color: "var(--text-primary)",
               }}
             />
+            <TriggerWordList text={inputText} />
+            <ToxicityGauge text={inputText} />
             <div className="mt-2 flex items-center justify-between">
               <span className="text-[10px]" style={{ color: "var(--text-tertiary)" }}>
                 {inputText.length} / {MAX_TEXT_LENGTH} {t.charCount}
@@ -333,6 +335,26 @@ export function DiplomaticoApp() {
                 </span>
               )}
             </div>
+            {outputText && (
+              <button
+                type="button"
+                onClick={handleShare}
+                disabled={sharing || shared}
+                className="press mt-2 w-full rounded-[var(--radius-chip)] border px-3 py-1.5 text-xs disabled:cursor-not-allowed"
+                style={{
+                  borderColor: shared ? "var(--accent-line)" : "var(--border-strong)",
+                  background: shared ? "var(--accent-soft)" : "transparent",
+                  color: shared ? "var(--accent)" : "var(--text-primary)",
+                  fontWeight: "var(--fw-semibold)",
+                }}
+              >
+                {shared
+                  ? "Ajouté au Mur !"
+                  : sharing
+                    ? "Partage en cours…"
+                    : "Partager anonymement sur le Mur de la Paix"}
+              </button>
+            )}
           </div>
         </section>
       </main>

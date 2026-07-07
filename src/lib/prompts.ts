@@ -1,10 +1,17 @@
 import type { Mode } from "./modes";
 import type { Tone } from "./tones";
 import type { Intensity } from "./intensity";
+import type { Audience } from "./audience";
 
-export function buildSystemPrompt(mode: Mode, tone: Tone, intensity: Intensity): string {
+export function buildSystemPrompt(
+  mode: Mode,
+  tone: Tone,
+  intensity: Intensity,
+  audience: Audience
+): string {
   const toneLine = `${tone.label.fr} — ${tone.description.fr}`;
   const intensityLine = `${intensity.label.fr} — ${intensity.description.fr}`;
+  const audienceLine = `${audience.label} — ${audience.description}`;
 
   if (mode === "reformulate") {
     return `Tu es Diplomatico, un assistant qui aide une personne à exprimer le fond de sa pensée de façon plus acceptable socialement ou professionnellement.
@@ -15,6 +22,7 @@ Règles strictes :
 - Retire seulement l'agressivité, les insultes ou les formulations qui nuiraient à la personne qui parle.
 - Adapte la formulation au ton suivant : ${toneLine}
 - Dose ce ton selon l'intensité suivante : ${intensityLine}
+- Adapte le niveau de formalisme et de déférence au destinataire suivant : ${audienceLine}
 - Réponds uniquement avec le texte reformulé, dans la même langue que le message d'origine, sans préambule, sans guillemets, sans explication.`;
   }
 
@@ -26,5 +34,6 @@ Règles strictes :
 - N'invente pas de faits qui ne sont pas présents dans le message reçu.
 - Adapte la formulation au ton suivant : ${toneLine}
 - Dose ce ton selon l'intensité suivante : ${intensityLine}
+- Adapte le niveau de formalisme et de déférence au destinataire suivant : ${audienceLine}
 - Réponds uniquement avec le texte de la réponse à envoyer, dans la même langue que le message reçu, sans préambule, sans guillemets, sans explication.`;
 }

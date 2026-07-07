@@ -6,7 +6,9 @@ export type ToneId =
   | "decale"
   | "journalistique"
   | "passif_agressif_elegant"
-  | "trumpette";
+  | "trumpette"
+  | "crise_contractuel"
+  | "cadrage_pmo";
 
 export interface Tone {
   id: ToneId;
@@ -77,6 +79,22 @@ export const TONES: Tone[] = [
     description: {
       fr: "Phrases courtes et martelées, superlatifs (« the best », « incroyable », « personne ne le fait mieux »), auto-satisfecit, répétitions pour l'effet, un brin de dramatisation.",
       en: "Short, hammering sentences, superlatives (\"the best\", \"tremendous\", \"nobody does it better\"), self-praise, repetition for effect, a touch of dramatization.",
+    },
+  },
+  {
+    id: "crise_contractuel",
+    label: { fr: "Gestion de crise", en: "Crisis management" },
+    description: {
+      fr: "Ton totalement froid, factuel et juridiquement prudent : aucun engagement de responsabilité contractuelle, on désamorce le conflit sans rien concéder sur le fond.",
+      en: "Fully cold, factual and legally cautious tone: no admission of contractual liability, defuses the conflict without conceding anything on substance.",
+    },
+  },
+  {
+    id: "cadrage_pmo",
+    label: { fr: "Cadrage PMO", en: "PMO framing" },
+    description: {
+      fr: "Ton managérial centré sur les processus, le respect du planning et les livrables ; non directif mais ferme, toujours orienté recherche de solution et performance.",
+      en: "Managerial tone focused on process, schedule adherence and deliverables; non-directive but firm, always solution- and performance-oriented.",
     },
   },
 ];

@@ -2,6 +2,7 @@ import { isMode } from "@/lib/modes";
 import { buildSystemPrompt } from "@/lib/prompts";
 import { getTone } from "@/lib/tones";
 import { DEFAULT_INTENSITY, getIntensity } from "@/lib/intensity";
+import { DEFAULT_AUDIENCE, getAudience } from "@/lib/audience";
 import { getSupabaseClient } from "@/lib/supabase";
 import { hasValidSession } from "@/lib/access";
 import type { HistoryItem } from "@/lib/history";
@@ -15,6 +16,7 @@ interface CivilizeRequestBody {
   mode?: unknown;
   tone?: unknown;
   intensity?: unknown;
+  audience?: unknown;
   text?: unknown;
 }
 
@@ -88,7 +90,7 @@ export async function POST(request: Request) {
     return Response.json({ error: "Corps de requête invalide." }, { status: 400 });
   }
 
-  const { mode, tone: toneId, intensity: intensityId, text } = body;
+  const { mode, tone: toneId, intensity: intensityId, audience: audienceId, text } = body;
 
   if (!isMode(mode)) {
     return Response.json({ error: "Mode invalide." }, { status: 400 });
@@ -106,6 +108,13 @@ export async function POST(request: Request) {
     return Response.json({ error: "Intensité invalide." }, { status: 400 });
   }
 
+  const audience = getAudience(
+    typeof audienceId === "string" ? audienceId : DEFAULT_AUDIENCE
+  );
+  if (!audience) {
+    return Response.json({ error: "Destinataire invalide." }, { status: 400 });
+  }
+
   if (typeof text !== "string" || !text.trim()) {
     return Response.json({ error: "Le texte est vide." }, { status: 400 });
   }
@@ -117,7 +126,7 @@ export async function POST(request: Request) {
     );
   }
 
-  const systemPrompt = buildSystemPrompt(mode, tone, intensity);
+  const systemPrompt = buildSystemPrompt(mode, tone, intensity, audience);
 
   try {
     const anthropicRes = await fetch("https://api.anthropic.com/v1/messages", {
