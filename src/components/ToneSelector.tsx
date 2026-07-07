@@ -11,7 +11,7 @@ interface ToneSelectorProps {
 
 export function ToneSelector({ value, onChange, lang }: ToneSelectorProps) {
   return (
-    <div className="flex gap-1.5 overflow-x-auto pb-1" role="radiogroup">
+    <div className="no-scrollbar flex gap-1.5 overflow-x-auto pb-1" role="radiogroup">
       {TONES.map((tone) => {
         const active = tone.id === value;
         return (
