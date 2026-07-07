@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server";
+import { getSupabaseClient } from "@/lib/supabase";
 import type { HistoryItem } from "@/lib/history";
 
 export const runtime = "nodejs";
@@ -28,13 +28,9 @@ function toHistoryItem(row: HistoryRow): HistoryItem {
 }
 
 export async function GET() {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    return Response.json({ error: "Non authentifié." }, { status: 401 });
+  const supabase = getSupabaseClient();
+  if (!supabase) {
+    return Response.json({ items: [] as HistoryItem[] });
   }
 
   const { data, error } = await supabase
@@ -52,16 +48,15 @@ export async function GET() {
 }
 
 export async function DELETE() {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    return Response.json({ error: "Non authentifié." }, { status: 401 });
+  const supabase = getSupabaseClient();
+  if (!supabase) {
+    return Response.json({ ok: true });
   }
 
-  const { error } = await supabase.from("history_items").delete().eq("user_id", user.id);
+  const { error } = await supabase
+    .from("history_items")
+    .delete()
+    .not("id", "is", null);
 
   if (error) {
     console.error("Failed to clear history", error);

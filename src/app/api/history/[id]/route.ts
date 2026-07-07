@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server";
+import { getSupabaseClient } from "@/lib/supabase";
 
 export const runtime = "nodejs";
 
@@ -8,20 +8,12 @@ export async function DELETE(
 ) {
   const { id } = await params;
 
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    return Response.json({ error: "Non authentifié." }, { status: 401 });
+  const supabase = getSupabaseClient();
+  if (!supabase) {
+    return Response.json({ ok: true });
   }
 
-  const { error } = await supabase
-    .from("history_items")
-    .delete()
-    .eq("id", id)
-    .eq("user_id", user.id);
+  const { error } = await supabase.from("history_items").delete().eq("id", id);
 
   if (error) {
     console.error("Failed to delete history item", error);
