@@ -53,8 +53,27 @@ export function AccessCodePage() {
           color: "var(--text-strong)",
         }}
       >
-        Diplomatico
+        Diplomatic
+        <span style={{ position: "relative", display: "inline-block" }}>
+          o
+          <span
+            aria-hidden="true"
+            style={{
+              position: "absolute",
+              top: 1,
+              right: -3,
+              width: 7,
+              height: 7,
+              borderRadius: "50%",
+              background: "var(--accent)",
+              boxShadow: "var(--glow-accent-sm)",
+            }}
+          />
+        </span>
       </h1>
+      <p className="mt-1 max-w-sm text-center text-xs" style={{ color: "var(--text-tertiary)" }}>
+        Balance tes scuds, je fournis les silencieux.
+      </p>
       <p className="mt-2 max-w-sm text-center text-sm" style={{ color: "var(--text-secondary)" }}>
         Accès restreint. Entre le code à 6 chiffres pour continuer.
       </p>
