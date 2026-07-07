@@ -22,7 +22,7 @@ export function ToneSelector({ value, onChange, lang }: ToneSelectorProps) {
             aria-checked={active}
             title={tone.description[lang]}
             onClick={() => onChange(tone.id)}
-            className="press inline-flex shrink-0 items-center gap-1 rounded-[var(--radius-chip)] border px-3 py-1.5 text-[10px] whitespace-nowrap transition-colors"
+            className="press inline-flex shrink-0 items-center gap-1 rounded-[var(--radius-chip)] border px-3 py-0.5 text-[10px] whitespace-nowrap transition-colors"
             style={{
               fontWeight: "var(--fw-semibold)",
               borderColor: active ? "transparent" : "var(--border-strong)",
