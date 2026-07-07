@@ -13,21 +13,9 @@ interface IntensitySliderProps {
 export function IntensitySlider({ value, onChange, lang, label }: IntensitySliderProps) {
   const index = intensityIndex(value);
   const pct = (index / (INTENSITIES.length - 1)) * 100;
-  const current = INTENSITIES[index];
 
   return (
     <div>
-      <div className="mb-1.5 flex items-center justify-between">
-        <span
-          className="text-[10px] uppercase"
-          style={{ fontWeight: "var(--fw-semibold)", letterSpacing: "var(--ls-caps)", color: "var(--text-tertiary)" }}
-        >
-          {label}
-        </span>
-        <span className="text-xs" style={{ fontWeight: "var(--fw-semibold)", color: "var(--accent)" }}>
-          {current.label[lang]}
-        </span>
-      </div>
       <input
         type="range"
         min={0}
