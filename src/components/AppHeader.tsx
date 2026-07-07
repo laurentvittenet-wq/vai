@@ -38,7 +38,7 @@ export function AppHeader({ active, extraActions }: AppHeaderProps) {
           </div>
         </div>
 
-        <nav className="flex items-center gap-1">
+        <div className="flex items-center gap-1">
           <Link
             href="/"
             title="Accueil"
@@ -85,22 +85,20 @@ export function AppHeader({ active, extraActions }: AppHeaderProps) {
               <circle cx="12" cy="7.8" r="0.1" fill="currentColor" stroke="currentColor" strokeWidth="2" />
             </svg>
           </Link>
-        </nav>
-
-        <div className="flex items-center gap-2">
           {extraActions}
           <button
             type="button"
             onClick={handleLogout}
             disabled={signingOut}
-            title="Verrouiller"
-            aria-label="Verrouiller"
-            className="press inline-flex h-7 w-7 items-center justify-center rounded-[var(--radius-chip)] border disabled:cursor-not-allowed disabled:opacity-60"
-            style={{ borderColor: "var(--danger-soft)", color: "var(--danger)" }}
+            title="Quitter"
+            aria-label="Quitter"
+            className="press inline-flex h-8 w-8 items-center justify-center rounded-[var(--radius-chip)] disabled:cursor-not-allowed disabled:opacity-60"
+            style={{ color: "var(--danger)" }}
           >
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <rect x="5" y="11" width="14" height="10" rx="2" />
-              <path d="M8 11V7a4 4 0 0 1 8 0v4" />
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3" />
+              <path d="M10 8l4 4-4 4" />
+              <path d="M14 12H3" />
             </svg>
           </button>
         </div>
