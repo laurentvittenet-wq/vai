@@ -7,7 +7,6 @@ export interface Strings {
   langBtn: string;
   badge: string;
   heroTitle: string;
-  heroSubtitle: string;
   modeReformulateTitle: string;
   modeReformulateDesc: string;
   modeReplyTitle: string;
@@ -45,8 +44,6 @@ export const STRINGS: Record<Lang, Strings> = {
     langBtn: "EN",
     badge: "Nouveau",
     heroTitle: "Balance tes scuds, je fournis les silencieux.",
-    heroSubtitle:
-      "Diplomatico prend tes pensées les plus létales et les emballe dans un cocon de papier bulle.",
     modeReformulateTitle: "Reformuler",
     modeReformulateDesc: "J'ai un scud à envoyer",
     modeReplyTitle: "Répondre",
@@ -82,8 +79,6 @@ export const STRINGS: Record<Lang, Strings> = {
     langBtn: "FR",
     badge: "New",
     heroTitle: "Say what you think. Phrased to be heard.",
-    heroSubtitle:
-      "Diplomatico rewrites the core of your thought into a more acceptable version, without ever betraying it.",
     modeReformulateTitle: "Rephrase",
     modeReformulateDesc: "I have something to say (raw mode) → acceptable version",
     modeReplyTitle: "Reply",

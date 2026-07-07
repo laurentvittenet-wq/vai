@@ -200,9 +200,6 @@ export function DiplomaticoApp() {
               />
             </span>
           </h1>
-          <p className="mt-2 max-w-xl text-sm" style={{ color: "var(--text-secondary)" }}>
-            {t.heroSubtitle}
-          </p>
         </section>
 
         <section className="mb-5">
