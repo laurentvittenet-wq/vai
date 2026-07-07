@@ -216,7 +216,7 @@ export function DiplomaticoApp() {
           <ModeTabs mode={mode} onChange={setMode} t={t} />
         </section>
 
-        <section className="mb-4">
+        <section className="surface-card mb-5 rounded-[var(--radius-card)] p-4">
           <h2
             className="mb-2 text-[10px] uppercase"
             style={{ fontWeight: "var(--fw-semibold)", letterSpacing: "var(--ls-caps)", color: "var(--text-tertiary)" }}
@@ -224,10 +224,9 @@ export function DiplomaticoApp() {
             {t.chooseTone}
           </h2>
           <ToneSelector value={tone} onChange={setTone} lang={lang} />
-        </section>
-
-        <section className="surface-card mb-5 rounded-[var(--radius-card)] p-4">
-          <IntensitySlider value={intensity} onChange={setIntensity} lang={lang} label={t.chooseIntensity} />
+          <div className="mt-3">
+            <IntensitySlider value={intensity} onChange={setIntensity} lang={lang} label={t.chooseIntensity} />
+          </div>
         </section>
 
         <section className="grid grid-cols-1 gap-4 lg:grid-cols-2">
