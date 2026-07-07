@@ -324,7 +324,7 @@ export function DiplomaticoApp() {
                 type="button"
                 onClick={handleShare}
                 disabled={sharing || shared}
-                className="press mt-2 w-full rounded-[var(--radius-chip)] border px-3 py-1.5 text-xs disabled:cursor-not-allowed"
+                className="press mt-2 inline-flex w-full items-center justify-center gap-1.5 rounded-[var(--radius-chip)] border px-3 py-1.5 text-xs disabled:cursor-not-allowed"
                 style={{
                   borderColor: shared ? "var(--accent-line)" : "var(--border-strong)",
                   background: shared ? "var(--accent-soft)" : "transparent",
@@ -332,11 +332,12 @@ export function DiplomaticoApp() {
                   fontWeight: "var(--fw-semibold)",
                 }}
               >
-                {shared
-                  ? "Ajouté au Mur !"
-                  : sharing
-                    ? "Partage en cours…"
-                    : "Partager anonymement sur le Mur de la Paix"}
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 2v6" />
+                  <path d="M8 8h8l1.5 5.5a1 1 0 0 1-1 1.5H7.5a1 1 0 0 1-1-1.5L8 8Z" />
+                  <path d="M12 15v7" />
+                </svg>
+                {shared ? "Ajouté au Mur !" : sharing ? "Partage en cours…" : "Épingler"}
               </button>
             )}
           </div>

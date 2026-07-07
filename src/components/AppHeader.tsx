@@ -41,25 +41,34 @@ export function AppHeader({ active, extraActions }: AppHeaderProps) {
         <nav className="flex items-center gap-1">
           <Link
             href="/"
-            className="press rounded-[var(--radius-chip)] px-3 py-1.5 text-xs"
+            title="Accueil"
+            aria-label="Accueil"
+            className="press inline-flex h-8 w-8 items-center justify-center rounded-[var(--radius-chip)]"
             style={{
-              fontWeight: "var(--fw-semibold)",
               color: active === "home" ? "var(--accent)" : "var(--text-secondary)",
               background: active === "home" ? "var(--accent-soft)" : "transparent",
             }}
           >
-            Accueil
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M3 10.5 12 3l9 7.5" />
+              <path d="M5 9.5V20a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V9.5" />
+            </svg>
           </Link>
           <Link
             href="/mur-de-la-paix"
-            className="press rounded-[var(--radius-chip)] px-3 py-1.5 text-xs"
+            title="Mur de la paix"
+            aria-label="Mur de la paix"
+            className="press inline-flex h-8 w-8 items-center justify-center rounded-[var(--radius-chip)]"
             style={{
-              fontWeight: "var(--fw-semibold)",
               color: active === "peace-wall" ? "var(--accent)" : "var(--text-secondary)",
               background: active === "peace-wall" ? "var(--accent-soft)" : "transparent",
             }}
           >
-            Mur de la paix
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 2v6" />
+              <path d="M8 8h8l1.5 5.5a1 1 0 0 1-1 1.5H7.5a1 1 0 0 1-1-1.5L8 8Z" />
+              <path d="M12 15v7" />
+            </svg>
           </Link>
         </nav>
 
