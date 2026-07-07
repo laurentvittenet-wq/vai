@@ -1,4 +1,4 @@
-export type AudienceLevel = "subordonne" | "pair" | "superieur";
+export type AudienceLevel = "pair" | "superieur";
 
 export interface Audience {
   id: AudienceLevel;
@@ -8,18 +8,13 @@ export interface Audience {
 
 export const AUDIENCES: Audience[] = [
   {
-    id: "subordonne",
-    label: "Collaborateur",
-    description: "Clarté et leadership bienveillant : on donne une direction sans écraser.",
-  },
-  {
     id: "pair",
-    label: "Pair / Collègue",
+    label: "Collègue",
     description: "Coopération et horizontalité : on parle d'égal à égal, esprit d'équipe.",
   },
   {
     id: "superieur",
-    label: "N+2 / Client",
+    label: "Client",
     description: "Diplomatie absolue : formalisme, déférence et respect des codes corporate.",
   },
 ];
