@@ -1,10 +1,12 @@
 import type { Mode } from "./modes";
 import type { ToneId } from "./tones";
+import type { IntensityLevel } from "./intensity";
 
 export interface HistoryItem {
   id: string;
   mode: Mode;
   tone: ToneId;
+  intensity: IntensityLevel;
   input: string;
   output: string;
   createdAt: number;

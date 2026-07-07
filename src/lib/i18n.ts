@@ -13,6 +13,7 @@ export interface Strings {
   modeReplyTitle: string;
   modeReplyDesc: string;
   chooseTone: string;
+  chooseIntensity: string;
   inputLabelReformulate: string;
   inputLabelReply: string;
   inputPlaceholderReformulate: string;
@@ -50,6 +51,7 @@ export const STRINGS: Record<Lang, Strings> = {
     modeReplyTitle: "Répondre",
     modeReplyDesc: "J'ai eu un mail agaçant",
     chooseTone: "Choisis ta tonalité",
+    chooseIntensity: "Intensité",
     inputLabelReformulate: "Ce que tu veux vraiment dire",
     inputLabelReply: "Le message que tu as reçu",
     inputPlaceholderReformulate: "Écris ou dicte ce que tu as vraiment envie de dire…",
@@ -85,6 +87,7 @@ export const STRINGS: Record<Lang, Strings> = {
     modeReplyTitle: "Reply",
     modeReplyDesc: "I received an annoying message → composed reply",
     chooseTone: "Choose your tone",
+    chooseIntensity: "Intensity",
     inputLabelReformulate: "What you really want to say",
     inputLabelReply: "The message you received",
     inputPlaceholderReformulate: "Type or dictate what you really want to say…",

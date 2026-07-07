@@ -1,8 +1,10 @@
 import type { Mode } from "./modes";
 import type { Tone } from "./tones";
+import type { Intensity } from "./intensity";
 
-export function buildSystemPrompt(mode: Mode, tone: Tone): string {
+export function buildSystemPrompt(mode: Mode, tone: Tone, intensity: Intensity): string {
   const toneLine = `${tone.label.fr} — ${tone.description.fr}`;
+  const intensityLine = `${intensity.label.fr} — ${intensity.description.fr}`;
 
   if (mode === "reformulate") {
     return `Tu es Diplomatico, un assistant qui aide une personne à exprimer le fond de sa pensée de façon plus acceptable socialement ou professionnellement.
@@ -12,6 +14,7 @@ Règles strictes :
 - Conserve l'intention, les faits et le niveau de fermeté du message original.
 - Retire seulement l'agressivité, les insultes ou les formulations qui nuiraient à la personne qui parle.
 - Adapte la formulation au ton suivant : ${toneLine}
+- Dose ce ton selon l'intensité suivante : ${intensityLine}
 - Réponds uniquement avec le texte reformulé, dans la même langue que le message d'origine, sans préambule, sans guillemets, sans explication.`;
   }
 
@@ -22,5 +25,6 @@ Règles strictes :
 - Ne sois jamais complaisant ni faible : la réponse doit rester ferme sur le fond si nécessaire, mais civilisée dans la forme.
 - N'invente pas de faits qui ne sont pas présents dans le message reçu.
 - Adapte la formulation au ton suivant : ${toneLine}
+- Dose ce ton selon l'intensité suivante : ${intensityLine}
 - Réponds uniquement avec le texte de la réponse à envoyer, dans la même langue que le message reçu, sans préambule, sans guillemets, sans explication.`;
 }

@@ -4,11 +4,13 @@ import { useState } from "react";
 import { Logo } from "@/components/Logo";
 import { ModeTabs } from "@/components/ModeTabs";
 import { ToneSelector } from "@/components/ToneSelector";
+import { IntensitySlider } from "@/components/IntensitySlider";
 import { MicButton } from "@/components/MicButton";
 import { HistoryPanel } from "@/components/HistoryPanel";
 import { STRINGS, type Lang } from "@/lib/i18n";
 import type { Mode } from "@/lib/modes";
 import type { ToneId } from "@/lib/tones";
+import { DEFAULT_INTENSITY, type IntensityLevel } from "@/lib/intensity";
 import { useSpeechRecognition } from "@/lib/useSpeechRecognition";
 import {
   addHistoryItem,
@@ -23,6 +25,7 @@ export default function Home() {
   const [lang, setLang] = useState<Lang>("fr");
   const [mode, setMode] = useState<Mode>("reformulate");
   const [tone, setTone] = useState<ToneId>("serieux");
+  const [intensity, setIntensity] = useState<IntensityLevel>(DEFAULT_INTENSITY);
   const [inputText, setInputText] = useState("");
   const [outputText, setOutputText] = useState("");
   const [loading, setLoading] = useState(false);
@@ -57,7 +60,7 @@ export default function Home() {
       const res = await fetch("/api/civilize", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ mode, tone, text: inputText }),
+        body: JSON.stringify({ mode, tone, intensity, text: inputText }),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -69,6 +72,7 @@ export default function Home() {
         addHistoryItem(history, {
           mode,
           tone,
+          intensity,
           input: inputText,
           output: data.result,
         })
@@ -90,6 +94,7 @@ export default function Home() {
   const handleHistorySelect = (item: HistoryItem) => {
     setMode(item.mode);
     setTone(item.tone);
+    setIntensity(item.intensity || DEFAULT_INTENSITY);
     setInputText(item.input);
     setOutputText(item.output);
     setHistoryOpen(false);
@@ -175,6 +180,10 @@ export default function Home() {
             {t.chooseTone}
           </h2>
           <ToneSelector value={tone} onChange={setTone} lang={lang} />
+        </section>
+
+        <section className="surface-card mb-5 rounded-[var(--radius-card)] p-4">
+          <IntensitySlider value={intensity} onChange={setIntensity} lang={lang} label={t.chooseIntensity} />
         </section>
 
         <section className="grid grid-cols-1 gap-4 lg:grid-cols-2">

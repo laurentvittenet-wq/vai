@@ -186,6 +186,39 @@ button, input, textarea {
   transform: scale(0.96);
 }
 
+.gauge-range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: var(--radius-full);
+  outline: none;
+  cursor: pointer;
+}
+.gauge-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: var(--glow-accent-sm);
+  border: 2px solid var(--on-accent);
+  cursor: pointer;
+}
+.gauge-range::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: var(--glow-accent-sm);
+  border: 2px solid var(--on-accent);
+  cursor: pointer;
+}
+.gauge-range::-moz-range-track {
+  background: transparent;
+}
+
 @keyframes podium-pulse {
   0%, 100% { opacity: 1; transform: scale(1); }
   50% { opacity: .35; transform: scale(.7); }

@@ -1,6 +1,7 @@
 import { isMode } from "@/lib/modes";
 import { buildSystemPrompt } from "@/lib/prompts";
 import { getTone } from "@/lib/tones";
+import { DEFAULT_INTENSITY, getIntensity } from "@/lib/intensity";
 
 export const runtime = "nodejs";
 
@@ -10,6 +11,7 @@ const ANTHROPIC_MODEL = process.env.ANTHROPIC_MODEL || "claude-sonnet-5";
 interface CivilizeRequestBody {
   mode?: unknown;
   tone?: unknown;
+  intensity?: unknown;
   text?: unknown;
 }
 
@@ -41,7 +43,7 @@ export async function POST(request: Request) {
     return Response.json({ error: "Corps de requête invalide." }, { status: 400 });
   }
 
-  const { mode, tone: toneId, text } = body;
+  const { mode, tone: toneId, intensity: intensityId, text } = body;
 
   if (!isMode(mode)) {
     return Response.json({ error: "Mode invalide." }, { status: 400 });
@@ -50,6 +52,13 @@ export async function POST(request: Request) {
   const tone = getTone(typeof toneId === "string" ? toneId : undefined);
   if (!tone) {
     return Response.json({ error: "Tonalité invalide." }, { status: 400 });
+  }
+
+  const intensity = getIntensity(
+    typeof intensityId === "string" ? intensityId : DEFAULT_INTENSITY
+  );
+  if (!intensity) {
+    return Response.json({ error: "Intensité invalide." }, { status: 400 });
   }
 
   if (typeof text !== "string" || !text.trim()) {
@@ -63,7 +72,7 @@ export async function POST(request: Request) {
     );
   }
 
-  const systemPrompt = buildSystemPrompt(mode, tone);
+  const systemPrompt = buildSystemPrompt(mode, tone, intensity);
 
   try {
     const anthropicRes = await fetch("https://api.anthropic.com/v1/messages", {
