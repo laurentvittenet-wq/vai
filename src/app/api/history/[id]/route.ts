@@ -1,4 +1,5 @@
 import { getSupabaseClient } from "@/lib/supabase";
+import { hasValidSession } from "@/lib/access";
 
 export const runtime = "nodejs";
 
@@ -6,6 +7,10 @@ export async function DELETE(
   _request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  if (!(await hasValidSession())) {
+    return Response.json({ error: "Accès non autorisé." }, { status: 401 });
+  }
+
   const { id } = await params;
 
   const supabase = getSupabaseClient();

@@ -3,6 +3,7 @@ import { buildSystemPrompt } from "@/lib/prompts";
 import { getTone } from "@/lib/tones";
 import { DEFAULT_INTENSITY, getIntensity } from "@/lib/intensity";
 import { getSupabaseClient } from "@/lib/supabase";
+import { hasValidSession } from "@/lib/access";
 import type { HistoryItem } from "@/lib/history";
 
 export const runtime = "nodejs";
@@ -65,6 +66,10 @@ async function persistHistoryItem(
 }
 
 export async function POST(request: Request) {
+  if (!(await hasValidSession())) {
+    return Response.json({ error: "Accès non autorisé." }, { status: 401 });
+  }
+
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
     return Response.json(

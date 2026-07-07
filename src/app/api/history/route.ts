@@ -1,4 +1,5 @@
 import { getSupabaseClient } from "@/lib/supabase";
+import { hasValidSession } from "@/lib/access";
 import type { HistoryItem } from "@/lib/history";
 
 export const runtime = "nodejs";
@@ -28,6 +29,10 @@ function toHistoryItem(row: HistoryRow): HistoryItem {
 }
 
 export async function GET() {
+  if (!(await hasValidSession())) {
+    return Response.json({ error: "Accès non autorisé." }, { status: 401 });
+  }
+
   const supabase = getSupabaseClient();
   if (!supabase) {
     return Response.json({ items: [] as HistoryItem[] });
@@ -48,6 +53,10 @@ export async function GET() {
 }
 
 export async function DELETE() {
+  if (!(await hasValidSession())) {
+    return Response.json({ error: "Accès non autorisé." }, { status: 401 });
+  }
+
   const supabase = getSupabaseClient();
   if (!supabase) {
     return Response.json({ ok: true });
