@@ -2,8 +2,9 @@ import { isMode } from "@/lib/modes";
 import { buildSystemPrompt } from "@/lib/prompts";
 import { getTone } from "@/lib/tones";
 import { DEFAULT_INTENSITY, getIntensity } from "@/lib/intensity";
-import { getSupabaseClient } from "@/lib/supabase";
+import { createClient } from "@/lib/supabase/server";
 import type { HistoryItem } from "@/lib/history";
+import type { SupabaseClient, User } from "@supabase/supabase-js";
 
 export const runtime = "nodejs";
 
@@ -27,18 +28,16 @@ interface AnthropicResponse {
 }
 
 async function persistHistoryItem(
+  supabase: SupabaseClient,
+  user: User,
   item: Omit<HistoryItem, "id" | "createdAt">
 ): Promise<HistoryItem> {
-  const supabase = getSupabaseClient();
   const fallback: HistoryItem = { ...item, id: crypto.randomUUID(), createdAt: Date.now() };
-
-  if (!supabase) {
-    return fallback;
-  }
 
   const { data, error } = await supabase
     .from("history_items")
     .insert({
+      user_id: user.id,
       mode: item.mode,
       tone: item.tone,
       intensity: item.intensity,
@@ -65,6 +64,15 @@ async function persistHistoryItem(
 }
 
 export async function POST(request: Request) {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    return Response.json({ error: "Connecte-toi pour utiliser Diplomatico." }, { status: 401 });
+  }
+
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
     return Response.json(
@@ -150,7 +158,7 @@ export async function POST(request: Request) {
     }
 
     const trimmedResult = result.trim();
-    const historyItem = await persistHistoryItem({
+    const historyItem = await persistHistoryItem(supabase, user, {
       mode,
       tone: tone.id,
       intensity: intensity.id,
