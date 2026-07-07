@@ -35,6 +35,7 @@ export interface Strings {
   errorEmptyText: string;
   errorGeneric: string;
   micUnsupported: string;
+  resetBtn: string;
 }
 
 export const STRINGS: Record<Lang, Strings> = {
@@ -74,6 +75,7 @@ export const STRINGS: Record<Lang, Strings> = {
     errorEmptyText: "Écris ou dicte d'abord ce que tu veux reformuler.",
     errorGeneric: "Une erreur est survenue. Réessaie.",
     micUnsupported: "La dictée vocale n'est pas prise en charge par ce navigateur.",
+    resetBtn: "Réinitialiser",
   },
   en: {
     appName: "Diplomatico",
@@ -111,5 +113,6 @@ export const STRINGS: Record<Lang, Strings> = {
     errorEmptyText: "Write or dictate what you want to rephrase first.",
     errorGeneric: "Something went wrong. Try again.",
     micUnsupported: "Voice dictation isn't supported by this browser.",
+    resetBtn: "Reset",
   },
 };

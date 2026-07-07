@@ -7,6 +7,7 @@ import { ModeTabs } from "@/components/ModeTabs";
 import { ToneSelector } from "@/components/ToneSelector";
 import { IntensitySlider } from "@/components/IntensitySlider";
 import { MicButton } from "@/components/MicButton";
+import { ResetButton } from "@/components/ResetButton";
 import { HistoryPanel } from "@/components/HistoryPanel";
 import { STRINGS, type Lang } from "@/lib/i18n";
 import type { Mode } from "@/lib/modes";
@@ -117,6 +118,12 @@ export function DiplomaticoApp() {
     await deleteHistoryItemRemote(id);
   };
 
+  const handleReset = () => {
+    setInputText("");
+    setOutputText("");
+    setError(null);
+  };
+
   const handleLogout = async () => {
     setSigningOut(true);
     await fetch("/api/auth", { method: "DELETE" });
@@ -223,14 +230,17 @@ export function DiplomaticoApp() {
               >
                 {mode === "reformulate" ? t.inputLabelReformulate : t.inputLabelReply}
               </h3>
-              <MicButton
-                isListening={speech.isListening}
-                isSupported={speech.isSupported}
-                onClick={handleMicClick}
-                startLabel={t.micStart}
-                stopLabel={t.micStop}
-                unsupportedLabel={t.micUnsupported}
-              />
+              <div className="flex items-center gap-2">
+                <ResetButton onClick={handleReset} label={t.resetBtn} />
+                <MicButton
+                  isListening={speech.isListening}
+                  isSupported={speech.isSupported}
+                  onClick={handleMicClick}
+                  startLabel={t.micStart}
+                  stopLabel={t.micStop}
+                  unsupportedLabel={t.micUnsupported}
+                />
+              </div>
             </div>
             <textarea
               value={inputText}
