@@ -8,7 +8,6 @@ import { IntensitySlider } from "@/components/IntensitySlider";
 import { AudienceSelector } from "@/components/AudienceSelector";
 import { MicButton } from "@/components/MicButton";
 import { ResetButton } from "@/components/ResetButton";
-import { PanicButton } from "@/components/PanicButton";
 import { ToxicityGauge } from "@/components/ToxicityGauge";
 import { TriggerWordList } from "@/components/TriggerWordList";
 import { HistoryPanel } from "@/components/HistoryPanel";
@@ -17,7 +16,6 @@ import type { Mode } from "@/lib/modes";
 import type { ToneId } from "@/lib/tones";
 import { DEFAULT_INTENSITY, type IntensityLevel } from "@/lib/intensity";
 import { DEFAULT_AUDIENCE, type AudienceLevel } from "@/lib/audience";
-import { PANIC_MESSAGE } from "@/lib/panicMessage";
 import { useSpeechRecognition } from "@/lib/useSpeechRecognition";
 import { sharePeaceWallItem } from "@/lib/peaceWall";
 import {
@@ -102,12 +100,6 @@ export function DiplomaticoApp() {
     } finally {
       setLoading(false);
     }
-  };
-
-  const handlePanic = () => {
-    setError(null);
-    setShared(false);
-    setOutputText(PANIC_MESSAGE);
   };
 
   const handleShare = async () => {
@@ -249,7 +241,6 @@ export function DiplomaticoApp() {
                 {mode === "reformulate" ? t.inputLabelReformulate : t.inputLabelReply}
               </h3>
               <div className="flex items-center gap-2">
-                <PanicButton onClick={handlePanic} />
                 <ResetButton onClick={handleReset} label={t.resetBtn} />
                 <MicButton
                   isListening={speech.isListening}
