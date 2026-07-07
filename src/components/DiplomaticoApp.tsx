@@ -25,7 +25,7 @@ const MAX_TEXT_LENGTH = 4000;
 
 export function DiplomaticoApp() {
   const router = useRouter();
-  const [lang, setLang] = useState<Lang>("fr");
+  const lang: Lang = "fr";
   const [mode, setMode] = useState<Mode>("reformulate");
   const [tone, setTone] = useState<ToneId>("serieux");
   const [intensity, setIntensity] = useState<IntensityLevel>(DEFAULT_INTENSITY);
@@ -39,7 +39,7 @@ export function DiplomaticoApp() {
   const [signingOut, setSigningOut] = useState(false);
 
   const t = STRINGS[lang];
-  const speech = useSpeechRecognition(lang === "fr" ? "fr-FR" : "en-US");
+  const speech = useSpeechRecognition("fr-FR");
 
   useEffect(() => {
     let cancelled = false;
@@ -165,18 +165,10 @@ export function DiplomaticoApp() {
             </button>
             <button
               type="button"
-              onClick={() => setLang(lang === "fr" ? "en" : "fr")}
-              className="press rounded-[var(--radius-chip)] border px-3 py-1 text-xs"
-              style={{ borderColor: "var(--border-strong)", color: "var(--text-primary)", fontWeight: "var(--fw-semibold)" }}
-            >
-              {t.langBtn}
-            </button>
-            <button
-              type="button"
               onClick={handleLogout}
               disabled={signingOut}
-              title={lang === "fr" ? "Verrouiller" : "Lock"}
-              aria-label={lang === "fr" ? "Verrouiller" : "Lock"}
+              title="Verrouiller"
+              aria-label="Verrouiller"
               className="press inline-flex h-7 w-7 items-center justify-center rounded-[var(--radius-chip)] border disabled:cursor-not-allowed disabled:opacity-60"
               style={{ borderColor: "var(--danger-soft)", color: "var(--danger)" }}
             >
