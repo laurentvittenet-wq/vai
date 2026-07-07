@@ -5,7 +5,8 @@ export type ToneId =
   | "chirurgical"
   | "decale"
   | "journalistique"
-  | "passif_agressif_elegant";
+  | "passif_agressif_elegant"
+  | "trumpette";
 
 export interface Tone {
   id: ToneId;
@@ -68,6 +69,14 @@ export const TONES: Tone[] = [
     description: {
       fr: "Poli en surface, l'agacement se devine entre les lignes, jamais dit frontalement.",
       en: "Polite on the surface, the irritation shows between the lines, never stated head-on.",
+    },
+  },
+  {
+    id: "trumpette",
+    label: { fr: "Trumpette", en: "Trumpette" },
+    description: {
+      fr: "Phrases courtes et martelées, superlatifs (« the best », « incroyable », « personne ne le fait mieux »), auto-satisfecit, répétitions pour l'effet, un brin de dramatisation.",
+      en: "Short, hammering sentences, superlatives (\"the best\", \"tremendous\", \"nobody does it better\"), self-praise, repetition for effect, a touch of dramatization.",
     },
   },
 ];
