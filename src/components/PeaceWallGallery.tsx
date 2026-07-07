@@ -1,13 +1,19 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { fetchPeaceWall, likePeaceWallItem, type PeaceWallItem } from "@/lib/peaceWall";
+import {
+  fetchPeaceWall,
+  likePeaceWallItem,
+  deletePeaceWallItem,
+  type PeaceWallItem,
+} from "@/lib/peaceWall";
 
 export function PeaceWallGallery() {
   const [items, setItems] = useState<PeaceWallItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [revealed, setRevealed] = useState<Set<string>>(new Set());
   const [liking, setLiking] = useState<Set<string>>(new Set());
+  const [deleting, setDeleting] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     let cancelled = false;
@@ -53,6 +59,21 @@ export function PeaceWallGallery() {
     }
   };
 
+  const handleDelete = async (id: string) => {
+    if (deleting.has(id)) return;
+    setDeleting((prev) => new Set(prev).add(id));
+    const ok = await deletePeaceWallItem(id);
+    if (ok) {
+      setItems((prev) => prev.filter((item) => item.id !== id));
+    } else {
+      setDeleting((prev) => {
+        const next = new Set(prev);
+        next.delete(id);
+        return next;
+      });
+    }
+  };
+
   if (loading) {
     return (
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -80,7 +101,21 @@ export function PeaceWallGallery() {
       {items.map((item) => {
         const isRevealed = revealed.has(item.id);
         return (
-          <div key={item.id} className="surface-card flex flex-col gap-2.5 rounded-[var(--radius-card)] p-4">
+          <div
+            key={item.id}
+            className="surface-card relative flex flex-col gap-2.5 rounded-[var(--radius-card)] p-4"
+          >
+            <button
+              type="button"
+              onClick={() => handleDelete(item.id)}
+              disabled={deleting.has(item.id)}
+              title="Supprimer ce scud"
+              aria-label="Supprimer ce scud"
+              className="press absolute right-2 top-2 flex h-5 w-5 items-center justify-center rounded-[var(--radius-full)] text-xs disabled:cursor-not-allowed disabled:opacity-50"
+              style={{ color: "var(--text-tertiary)" }}
+            >
+              ✕
+            </button>
             <div>
               <span
                 className="text-[10px] uppercase"

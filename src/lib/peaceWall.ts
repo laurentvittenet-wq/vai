@@ -51,3 +51,14 @@ export async function likePeaceWallItem(id: string): Promise<number | null> {
     return null;
   }
 }
+
+export async function deletePeaceWallItem(id: string): Promise<boolean> {
+  try {
+    const res = await fetch(`/api/peace-wall/${encodeURIComponent(id)}`, {
+      method: "DELETE",
+    });
+    return res.ok;
+  } catch {
+    return false;
+  }
+}
