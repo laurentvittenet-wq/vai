@@ -23,6 +23,10 @@ import {
 
 const MAX_TEXT_LENGTH = 4000;
 
+// Masqué pour l'instant — remettre à true pour réafficher le bouton
+// d'historique dans le header (la fonctionnalité reste intacte).
+const SHOW_HISTORY_BUTTON = false;
+
 export function DiplomaticoApp() {
   const router = useRouter();
   const lang: Lang = "fr";
@@ -149,20 +153,22 @@ export function DiplomaticoApp() {
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={() => setHistoryOpen(true)}
-              title={t.historyBtn}
-              aria-label={t.historyBtn}
-              className="press inline-flex h-7 w-7 items-center justify-center rounded-[var(--radius-chip)] border"
-              style={{ borderColor: "var(--border-strong)", color: "var(--text-primary)" }}
-            >
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M3 3v5h5" />
-                <path d="M3.05 13a9 9 0 1 0 2.13-6.36L3 8" />
-                <path d="M12 7v5l4 2" />
-              </svg>
-            </button>
+            {SHOW_HISTORY_BUTTON && (
+              <button
+                type="button"
+                onClick={() => setHistoryOpen(true)}
+                title={t.historyBtn}
+                aria-label={t.historyBtn}
+                className="press inline-flex h-7 w-7 items-center justify-center rounded-[var(--radius-chip)] border"
+                style={{ borderColor: "var(--border-strong)", color: "var(--text-primary)" }}
+              >
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M3 3v5h5" />
+                  <path d="M3.05 13a9 9 0 1 0 2.13-6.36L3 8" />
+                  <path d="M12 7v5l4 2" />
+                </svg>
+              </button>
+            )}
             <button
               type="button"
               onClick={handleLogout}
