@@ -232,24 +232,6 @@ button, input, textarea {
   50% { opacity: .35; transform: scale(.7); }
 }
 
-@keyframes drift {
-  0%, 100% { transform: translate(0, 0); }
-  50% { transform: translate(-3%, 3%); }
-}
-
-.field-input {
-  transition: border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out);
-}
-.field-input:focus {
-  border-color: var(--accent-line) !important;
-  box-shadow: var(--ring);
-}
-
-.bg-grid-dots {
-  background-image: radial-gradient(var(--border-strong) 1px, transparent 1px);
-  background-size: 24px 24px;
-}
-
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
