@@ -1,24 +1,23 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type ClipboardEvent, type KeyboardEvent } from "react";
 import { useRouter } from "next/navigation";
 import { Logo } from "@/components/Logo";
 
 export function AccessCodePage() {
   const router = useRouter();
-  const [code, setCode] = useState("");
+  const [digits, setDigits] = useState<string[]>(Array(6).fill(""));
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [errorTick, setErrorTick] = useState(0);
+  const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
 
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
+  useEffect(() => {
+    inputsRef.current[0]?.focus();
+  }, [errorTick]);
+
+  const submitCode = async (code: string) => {
     setError(null);
-
-    if (!/^\d{6}$/.test(code)) {
-      setError("Entre les 6 chiffres du code d'accès.");
-      return;
-    }
-
     setLoading(true);
     try {
       const res = await fetch("/api/auth", {
@@ -29,94 +28,192 @@ export function AccessCodePage() {
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
         setError(data.error || "Code incorrect.");
+        setErrorTick((t) => t + 1);
         setLoading(false);
+        setDigits(Array(6).fill(""));
         return;
       }
       router.refresh();
     } catch {
       setError("Erreur réseau. Réessaie.");
+      setErrorTick((t) => t + 1);
       setLoading(false);
+    }
+  };
+
+  const handleDigitChange = (index: number, raw: string) => {
+    const value = raw.replace(/\D/g, "").slice(-1);
+    const next = [...digits];
+    next[index] = value;
+    setDigits(next);
+
+    if (value && index < 5) {
+      inputsRef.current[index + 1]?.focus();
+    }
+
+    const code = next.join("");
+    if (code.length === 6) {
+      submitCode(code);
+    }
+  };
+
+  const handleKeyDown = (index: number, e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Backspace" && !digits[index] && index > 0) {
+      const next = [...digits];
+      next[index - 1] = "";
+      setDigits(next);
+      inputsRef.current[index - 1]?.focus();
+    }
+  };
+
+  const handlePaste = (e: ClipboardEvent<HTMLInputElement>) => {
+    const pasted = e.clipboardData.getData("text").replace(/\D/g, "").slice(0, 6);
+    if (!pasted) return;
+    e.preventDefault();
+    const next = Array(6)
+      .fill("")
+      .map((_, i) => pasted[i] || "");
+    setDigits(next);
+    if (pasted.length === 6) {
+      submitCode(pasted);
+    } else {
+      inputsRef.current[pasted.length]?.focus();
     }
   };
 
   return (
     <div
-      className="flex min-h-full flex-col items-center justify-center px-6 py-16"
+      className="relative flex min-h-full flex-col items-center justify-center overflow-hidden px-6 py-16"
       style={{ background: "var(--bg-base)" }}
     >
-      <Logo size={56} />
-      <h1
-        className="mt-6 text-center text-2xl"
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -left-40 -top-40 h-[28rem] w-[28rem] rounded-full"
         style={{
-          fontFamily: "var(--font-display)",
-          fontWeight: "var(--fw-extrabold)",
-          color: "var(--text-strong)",
+          background: "radial-gradient(closest-side, var(--accent-soft), transparent)",
+          filter: "blur(10px)",
+          animation: "drift 16s ease-in-out infinite",
         }}
-      >
-        Diplomatic
-        <span style={{ position: "relative", display: "inline-block" }}>
-          o
-          <span
-            aria-hidden="true"
-            style={{
-              position: "absolute",
-              top: 1,
-              right: -3,
-              width: 7,
-              height: 7,
-              borderRadius: "50%",
-              background: "var(--accent)",
-              boxShadow: "var(--glow-accent-sm)",
-            }}
-          />
-        </span>
-      </h1>
-      <p className="mt-1 max-w-sm text-center text-xs" style={{ color: "var(--text-tertiary)" }}>
-        Balance tes scuds, je fournis les silencieux.
-      </p>
-      <p className="mt-2 max-w-sm text-center text-sm" style={{ color: "var(--text-secondary)" }}>
-        Accès restreint. Entre le code à 6 chiffres pour continuer.
-      </p>
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -bottom-52 -right-32 h-[32rem] w-[32rem] rounded-full"
+        style={{
+          background: "radial-gradient(closest-side, var(--pop-soft), transparent)",
+          filter: "blur(10px)",
+          animation: "drift 20s ease-in-out infinite reverse",
+        }}
+      />
+      <div aria-hidden="true" className="bg-grid-dots pointer-events-none absolute inset-0 opacity-[0.3]" />
 
-      <form onSubmit={handleSubmit} className="mt-8 flex flex-col items-center gap-3">
-        <input
-          type="text"
-          inputMode="numeric"
-          autoComplete="one-time-code"
-          maxLength={6}
-          autoFocus
-          value={code}
-          onChange={(e) => setCode(e.target.value.replace(/\D/g, "").slice(0, 6))}
-          placeholder="••••••"
-          className="w-64 rounded-[var(--radius-input)] border px-4 py-3 text-center text-2xl outline-none"
+      <div className="animate-rise relative flex flex-col items-center">
+        <div style={{ animation: "podium-pulse 3.2s ease-in-out infinite" }}>
+          <Logo size={56} />
+        </div>
+        <h1
+          className="mt-6 text-center text-2xl"
           style={{
-            borderColor: "var(--border)",
-            background: "var(--bg-surface-3)",
+            fontFamily: "var(--font-display)",
+            fontWeight: "var(--fw-extrabold)",
             color: "var(--text-strong)",
-            fontFamily: "var(--font-mono)",
-            letterSpacing: "0.4em",
-          }}
-        />
-        <button
-          type="submit"
-          disabled={loading}
-          className="press mt-2 rounded-[var(--radius-button)] px-6 py-3 text-sm disabled:cursor-not-allowed disabled:opacity-60"
-          style={{
-            background: "var(--accent)",
-            color: "var(--on-accent)",
-            fontWeight: "var(--fw-bold)",
-            boxShadow: "var(--glow-accent-sm)",
           }}
         >
-          {loading ? "Vérification…" : "Déverrouiller"}
-        </button>
-      </form>
-
-      {error && (
-        <p className="mt-4 max-w-sm text-center text-sm" style={{ color: "var(--danger)" }}>
-          {error}
+          Diplomatic
+          <span style={{ position: "relative", display: "inline-block" }}>
+            o
+            <span
+              aria-hidden="true"
+              style={{
+                position: "absolute",
+                top: 1,
+                right: -3,
+                width: 7,
+                height: 7,
+                borderRadius: "50%",
+                background: "var(--accent)",
+                boxShadow: "var(--glow-accent-sm)",
+              }}
+            />
+          </span>
+        </h1>
+        <p className="mt-1 max-w-sm text-center text-xs" style={{ color: "var(--text-tertiary)" }}>
+          Balance tes scuds, je fournis les silencieux.
         </p>
-      )}
+        <p className="mt-2 max-w-sm text-center text-sm" style={{ color: "var(--text-secondary)" }}>
+          Accès restreint. Entre le code à 6 chiffres pour continuer.
+        </p>
+
+        <div
+          key={errorTick}
+          className={`surface-card mt-8 flex flex-col items-center gap-5 rounded-[var(--radius-card)] p-6 ${errorTick > 0 ? "shake" : ""}`}
+        >
+          <div className="flex gap-2">
+            {digits.map((digit, index) => (
+              <input
+                key={index}
+                ref={(el) => {
+                  inputsRef.current[index] = el;
+                }}
+                type="text"
+                inputMode="numeric"
+                autoComplete={index === 0 ? "one-time-code" : "off"}
+                maxLength={1}
+                disabled={loading}
+                value={digit}
+                onChange={(e) => handleDigitChange(index, e.target.value)}
+                onKeyDown={(e) => handleKeyDown(index, e)}
+                onPaste={handlePaste}
+                className="otp-input h-14 w-11 rounded-[var(--radius-input)] border text-center text-xl outline-none disabled:opacity-60"
+                style={{
+                  borderColor: error ? "var(--danger)" : "var(--border)",
+                  background: "var(--bg-surface-3)",
+                  color: "var(--text-strong)",
+                  fontFamily: "var(--font-mono)",
+                }}
+              />
+            ))}
+          </div>
+
+          <button
+            type="button"
+            onClick={() => submitCode(digits.join(""))}
+            disabled={loading || digits.join("").length !== 6}
+            className="press inline-flex items-center gap-2 rounded-[var(--radius-button)] px-6 py-3 text-sm disabled:cursor-not-allowed disabled:opacity-60"
+            style={{
+              background: "var(--accent)",
+              color: "var(--on-accent)",
+              fontWeight: "var(--fw-bold)",
+              boxShadow: "var(--glow-accent-sm)",
+            }}
+          >
+            {loading ? (
+              <>
+                <span className="flex gap-1">
+                  {[0, 1, 2].map((i) => (
+                    <span
+                      key={i}
+                      className="h-1.5 w-1.5 rounded-full"
+                      style={{
+                        background: "var(--on-accent)",
+                        animation: `podium-pulse 1s ease-in-out ${i * 0.15}s infinite`,
+                      }}
+                    />
+                  ))}
+                </span>
+                Vérification…
+              </>
+            ) : (
+              "Déverrouiller"
+            )}
+          </button>
+        </div>
+
+        {error && (
+          <p className="mt-4 max-w-sm text-center text-sm" style={{ color: "var(--danger)" }}>
+            {error}
+          </p>
+        )}
+      </div>
     </div>
   );
 }
