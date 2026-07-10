@@ -48,6 +48,7 @@ export function DiplomaticoApp() {
 
   const t = STRINGS[lang];
   const speech = useSpeechRecognition("fr-FR");
+  const showOutput = inputText.trim().length > 0 && (loading || outputText.length > 0);
 
   useEffect(() => {
     let cancelled = false;
@@ -227,7 +228,7 @@ export function DiplomaticoApp() {
           </div>
         </section>
 
-        <section className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+        <section className={`grid grid-cols-1 gap-4 ${showOutput ? "lg:grid-cols-2" : ""}`}>
           <div className="surface-card rounded-[var(--radius-card)] p-4">
             <div className="mb-2 flex items-center justify-between">
               <h3
@@ -294,66 +295,68 @@ export function DiplomaticoApp() {
             )}
           </div>
 
-          <div className="surface-card rounded-[var(--radius-card)] p-4">
-            <h3
-              className="mb-2 text-[10px] uppercase"
-              style={{ fontWeight: "var(--fw-semibold)", letterSpacing: "var(--ls-caps)", color: "var(--text-strong)" }}
-            >
-              {t.outputLabel}
-            </h3>
-            <div className="relative">
-              <div
-                className="h-[150px] overflow-y-auto whitespace-pre-wrap rounded-[var(--radius-input)] border p-2.5 pr-10 text-xs"
-                style={{ borderColor: "var(--border)", background: "var(--bg-surface-2)", color: "var(--text-primary)" }}
+          {showOutput && (
+            <div className="surface-card rounded-[var(--radius-card)] p-4">
+              <h3
+                className="mb-2 text-[10px] uppercase"
+                style={{ fontWeight: "var(--fw-semibold)", letterSpacing: "var(--ls-caps)", color: "var(--text-strong)" }}
               >
-                {outputText}
+                {t.outputLabel}
+              </h3>
+              <div className="relative">
+                <div
+                  className="h-[150px] overflow-y-auto whitespace-pre-wrap rounded-[var(--radius-input)] border p-2.5 pr-10 text-xs"
+                  style={{ borderColor: "var(--border)", background: "var(--bg-surface-2)", color: "var(--text-primary)" }}
+                >
+                  {outputText}
+                </div>
+                <button
+                  type="button"
+                  onClick={handleCopy}
+                  disabled={!outputText}
+                  title={copied ? t.copiedBtn : t.copyBtn}
+                  aria-label={copied ? t.copiedBtn : t.copyBtn}
+                  className="press absolute right-2 top-2 inline-flex h-6 w-6 items-center justify-center rounded-[var(--radius-chip)] border disabled:cursor-not-allowed disabled:opacity-40"
+                  style={{
+                    borderColor: copied ? "var(--accent-line)" : "var(--border-strong)",
+                    background: copied ? "var(--accent-soft)" : "var(--bg-surface-2)",
+                    color: copied ? "var(--accent)" : "var(--text-secondary)",
+                  }}
+                >
+                  {copied ? (
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M20 6 9 17l-5-5" />
+                    </svg>
+                  ) : (
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                      <rect x="9" y="9" width="13" height="13" rx="2" />
+                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                    </svg>
+                  )}
+                </button>
               </div>
-              <button
-                type="button"
-                onClick={handleCopy}
-                disabled={!outputText}
-                title={copied ? t.copiedBtn : t.copyBtn}
-                aria-label={copied ? t.copiedBtn : t.copyBtn}
-                className="press absolute right-2 top-2 inline-flex h-6 w-6 items-center justify-center rounded-[var(--radius-chip)] border disabled:cursor-not-allowed disabled:opacity-40"
-                style={{
-                  borderColor: copied ? "var(--accent-line)" : "var(--border-strong)",
-                  background: copied ? "var(--accent-soft)" : "var(--bg-surface-2)",
-                  color: copied ? "var(--accent)" : "var(--text-secondary)",
-                }}
-              >
-                {copied ? (
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M20 6 9 17l-5-5" />
+              {outputText && (
+                <button
+                  type="button"
+                  onClick={handleShare}
+                  disabled={sharing || shared}
+                  className="press mt-2 inline-flex w-full items-center justify-center gap-1.5 rounded-[var(--radius-chip)] border px-3 py-1.5 text-xs disabled:cursor-not-allowed"
+                  style={{
+                    borderColor: shared ? "var(--accent-line)" : "var(--border-strong)",
+                    background: shared ? "var(--accent-soft)" : "transparent",
+                    color: shared ? "var(--accent)" : "var(--text-primary)",
+                    fontWeight: "var(--fw-semibold)",
+                  }}
+                >
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 17v5" />
+                    <path d="M9 10.8a2 2 0 0 1-1.1 1.8l-1.8.9A2 2 0 0 0 5 15.3V17h14v-1.7a2 2 0 0 0-1.1-1.8l-1.8-.9a2 2 0 0 1-1.1-1.8V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1Z" />
                   </svg>
-                ) : (
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                    <rect x="9" y="9" width="13" height="13" rx="2" />
-                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-                  </svg>
-                )}
-              </button>
+                  {shared ? "Ajouté au Mur !" : sharing ? "Partage en cours…" : "Épingler"}
+                </button>
+              )}
             </div>
-            {outputText && (
-              <button
-                type="button"
-                onClick={handleShare}
-                disabled={sharing || shared}
-                className="press mt-2 inline-flex w-full items-center justify-center gap-1.5 rounded-[var(--radius-chip)] border px-3 py-1.5 text-xs disabled:cursor-not-allowed"
-                style={{
-                  borderColor: shared ? "var(--accent-line)" : "var(--border-strong)",
-                  background: shared ? "var(--accent-soft)" : "transparent",
-                  color: shared ? "var(--accent)" : "var(--text-primary)",
-                  fontWeight: "var(--fw-semibold)",
-                }}
-              >
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 17v5" />
-                  <path d="M9 10.8a2 2 0 0 1-1.1 1.8l-1.8.9A2 2 0 0 0 5 15.3V17h14v-1.7a2 2 0 0 0-1.1-1.8l-1.8-.9a2 2 0 0 1-1.1-1.8V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1Z" />
-                </svg>
-                {shared ? "Ajouté au Mur !" : sharing ? "Partage en cours…" : "Épingler"}
-              </button>
-            )}
-          </div>
+          )}
         </section>
       </main>
 
