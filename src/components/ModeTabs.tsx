@@ -46,7 +46,7 @@ export function ModeTabs({ mode, onChange, t }: ModeTabsProps) {
             aria-pressed={active}
             className={`neo-brutal flex items-center justify-between gap-2 rounded-full py-1 pl-5 pr-1.5 ${active ? "neo-brutal-active" : ""}`}
             style={{
-              background: active ? "var(--accent)" : "var(--bg-surface-3)",
+              background: active ? "var(--gradient-cta)" : "var(--bg-surface-3)",
             }}
           >
             <span
