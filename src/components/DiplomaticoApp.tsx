@@ -40,7 +40,7 @@ interface ToneResult {
 }
 
 export function DiplomaticoApp() {
-  const [lang, setLang] = useState<Lang>("fr");
+  const lang: Lang = "fr";
   const [mode, setMode] = useState<Mode>("reformulate");
   const [tones, setTones] = useState<ToneId[]>(["serieux"]);
   const [intensity, setIntensity] = useState<IntensityLevel>(DEFAULT_INTENSITY);
@@ -193,12 +193,7 @@ export function DiplomaticoApp() {
 
   return (
     <div className="min-h-full" style={{ background: "#000000" }}>
-      <AppHeader
-        active="home"
-        extraActions={historyButton}
-        langLabel={t.langBtn}
-        onToggleLang={() => setLang((prev) => (prev === "fr" ? "en" : "fr"))}
-      />
+      <AppHeader active="home" extraActions={historyButton} />
 
       <main className="mx-auto max-w-5xl px-5 py-6">
         <section className="mb-6 flex items-center justify-between gap-3">
