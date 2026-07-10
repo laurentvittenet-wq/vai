@@ -196,9 +196,9 @@ export function DiplomaticoApp() {
       <AppHeader active="home" extraActions={historyButton} />
 
       <main className="mx-auto max-w-5xl px-5 py-6">
-        <section className="mb-6">
+        <section className="mb-6 flex items-center justify-between gap-3">
           <h1
-            className="max-w-2xl text-xl sm:text-2xl"
+            className="text-lg sm:text-2xl"
             style={{
               fontFamily: "var(--font-display)",
               fontWeight: "var(--fw-extrabold)",
@@ -207,25 +207,32 @@ export function DiplomaticoApp() {
               color: "var(--text-strong)",
             }}
           >
-            Balance tes scuds,
+            <span style={{ whiteSpace: "nowrap" }}>Balance tes scuds,</span>
             <br />
-            je fournis les silencieux
-            <span style={{ position: "relative", display: "inline-block", width: "0.5em" }}>
-              <span
-                aria-hidden="true"
-                style={{
-                  position: "absolute",
-                  bottom: 4,
-                  left: 6,
-                  width: 7,
-                  height: 7,
-                  borderRadius: "50%",
-                  background: "var(--accent)",
-                  boxShadow: "var(--glow-accent-sm)",
-                }}
-              />
+            <span style={{ whiteSpace: "nowrap" }}>
+              je fournis les silencieux
+              <span style={{ position: "relative", display: "inline-block", width: "0.5em" }}>
+                <span
+                  aria-hidden="true"
+                  style={{
+                    position: "absolute",
+                    bottom: 4,
+                    left: 6,
+                    width: 7,
+                    height: 7,
+                    borderRadius: "50%",
+                    background: "var(--accent)",
+                    boxShadow: "var(--glow-accent-sm)",
+                  }}
+                />
+              </span>
             </span>
           </h1>
+          <img
+            src="/access-mascot.jpg"
+            alt="Diplomatico"
+            className="h-12 w-12 shrink-0 rounded-[var(--radius-lg)] object-cover sm:h-20 sm:w-20"
+          />
         </section>
 
         <section className="mb-5">
