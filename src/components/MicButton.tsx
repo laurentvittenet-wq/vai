@@ -17,29 +17,35 @@ export function MicButton({
   stopLabel,
   unsupportedLabel,
 }: MicButtonProps) {
+  const label = isSupported ? (isListening ? stopLabel : startLabel) : unsupportedLabel;
+
   return (
     <button
       type="button"
       onClick={onClick}
       disabled={!isSupported}
-      title={isSupported ? (isListening ? stopLabel : startLabel) : unsupportedLabel}
+      title={label}
+      aria-label={label}
       aria-pressed={isListening}
-      className="press inline-flex items-center gap-1.5 rounded-[var(--radius-chip)] border px-2.5 py-1 text-xs transition-colors disabled:cursor-not-allowed disabled:opacity-40"
+      className="press relative inline-flex h-6 w-6 items-center justify-center rounded-[var(--radius-chip)] border transition-colors disabled:cursor-not-allowed disabled:opacity-40"
       style={{
-        fontWeight: "var(--fw-semibold)",
         borderColor: isListening ? "transparent" : "var(--border-strong)",
         background: isListening ? "var(--pop-soft)" : "var(--bg-surface-2)",
-        color: isListening ? "var(--pop)" : "var(--text-primary)",
+        color: isListening ? "var(--pop)" : "var(--text-secondary)",
       }}
     >
-      <span
-        className="inline-block h-2 w-2 rounded-full"
-        style={{
-          background: isListening ? "var(--live)" : "var(--text-tertiary)",
-          animation: isListening ? "podium-pulse 1.2s ease-in-out infinite" : "none",
-        }}
-      />
-      {isListening ? stopLabel : startLabel}
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3Z" />
+        <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+        <path d="M12 19v3" />
+      </svg>
+      {isListening && (
+        <span
+          aria-hidden="true"
+          className="absolute -right-0.5 -top-0.5 h-1.5 w-1.5 rounded-full"
+          style={{ background: "var(--live)", animation: "podium-pulse 1.2s ease-in-out infinite" }}
+        />
+      )}
     </button>
   );
 }

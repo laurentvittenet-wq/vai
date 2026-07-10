@@ -50,7 +50,7 @@ export const STRINGS: Record<Lang, Strings> = {
     modeReplyDesc: "J'ai eu un mail agaçant",
     chooseTone: "Choisis ta tonalité",
     chooseIntensity: "Intensité",
-    inputLabelReformulate: "Ce que tu veux vraiment dire",
+    inputLabelReformulate: "Ton message",
     inputLabelReply: "Le message que tu as reçu",
     inputPlaceholderReformulate: "Écris ou dicte ce que tu as vraiment envie de dire…",
     inputPlaceholderReply: "Colle ici le message agaçant que tu as reçu…",

@@ -8,7 +8,6 @@ import { IntensitySlider } from "@/components/IntensitySlider";
 import { AudienceSelector } from "@/components/AudienceSelector";
 import { MicButton } from "@/components/MicButton";
 import { ResetButton } from "@/components/ResetButton";
-import { ToxicityGauge } from "@/components/ToxicityGauge";
 import { TriggerWordList } from "@/components/TriggerWordList";
 import { HistoryPanel } from "@/components/HistoryPanel";
 import { STRINGS, type Lang } from "@/lib/i18n";
@@ -230,14 +229,28 @@ export function DiplomaticoApp() {
 
         <section className="grid grid-cols-1 gap-4 lg:grid-cols-2">
           <div className="surface-card rounded-[var(--radius-card)] p-4">
-            <div className="mb-2 flex items-center justify-between">
-              <h3
-                className="text-[10px] uppercase"
-                style={{ fontWeight: "var(--fw-semibold)", letterSpacing: "var(--ls-caps)", color: "var(--text-strong)" }}
-              >
-                {mode === "reformulate" ? t.inputLabelReformulate : t.inputLabelReply}
-              </h3>
-              <div className="flex items-center gap-2">
+            <h3
+              className="mb-2 text-[10px] uppercase"
+              style={{ fontWeight: "var(--fw-semibold)", letterSpacing: "var(--ls-caps)", color: "var(--text-strong)" }}
+            >
+              {mode === "reformulate" ? t.inputLabelReformulate : t.inputLabelReply}
+            </h3>
+            <div className="relative">
+              <textarea
+                value={inputText}
+                onChange={(e) => setInputText(e.target.value.slice(0, MAX_TEXT_LENGTH))}
+                placeholder={
+                  mode === "reformulate" ? t.inputPlaceholderReformulate : t.inputPlaceholderReply
+                }
+                rows={8}
+                className="w-full resize-none rounded-[var(--radius-input)] border p-2.5 pr-16 text-xs outline-none"
+                style={{
+                  borderColor: "var(--border)",
+                  background: "var(--bg-surface-3)",
+                  color: "var(--text-primary)",
+                }}
+              />
+              <div className="absolute right-2 top-2 flex items-center gap-1">
                 <ResetButton onClick={handleReset} label={t.resetBtn} />
                 <MicButton
                   isListening={speech.isListening}
@@ -249,22 +262,7 @@ export function DiplomaticoApp() {
                 />
               </div>
             </div>
-            <textarea
-              value={inputText}
-              onChange={(e) => setInputText(e.target.value.slice(0, MAX_TEXT_LENGTH))}
-              placeholder={
-                mode === "reformulate" ? t.inputPlaceholderReformulate : t.inputPlaceholderReply
-              }
-              rows={8}
-              className="w-full resize-none rounded-[var(--radius-input)] border p-2.5 text-xs outline-none"
-              style={{
-                borderColor: "var(--border)",
-                background: "var(--bg-surface-3)",
-                color: "var(--text-primary)",
-              }}
-            />
             <TriggerWordList text={inputText} />
-            <ToxicityGauge text={inputText} />
             <div className="mt-2 flex items-center justify-between">
               <span className="text-[10px]" style={{ color: "var(--text-tertiary)" }}>
                 {inputText.length} / {MAX_TEXT_LENGTH} {t.charCount}
