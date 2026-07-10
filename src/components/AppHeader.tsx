@@ -3,7 +3,6 @@
 import { type ReactNode, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Logo } from "@/components/Logo";
 
 interface AppHeaderProps {
   active: "home" | "peace-wall" | "informations";
@@ -23,21 +22,6 @@ export function AppHeader({ active, extraActions }: AppHeaderProps) {
   return (
     <header style={{ borderBottom: "1px solid var(--border)", background: "var(--bg-surface)" }}>
       <div className="mx-auto flex max-w-5xl items-center justify-between px-5 py-3">
-        <div className="flex items-center gap-2">
-          <Logo size={26} />
-          <div>
-            <span
-              className="text-sm"
-              style={{ fontFamily: "var(--font-display)", fontWeight: "var(--fw-extrabold)", color: "var(--text-strong)" }}
-            >
-              Diplomatico
-            </span>
-            <span className="ml-1.5 text-[10px]" style={{ color: "var(--text-tertiary)" }}>
-              v1.0
-            </span>
-          </div>
-        </div>
-
         <div className="flex items-center gap-1">
           <Link
             href="/"
@@ -85,6 +69,9 @@ export function AppHeader({ active, extraActions }: AppHeaderProps) {
               <circle cx="12" cy="7.8" r="0.1" fill="currentColor" stroke="currentColor" strokeWidth="2" />
             </svg>
           </Link>
+        </div>
+
+        <div className="flex items-center gap-1">
           {extraActions}
           <button
             type="button"
