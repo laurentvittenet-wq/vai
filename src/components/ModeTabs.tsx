@@ -51,7 +51,7 @@ export function ModeTabs({ mode, onChange, t }: ModeTabsProps) {
                 ? "linear-gradient(135deg, color-mix(in oklch, var(--accent) 32%, transparent) 0%, color-mix(in oklch, var(--accent) 6%, transparent) 100%)"
                 : "linear-gradient(135deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.02) 100%)",
               boxShadow: active
-                ? "0 10px 24px color-mix(in oklch, var(--accent) 30%, transparent), inset 0 1px 0 rgba(255,255,255,0.35), inset 0 -8px 14px rgba(0,0,0,0.25)"
+                ? "0 4px 10px color-mix(in oklch, var(--accent) 14%, transparent), inset 0 1px 0 rgba(255,255,255,0.35), inset 0 -8px 14px rgba(0,0,0,0.25)"
                 : "0 8px 18px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.14), inset 0 -8px 14px rgba(0,0,0,0.2)",
             }}
           >
