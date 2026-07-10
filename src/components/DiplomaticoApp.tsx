@@ -242,7 +242,7 @@ export function DiplomaticoApp() {
                 placeholder={
                   mode === "reformulate" ? t.inputPlaceholderReformulate : t.inputPlaceholderReply
                 }
-                className="h-56 w-full resize-none overflow-y-auto rounded-[var(--radius-input)] border p-2.5 pr-16 text-xs outline-none"
+                className="h-[150px] w-full resize-none overflow-y-auto rounded-[var(--radius-input)] border p-2.5 pr-16 text-xs outline-none"
                 style={{
                   borderColor: "var(--border)",
                   background: "var(--bg-surface-3)",
@@ -301,7 +301,7 @@ export function DiplomaticoApp() {
             </h3>
             <div className="relative">
               <div
-                className="h-56 overflow-y-auto whitespace-pre-wrap rounded-[var(--radius-input)] border p-2.5 pr-10 text-xs"
+                className="h-[150px] overflow-y-auto whitespace-pre-wrap rounded-[var(--radius-input)] border p-2.5 pr-10 text-xs"
                 style={{ borderColor: "var(--border)", background: "var(--bg-surface-2)", color: "var(--text-primary)" }}
               >
                 {outputText}
