@@ -34,25 +34,19 @@ export function ModeTabs({ mode, onChange, t }: ModeTabsProps) {
   ];
 
   return (
-    <div className="grid grid-cols-2 gap-2" style={{ perspective: "700px" }}>
+    <div className="grid grid-cols-2 gap-2">
       {tabs.map((tab) => {
         const active = tab.id === mode;
-        const color = active ? "var(--accent)" : "var(--text-strong)";
+        const color = active ? "var(--on-accent)" : "var(--text-strong)";
         return (
           <button
             key={tab.id}
             type="button"
             onClick={() => onChange(tab.id)}
             aria-pressed={active}
-            className="press glass-3d flex items-center justify-between gap-2 rounded-full border py-1.5 pl-5 pr-1.5"
+            className={`neo-brutal flex items-center justify-between gap-2 rounded-full py-1.5 pl-5 pr-1.5 ${active ? "neo-brutal-active" : ""}`}
             style={{
-              borderColor: active ? "rgba(0, 230, 118, 0.4)" : "rgba(255, 255, 255, 0.16)",
-              background: active
-                ? "linear-gradient(135deg, color-mix(in oklch, var(--accent) 32%, transparent) 0%, color-mix(in oklch, var(--accent) 6%, transparent) 100%)"
-                : "linear-gradient(135deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.02) 100%)",
-              boxShadow: active
-                ? "0 4px 10px color-mix(in oklch, var(--accent) 14%, transparent), inset 0 1px 0 rgba(255,255,255,0.35), inset 0 -8px 14px rgba(0,0,0,0.25)"
-                : "0 8px 18px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.14), inset 0 -8px 14px rgba(0,0,0,0.2)",
+              background: active ? "var(--accent)" : "var(--bg-surface-3)",
             }}
           >
             <span
@@ -69,14 +63,13 @@ export function ModeTabs({ mode, onChange, t }: ModeTabsProps) {
             <span
               className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full"
               style={{
-                background: active ? "var(--text-strong)" : "var(--bg-surface-2)",
-                boxShadow: active ? "0 2px 6px rgba(0,0,0,0.25)" : "none",
+                background: active ? "var(--on-accent)" : "var(--text-strong)",
               }}
             >
               {tab.id === "reformulate" ? (
-                <WriteIcon color={active ? "var(--accent)" : "var(--text-strong)"} />
+                <WriteIcon color={active ? "var(--accent)" : "var(--bg-base)"} />
               ) : (
-                <ResponseIcon color={active ? "var(--accent)" : "var(--text-strong)"} />
+                <ResponseIcon color={active ? "var(--accent)" : "var(--bg-base)"} />
               )}
             </span>
           </button>

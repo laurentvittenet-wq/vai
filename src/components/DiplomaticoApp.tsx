@@ -338,12 +338,11 @@ export function DiplomaticoApp() {
                     disabled={loading}
                     title={loading ? t.submitBtnLoading : t.submitBtn}
                     aria-label={loading ? t.submitBtnLoading : t.submitBtn}
-                    className="press inline-flex h-[21px] items-center justify-center gap-1.5 rounded-[var(--radius-button)] px-10 text-[10px] disabled:cursor-not-allowed disabled:opacity-60"
+                    className="neo-brutal neo-brutal-active inline-flex h-[21px] items-center justify-center gap-1.5 rounded-[var(--radius-button)] px-10 text-[10px] disabled:cursor-not-allowed disabled:opacity-60"
                     style={{
                       background: "var(--accent)",
                       color: "var(--on-accent)",
                       fontWeight: "var(--fw-bold)",
-                      boxShadow: "var(--glow-accent-sm)",
                     }}
                   >
                     {loading ? (
