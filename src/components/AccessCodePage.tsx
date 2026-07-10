@@ -83,36 +83,14 @@ export function AccessCodePage() {
   return (
     <div
       className="relative flex min-h-full flex-col items-center justify-center overflow-hidden px-6 py-16"
-      style={{ background: "var(--bg-base)" }}
+      style={{ background: "#000000" }}
     >
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -left-40 -top-40 h-[28rem] w-[28rem] rounded-full"
-        style={{
-          background: "radial-gradient(closest-side, var(--accent-soft), transparent)",
-          filter: "blur(10px)",
-          animation: "drift 16s ease-in-out infinite",
-        }}
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -bottom-52 -right-32 h-[32rem] w-[32rem] rounded-full"
-        style={{
-          background: "radial-gradient(closest-side, var(--pop-soft), transparent)",
-          filter: "blur(10px)",
-          animation: "drift 20s ease-in-out infinite reverse",
-        }}
-      />
-      <div aria-hidden="true" className="bg-grid-dots pointer-events-none absolute inset-0 opacity-[0.3]" />
-
       <div className="animate-rise relative flex flex-col items-center">
         <div
-          className="overflow-hidden rounded-[var(--radius-lg)] border-2"
+          className="overflow-hidden rounded-[var(--radius-lg)]"
           style={{
             width: 176,
             height: 176,
-            borderColor: "var(--accent)",
-            boxShadow: "var(--glow-accent-sm)",
             animation: "podium-pulse 3.2s ease-in-out infinite",
           }}
         >
