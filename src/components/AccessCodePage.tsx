@@ -109,8 +109,8 @@ export function AccessCodePage() {
         <div
           className="overflow-hidden rounded-[var(--radius-lg)] border-2"
           style={{
-            width: 88,
-            height: 88,
+            width: 176,
+            height: 176,
             borderColor: "var(--accent)",
             boxShadow: "var(--glow-accent-sm)",
             animation: "podium-pulse 3.2s ease-in-out infinite",
