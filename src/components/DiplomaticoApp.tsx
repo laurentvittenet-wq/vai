@@ -229,12 +229,17 @@ export function DiplomaticoApp() {
 
         <section className="grid grid-cols-1 gap-4 lg:grid-cols-2">
           <div className="surface-card rounded-[var(--radius-card)] p-4">
-            <h3
-              className="mb-2 text-[10px] uppercase"
-              style={{ fontWeight: "var(--fw-semibold)", letterSpacing: "var(--ls-caps)", color: "var(--text-strong)" }}
-            >
-              {mode === "reformulate" ? t.inputLabelReformulate : t.inputLabelReply}
-            </h3>
+            <div className="mb-2 flex items-center justify-between">
+              <h3
+                className="text-[10px] uppercase"
+                style={{ fontWeight: "var(--fw-semibold)", letterSpacing: "var(--ls-caps)", color: "var(--text-strong)" }}
+              >
+                {mode === "reformulate" ? t.inputLabelReformulate : t.inputLabelReply}
+              </h3>
+              <span className="text-[10px]" style={{ color: "var(--text-tertiary)" }}>
+                {inputText.length} / {MAX_TEXT_LENGTH} {t.charCount}
+              </span>
+            </div>
             <div className="relative">
               <textarea
                 value={inputText}
@@ -262,24 +267,21 @@ export function DiplomaticoApp() {
               </div>
             </div>
             <TriggerWordList text={inputText} />
-            <div className="mt-2 flex items-center justify-between">
-              <span className="text-[10px]" style={{ color: "var(--text-tertiary)" }}>
-                {inputText.length} / {MAX_TEXT_LENGTH} {t.charCount}
-              </span>
+            <div className="mt-3 flex justify-center">
               <button
                 type="button"
                 onClick={handleSubmit}
                 disabled={loading}
                 title={loading ? t.submitBtnLoading : t.submitBtn}
                 aria-label={loading ? t.submitBtnLoading : t.submitBtn}
-                className="press inline-flex items-center justify-center rounded-[var(--radius-button)] px-4 py-1.5 disabled:cursor-not-allowed disabled:opacity-60"
+                className="press inline-flex items-center justify-center rounded-[var(--radius-button)] px-10 py-3 disabled:cursor-not-allowed disabled:opacity-60"
                 style={{
                   background: "var(--accent)",
                   color: "var(--on-accent)",
                   boxShadow: "var(--glow-accent-sm)",
                 }}
               >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                   <path d="M12 2.5c.4 3.3 1.9 4.8 5.2 5.2-3.3.4-4.8 1.9-5.2 5.2-.4-3.3-1.9-4.8-5.2-5.2 3.3-.4 4.8-1.9 5.2-5.2Z" />
                   <path d="M19 13c.25 2 1 2.75 3 3-2 .25-2.75 1-3 3-.25-2-1-2.75-3-3 2-.25 2.75-1 3-3Z" />
                 </svg>
