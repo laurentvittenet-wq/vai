@@ -326,7 +326,7 @@ export function DiplomaticoApp() {
                     disabled={loading}
                     title={loading ? t.submitBtnLoading : t.submitBtn}
                     aria-label={loading ? t.submitBtnLoading : t.submitBtn}
-                    className="neo-brutal neo-brutal-active flex h-12 w-12 shrink-0 items-center justify-center rounded-full disabled:cursor-not-allowed disabled:opacity-60"
+                    className="neo-brutal neo-brutal-active flex h-9 w-9 shrink-0 items-center justify-center rounded-full disabled:cursor-not-allowed disabled:opacity-60"
                     style={{
                       background: "var(--accent)",
                       color: "var(--on-accent)",
@@ -337,7 +337,7 @@ export function DiplomaticoApp() {
                         {[0, 1, 2].map((i) => (
                           <span
                             key={i}
-                            className="h-1.5 w-1.5 rounded-full"
+                            className="h-1 w-1 rounded-full"
                             style={{
                               background: "var(--on-accent)",
                               animation: `podium-pulse 1s ease-in-out ${i * 0.15}s infinite`,
@@ -346,7 +346,7 @@ export function DiplomaticoApp() {
                         ))}
                       </span>
                     ) : (
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                         <path d="M8 5v14l11-7z" />
                       </svg>
                     )}
