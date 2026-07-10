@@ -2,6 +2,7 @@
 
 import type { Mode } from "@/lib/modes";
 import type { Strings } from "@/lib/i18n";
+import { ReformulerIcon } from "@/components/ReformulerIcon";
 
 interface ModeTabsProps {
   mode: Mode;
@@ -25,6 +26,8 @@ export function ModeTabs({ mode, onChange, t }: ModeTabsProps) {
             type="button"
             onClick={() => onChange(tab.id)}
             aria-pressed={active}
+            title={tab.id === "reformulate" ? tab.title : undefined}
+            aria-label={tab.id === "reformulate" ? tab.title : undefined}
             className="press rounded-[var(--radius-card)] border px-4 py-3 text-left transition-colors"
             style={{
               borderColor: active ? "var(--accent-line)" : "var(--border)",
@@ -35,16 +38,20 @@ export function ModeTabs({ mode, onChange, t }: ModeTabsProps) {
             }}
           >
             <div className="flex items-center justify-between gap-2">
-              <span
-                className="text-sm"
-                style={{
-                  fontFamily: "var(--font-display)",
-                  fontWeight: "var(--fw-bold)",
-                  color: active ? "var(--accent)" : "var(--text-strong)",
-                }}
-              >
-                {tab.title}
-              </span>
+              {tab.id === "reformulate" ? (
+                <ReformulerIcon size={20} strokeWidth={2} color={active ? "var(--accent)" : "var(--text-strong)"} />
+              ) : (
+                <span
+                  className="text-sm"
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    fontWeight: "var(--fw-bold)",
+                    color: active ? "var(--accent)" : "var(--text-strong)",
+                  }}
+                >
+                  {tab.title}
+                </span>
+              )}
               {active && (
                 <span className="text-xs" style={{ color: "var(--accent)" }}>
                   ✔️
