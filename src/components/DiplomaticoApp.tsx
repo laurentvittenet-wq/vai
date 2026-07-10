@@ -326,36 +326,29 @@ export function DiplomaticoApp() {
                     disabled={loading}
                     title={loading ? t.submitBtnLoading : t.submitBtn}
                     aria-label={loading ? t.submitBtnLoading : t.submitBtn}
-                    className="neo-brutal neo-brutal-active inline-flex h-[21px] items-center justify-center gap-1.5 rounded-[var(--radius-button)] px-10 text-[10px] disabled:cursor-not-allowed disabled:opacity-60"
+                    className="neo-brutal neo-brutal-active flex h-12 w-12 shrink-0 items-center justify-center rounded-full disabled:cursor-not-allowed disabled:opacity-60"
                     style={{
-                      background: "var(--gradient-cta)",
+                      background: "var(--accent)",
                       color: "var(--on-accent)",
-                      fontWeight: "var(--fw-bold)",
                     }}
                   >
                     {loading ? (
-                      <>
-                        <span className="flex gap-1">
-                          {[0, 1, 2].map((i) => (
-                            <span
-                              key={i}
-                              className="h-1 w-1 rounded-full"
-                              style={{
-                                background: "var(--on-accent)",
-                                animation: `podium-pulse 1s ease-in-out ${i * 0.15}s infinite`,
-                              }}
-                            />
-                          ))}
-                        </span>
-                        {t.submitBtnLoading}
-                      </>
-                    ) : (
-                      <span
-                        className="flex h-4 w-4 shrink-0 items-center justify-center overflow-hidden rounded-full"
-                        style={{ background: "#000000" }}
-                      >
-                        <img src="/hero-mascot.png" alt="" className="h-full w-full object-cover" />
+                      <span className="flex gap-1">
+                        {[0, 1, 2].map((i) => (
+                          <span
+                            key={i}
+                            className="h-1.5 w-1.5 rounded-full"
+                            style={{
+                              background: "var(--on-accent)",
+                              animation: `podium-pulse 1s ease-in-out ${i * 0.15}s infinite`,
+                            }}
+                          />
+                        ))}
                       </span>
+                    ) : (
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M8 5v14l11-7z" />
+                      </svg>
                     )}
                   </button>
                 </div>
