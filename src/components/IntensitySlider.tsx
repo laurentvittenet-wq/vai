@@ -25,7 +25,7 @@ export function IntensitySlider({ value, onChange, lang, label }: IntensitySlide
         onChange={(e) => onChange(INTENSITIES[Number(e.target.value)].id)}
         className="gauge-range"
         style={{
-          background: `linear-gradient(to right, var(--accent) 0%, var(--accent) ${pct}%, var(--bg-surface-3) ${pct}%, var(--bg-surface-3) 100%)`,
+          background: `linear-gradient(to right, var(--gradient-cta-1) 0%, var(--gradient-cta-2) ${pct / 2}%, var(--gradient-cta-3) ${pct}%, var(--bg-surface-3) ${pct}%, var(--bg-surface-3) 100%)`,
         }}
         aria-label={label}
       />

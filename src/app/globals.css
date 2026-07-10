@@ -37,7 +37,10 @@
   --accent-line:    rgba(0, 230, 118, 0.32);
   --on-accent:      #05230F;
   /* Dégradé "concours du jour" (ported from Podium) */
-  --gradient-cta:   linear-gradient(135deg, #22E573 0%, #A3CC00 55%, #D9AD00 100%);
+  --gradient-cta-1: #22E573;
+  --gradient-cta-2: #A3CC00;
+  --gradient-cta-3: #D9AD00;
+  --gradient-cta:   linear-gradient(135deg, var(--gradient-cta-1) 0%, var(--gradient-cta-2) 55%, var(--gradient-cta-3) 100%);
 
   /* ---- Secondary pop (used for live / highlights) ---- */
   --pop:            #FF3D71;
