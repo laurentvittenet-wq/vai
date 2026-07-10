@@ -9,7 +9,7 @@ interface AudienceSelectorProps {
 
 export function AudienceSelector({ value, onChange }: AudienceSelectorProps) {
   return (
-    <div className="grid grid-cols-2 gap-1.5" role="radiogroup">
+    <div className="flex flex-wrap gap-1.5" role="radiogroup">
       {AUDIENCES.map((audience) => {
         const active = audience.id === value;
         return (

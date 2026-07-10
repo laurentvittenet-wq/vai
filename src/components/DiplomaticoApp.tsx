@@ -206,24 +206,24 @@ export function DiplomaticoApp() {
         </section>
 
         <section className="surface-card mb-5 rounded-[var(--radius-card)] p-4">
-          <h2
-            className="mb-2 text-[10px] uppercase"
+          <span
+            className="mb-1.5 block text-[10px] uppercase"
             style={{ fontWeight: "var(--fw-semibold)", letterSpacing: "var(--ls-caps)", color: "var(--text-strong)" }}
           >
-            {t.chooseTone}
-          </h2>
-          <ToneSelector value={tone} onChange={setTone} lang={lang} />
+            Choisis le destinataire
+          </span>
+          <AudienceSelector value={audience} onChange={setAudience} />
           <div className="mt-3">
-            <IntensitySlider value={intensity} onChange={setIntensity} lang={lang} label={t.chooseIntensity} />
+            <h2
+              className="mb-2 text-[10px] uppercase"
+              style={{ fontWeight: "var(--fw-semibold)", letterSpacing: "var(--ls-caps)", color: "var(--text-strong)" }}
+            >
+              {t.chooseTone}
+            </h2>
+            <ToneSelector value={tone} onChange={setTone} lang={lang} />
           </div>
           <div className="mt-3">
-            <span
-              className="mb-1.5 block text-[10px] uppercase"
-              style={{ fontWeight: "var(--fw-semibold)", letterSpacing: "var(--ls-caps)", color: "var(--text-tertiary)" }}
-            >
-              Destinataire
-            </span>
-            <AudienceSelector value={audience} onChange={setAudience} />
+            <IntensitySlider value={intensity} onChange={setIntensity} lang={lang} label={t.chooseIntensity} />
           </div>
         </section>
 

@@ -1,4 +1,4 @@
-export type AudienceLevel = "pair" | "superieur";
+export type AudienceLevel = "pair" | "superieur" | "hierarchie" | "ami" | "administration";
 
 export interface Audience {
   id: AudienceLevel;
@@ -16,6 +16,21 @@ export const AUDIENCES: Audience[] = [
     id: "superieur",
     label: "Client",
     description: "Diplomatie absolue : formalisme, déférence et respect des codes corporate.",
+  },
+  {
+    id: "hierarchie",
+    label: "Hiérarchie",
+    description: "Ton manager, ton N+1, ton N+2 : respect de la ligne hiérarchique, sans flagornerie.",
+  },
+  {
+    id: "ami",
+    label: "Ami(e)",
+    description: "Un·e pote : ton direct et décontracté, zéro filtre corporate.",
+  },
+  {
+    id: "administration",
+    label: "Administration",
+    description: "Impôts, CAF, sécu... : clarté, précision et formules d'usage administratives.",
   },
 ];
 
