@@ -1,4 +1,4 @@
-export type AudienceLevel = "pair" | "superieur" | "hierarchie" | "ami" | "administration";
+export type AudienceLevel = "pair" | "superieur" | "hierarchie" | "ami";
 
 export interface Audience {
   id: AudienceLevel;
@@ -7,11 +7,6 @@ export interface Audience {
 }
 
 export const AUDIENCES: Audience[] = [
-  {
-    id: "administration",
-    label: "Administration",
-    description: "Impôts, CAF, sécu... : clarté, précision et formules d'usage administratives.",
-  },
   {
     id: "ami",
     label: "Ami(e)",
