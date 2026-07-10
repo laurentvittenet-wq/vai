@@ -242,8 +242,7 @@ export function DiplomaticoApp() {
                 placeholder={
                   mode === "reformulate" ? t.inputPlaceholderReformulate : t.inputPlaceholderReply
                 }
-                rows={8}
-                className="w-full resize-none rounded-[var(--radius-input)] border p-2.5 pr-16 text-xs outline-none"
+                className="h-56 w-full resize-none overflow-y-auto rounded-[var(--radius-input)] border p-2.5 pr-16 text-xs outline-none"
                 style={{
                   borderColor: "var(--border)",
                   background: "var(--bg-surface-3)",
@@ -294,28 +293,43 @@ export function DiplomaticoApp() {
           </div>
 
           <div className="surface-card rounded-[var(--radius-card)] p-4">
-            <div className="mb-2 flex items-center justify-between">
-              <h3
-                className="text-[10px] uppercase"
-                style={{ fontWeight: "var(--fw-semibold)", letterSpacing: "var(--ls-caps)", color: "var(--text-strong)" }}
+            <h3
+              className="mb-2 text-[10px] uppercase"
+              style={{ fontWeight: "var(--fw-semibold)", letterSpacing: "var(--ls-caps)", color: "var(--text-strong)" }}
+            >
+              {t.outputLabel}
+            </h3>
+            <div className="relative">
+              <div
+                className="h-56 overflow-y-auto whitespace-pre-wrap rounded-[var(--radius-input)] border p-2.5 pr-10 text-xs"
+                style={{ borderColor: "var(--border)", background: "var(--bg-surface-2)", color: "var(--text-primary)" }}
               >
-                {t.outputLabel}
-              </h3>
+                {outputText}
+              </div>
               <button
                 type="button"
                 onClick={handleCopy}
                 disabled={!outputText}
-                className="press rounded-[var(--radius-chip)] border px-2.5 py-1 text-xs disabled:cursor-not-allowed disabled:opacity-40"
-                style={{ borderColor: "var(--border-strong)", color: "var(--text-primary)", fontWeight: "var(--fw-semibold)" }}
+                title={copied ? t.copiedBtn : t.copyBtn}
+                aria-label={copied ? t.copiedBtn : t.copyBtn}
+                className="press absolute right-2 top-2 inline-flex h-6 w-6 items-center justify-center rounded-[var(--radius-chip)] border disabled:cursor-not-allowed disabled:opacity-40"
+                style={{
+                  borderColor: copied ? "var(--accent-line)" : "var(--border-strong)",
+                  background: copied ? "var(--accent-soft)" : "var(--bg-surface-2)",
+                  color: copied ? "var(--accent)" : "var(--text-secondary)",
+                }}
               >
-                {copied ? t.copiedBtn : t.copyBtn}
+                {copied ? (
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M20 6 9 17l-5-5" />
+                  </svg>
+                ) : (
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="9" y="9" width="13" height="13" rx="2" />
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                  </svg>
+                )}
               </button>
-            </div>
-            <div
-              className="min-h-[14rem] whitespace-pre-wrap rounded-[var(--radius-input)] border p-2.5 text-xs"
-              style={{ borderColor: "var(--border)", background: "var(--bg-surface-2)", color: "var(--text-primary)" }}
-            >
-              {outputText}
             </div>
             {outputText && (
               <button
