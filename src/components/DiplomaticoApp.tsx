@@ -234,9 +234,10 @@ export function DiplomaticoApp() {
             </span>
           </h1>
           <img
-            src="/hero-mascot.jpg"
+            src="/hero-mascot.png"
             alt="Diplomatico"
-            className="h-16 w-16 shrink-0 rounded-[var(--radius-lg)] object-cover sm:h-28 sm:w-28"
+            className="h-16 w-16 shrink-0 rounded-[var(--radius-lg)] object-contain sm:h-28 sm:w-28"
+            style={{ background: "#000000" }}
           />
         </section>
 
