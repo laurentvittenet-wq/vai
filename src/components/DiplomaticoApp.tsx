@@ -309,17 +309,36 @@ export function DiplomaticoApp() {
                 disabled={loading}
                 title={loading ? t.submitBtnLoading : t.submitBtn}
                 aria-label={loading ? t.submitBtnLoading : t.submitBtn}
-                className="press inline-flex items-center justify-center rounded-[var(--radius-button)] px-10 py-3 disabled:cursor-not-allowed disabled:opacity-60"
+                className="press inline-flex items-center justify-center gap-2 rounded-[var(--radius-button)] px-10 py-3 text-sm disabled:cursor-not-allowed disabled:opacity-60"
                 style={{
                   background: "var(--accent)",
                   color: "var(--on-accent)",
+                  fontWeight: "var(--fw-bold)",
                   boxShadow: "var(--glow-accent-sm)",
                 }}
               >
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                  <path d="M12 2.5c.4 3.3 1.9 4.8 5.2 5.2-3.3.4-4.8 1.9-5.2 5.2-.4-3.3-1.9-4.8-5.2-5.2 3.3-.4 4.8-1.9 5.2-5.2Z" />
-                  <path d="M19 13c.25 2 1 2.75 3 3-2 .25-2.75 1-3 3-.25-2-1-2.75-3-3 2-.25 2.75-1 3-3Z" />
-                </svg>
+                {loading ? (
+                  <>
+                    <span className="flex gap-1">
+                      {[0, 1, 2].map((i) => (
+                        <span
+                          key={i}
+                          className="h-1.5 w-1.5 rounded-full"
+                          style={{
+                            background: "var(--on-accent)",
+                            animation: `podium-pulse 1s ease-in-out ${i * 0.15}s infinite`,
+                          }}
+                        />
+                      ))}
+                    </span>
+                    {t.submitBtnLoading}
+                  </>
+                ) : (
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M12 2.5c.4 3.3 1.9 4.8 5.2 5.2-3.3.4-4.8 1.9-5.2 5.2-.4-3.3-1.9-4.8-5.2-5.2 3.3-.4 4.8-1.9 5.2-5.2Z" />
+                    <path d="M19 13c.25 2 1 2.75 3 3-2 .25-2.75 1-3 3-.25-2-1-2.75-3-3 2-.25 2.75-1 3-3Z" />
+                  </svg>
+                )}
               </button>
             </div>
             {error && (
