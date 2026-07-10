@@ -240,18 +240,11 @@ export function DiplomaticoApp() {
           />
         </section>
 
-        <section className="mb-5">
-          <ModeTabs mode={mode} onChange={setMode} t={t} />
-        </section>
-
         <section className="surface-card mb-5 rounded-[var(--radius-card)] p-4">
-          <span
-            className="mb-1.5 block text-[10px] uppercase"
-            style={{ fontWeight: "var(--fw-semibold)", letterSpacing: "var(--ls-caps)", color: "var(--text-strong)" }}
-          >
-            Choisis le destinataire
-          </span>
-          <AudienceSelector value={audience} onChange={setAudience} />
+          <ModeTabs mode={mode} onChange={setMode} t={t} />
+          <div className="mt-3">
+            <AudienceSelector value={audience} onChange={setAudience} />
+          </div>
         </section>
 
         <section className="surface-card mb-5 rounded-[var(--radius-card)] p-4">
