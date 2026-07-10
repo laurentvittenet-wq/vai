@@ -9,7 +9,7 @@ interface AudienceSelectorProps {
 
 export function AudienceSelector({ value, onChange }: AudienceSelectorProps) {
   return (
-    <div className="flex flex-wrap gap-1.5" role="radiogroup">
+    <div className="no-scrollbar flex gap-1.5 overflow-x-auto pb-1" role="radiogroup">
       {AUDIENCES.map((audience) => {
         const active = audience.id === value;
         return (
@@ -20,7 +20,7 @@ export function AudienceSelector({ value, onChange }: AudienceSelectorProps) {
             aria-checked={active}
             title={audience.description}
             onClick={() => onChange(audience.id)}
-            className="press rounded-[var(--radius-chip)] border px-3 py-0.5 text-[10px] transition-colors"
+            className="press inline-flex shrink-0 items-center rounded-[var(--radius-chip)] border px-3 py-0.5 text-[10px] whitespace-nowrap transition-colors"
             style={{
               fontWeight: "var(--fw-semibold)",
               borderColor: active ? "transparent" : "var(--border-strong)",
