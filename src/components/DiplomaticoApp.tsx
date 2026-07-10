@@ -240,15 +240,16 @@ export function DiplomaticoApp() {
             Choisis le destinataire
           </span>
           <AudienceSelector value={audience} onChange={setAudience} />
-          <div className="mt-3">
-            <h2
-              className="mb-2 text-[10px] uppercase"
-              style={{ fontWeight: "var(--fw-semibold)", letterSpacing: "var(--ls-caps)", color: "var(--text-strong)" }}
-            >
-              {t.chooseTone} ({tones.length})
-            </h2>
-            <ToneSelector values={tones} onChange={setTones} lang={lang} />
-          </div>
+        </section>
+
+        <section className="surface-card mb-5 rounded-[var(--radius-card)] p-4">
+          <h2
+            className="mb-2 text-[10px] uppercase"
+            style={{ fontWeight: "var(--fw-semibold)", letterSpacing: "var(--ls-caps)", color: "var(--text-strong)" }}
+          >
+            {t.chooseTone} ({tones.length})
+          </h2>
+          <ToneSelector values={tones} onChange={setTones} lang={lang} />
           <div className="mt-3">
             <IntensitySlider value={intensity} onChange={setIntensity} lang={lang} label={t.chooseIntensity} />
           </div>
