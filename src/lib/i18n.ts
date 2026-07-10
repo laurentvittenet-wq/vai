@@ -57,7 +57,7 @@ export const STRINGS: Record<Lang, Strings> = {
     outputLabel: "Ma proposition",
     charCount: "caractères",
     submitBtn: "Civiliser",
-    submitBtnLoading: "Civilisation en cours…",
+    submitBtnLoading: "Lancement du scud…",
     micStart: "Dicter",
     micStop: "Arrêter",
     copyBtn: "Copier",
