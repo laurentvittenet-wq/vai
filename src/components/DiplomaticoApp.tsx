@@ -245,7 +245,7 @@ export function DiplomaticoApp() {
               className="mb-2 text-[10px] uppercase"
               style={{ fontWeight: "var(--fw-semibold)", letterSpacing: "var(--ls-caps)", color: "var(--text-strong)" }}
             >
-              {t.chooseTone}
+              {t.chooseTone} ({tones.length})
             </h2>
             <ToneSelector values={tones} onChange={setTones} lang={lang} />
           </div>
