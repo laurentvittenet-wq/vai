@@ -2,8 +2,6 @@
 
 import type { Mode } from "@/lib/modes";
 import type { Strings } from "@/lib/i18n";
-import { ReformulerIcon } from "@/components/ReformulerIcon";
-import { RepondreIcon } from "@/components/RepondreIcon";
 
 interface ModeTabsProps {
   mode: Mode;
@@ -12,9 +10,9 @@ interface ModeTabsProps {
 }
 
 export function ModeTabs({ mode, onChange, t }: ModeTabsProps) {
-  const tabs: { id: Mode; title: string; desc: string }[] = [
-    { id: "reformulate", title: t.modeReformulateTitle, desc: t.modeReformulateDesc },
-    { id: "reply", title: t.modeReplyTitle, desc: t.modeReplyDesc },
+  const tabs: { id: Mode; title: string }[] = [
+    { id: "reformulate", title: t.modeReformulateTitle },
+    { id: "reply", title: t.modeReplyTitle },
   ];
 
   return (
@@ -27,9 +25,7 @@ export function ModeTabs({ mode, onChange, t }: ModeTabsProps) {
             type="button"
             onClick={() => onChange(tab.id)}
             aria-pressed={active}
-            title={tab.title}
-            aria-label={tab.title}
-            className="press rounded-[var(--radius-card)] border px-4 py-3 text-left transition-colors"
+            className="press flex items-center justify-center rounded-[var(--radius-card)] border px-4 py-4 transition-colors"
             style={{
               borderColor: active ? "var(--accent-line)" : "var(--border)",
               background: active ? "var(--accent-soft)" : "var(--bg-surface)",
@@ -38,21 +34,17 @@ export function ModeTabs({ mode, onChange, t }: ModeTabsProps) {
                 : "var(--shadow-sm), var(--edge-highlight)",
             }}
           >
-            <div className="flex items-center justify-between gap-2">
-              {tab.id === "reformulate" ? (
-                <ReformulerIcon size={20} strokeWidth={2} color={active ? "var(--accent)" : "var(--text-strong)"} />
-              ) : (
-                <RepondreIcon size={20} strokeWidth={2} color={active ? "var(--accent)" : "var(--text-strong)"} />
-              )}
-              {active && (
-                <span className="text-xs" style={{ color: "var(--accent)" }}>
-                  ✔️
-                </span>
-              )}
-            </div>
-            <div className="mt-0.5 text-xs" style={{ color: "var(--text-secondary)" }}>
-              {tab.desc}
-            </div>
+            <span
+              className="text-sm"
+              style={{
+                fontFamily: "var(--font-display)",
+                fontWeight: "var(--fw-extrabold)",
+                letterSpacing: "0.04em",
+                color: active ? "var(--accent)" : "var(--text-strong)",
+              }}
+            >
+              {tab.title}
+            </span>
           </button>
         );
       })}
