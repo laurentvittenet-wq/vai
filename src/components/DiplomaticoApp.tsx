@@ -234,7 +234,7 @@ export function DiplomaticoApp() {
             </span>
           </h1>
           <img
-            src="/access-mascot.jpg"
+            src="/hero-mascot.jpg"
             alt="Diplomatico"
             className="h-16 w-16 shrink-0 rounded-[var(--radius-lg)] object-cover sm:h-28 sm:w-28"
           />
