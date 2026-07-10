@@ -29,7 +29,7 @@ export const AUDIENCES: Audience[] = [
   },
 ];
 
-export const DEFAULT_AUDIENCE: AudienceLevel = "pair";
+export const DEFAULT_AUDIENCE: AudienceLevel = "ami";
 
 export function getAudience(id: string | undefined): Audience | undefined {
   return AUDIENCES.find((audience) => audience.id === id);

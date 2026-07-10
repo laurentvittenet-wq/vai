@@ -42,7 +42,7 @@ interface ToneResult {
 export function DiplomaticoApp() {
   const lang: Lang = "fr";
   const [mode, setMode] = useState<Mode>("reformulate");
-  const [tones, setTones] = useState<ToneId[]>(["serieux"]);
+  const [tones, setTones] = useState<ToneId[]>(["chirurgical"]);
   const [intensity, setIntensity] = useState<IntensityLevel>(DEFAULT_INTENSITY);
   const [audience, setAudience] = useState<AudienceLevel>(DEFAULT_AUDIENCE);
   const [inputText, setInputText] = useState("");
