@@ -23,10 +23,9 @@ export function AudienceSelector({ value, onChange }: AudienceSelectorProps) {
             className="press inline-flex shrink-0 items-center rounded-[var(--radius-chip)] border px-3 py-0.5 text-[10px] whitespace-nowrap transition-colors"
             style={{
               fontWeight: "var(--fw-semibold)",
-              borderColor: active ? "transparent" : "var(--border-strong)",
-              background: active ? "var(--accent)" : "var(--bg-surface-2)",
-              color: active ? "var(--on-accent)" : "var(--text-primary)",
-              boxShadow: active ? "var(--glow-accent-sm)" : "none",
+              borderColor: "var(--border-strong)",
+              background: "var(--bg-surface-2)",
+              color: active ? "var(--accent)" : "var(--text-primary)",
             }}
           >
             {audience.label}
