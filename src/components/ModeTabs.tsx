@@ -44,13 +44,13 @@ export function ModeTabs({ mode, onChange, t }: ModeTabsProps) {
             type="button"
             onClick={() => onChange(tab.id)}
             aria-pressed={active}
-            className={`neo-brutal flex items-center justify-between gap-2 rounded-full py-1.5 pl-5 pr-1.5 ${active ? "neo-brutal-active" : ""}`}
+            className={`neo-brutal flex items-center justify-between gap-2 rounded-full py-1 pl-5 pr-1.5 ${active ? "neo-brutal-active" : ""}`}
             style={{
               background: active ? "var(--accent)" : "var(--bg-surface-3)",
             }}
           >
             <span
-              className="text-sm"
+              className="text-[11px]"
               style={{
                 fontFamily: "var(--font-display)",
                 fontWeight: "var(--fw-extrabold)",
@@ -61,7 +61,7 @@ export function ModeTabs({ mode, onChange, t }: ModeTabsProps) {
               {tab.title}
             </span>
             <span
-              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full"
+              className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full"
               style={{
                 background: active ? "var(--on-accent)" : "var(--text-strong)",
               }}
