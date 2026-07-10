@@ -51,10 +51,12 @@ export function DiplomaticoApp() {
   const [error, setError] = useState<string | null>(null);
   const [historyOpen, setHistoryOpen] = useState(false);
   const [history, setHistory] = useState<HistoryItem[]>([]);
+  const [expanded, setExpanded] = useState(true);
 
   const t = STRINGS[lang];
   const speech = useSpeechRecognition("fr-FR");
   const showOutput = inputText.trim().length > 0 && (loading || results.length > 0);
+  const collapsed = !expanded && showOutput;
 
   useEffect(() => {
     let cancelled = false;
@@ -119,6 +121,7 @@ export function DiplomaticoApp() {
           shared: false,
         }))
       );
+      setExpanded(false);
     } finally {
       setLoading(false);
     }
@@ -155,6 +158,7 @@ export function DiplomaticoApp() {
     setIntensity(item.intensity || DEFAULT_INTENSITY);
     setInputText(item.input);
     setResults([{ toneId: item.tone, output: item.output, copied: false, sharing: false, shared: false }]);
+    setExpanded(false);
     setHistoryOpen(false);
   };
 
@@ -172,6 +176,7 @@ export function DiplomaticoApp() {
     setInputText("");
     setResults([]);
     setError(null);
+    setExpanded(true);
   };
 
   const historyButton = SHOW_HISTORY_BUTTON ? (
@@ -262,89 +267,115 @@ export function DiplomaticoApp() {
           </div>
         </section>
 
-        <section className={`grid grid-cols-1 gap-4 ${showOutput ? "lg:grid-cols-2" : ""}`}>
+        <section className={`grid grid-cols-1 gap-4 ${showOutput && !collapsed ? "lg:grid-cols-2" : ""}`}>
           <div className="surface-card rounded-[var(--radius-card)] p-4">
-            <div className="mb-2 flex items-center justify-between">
-              <h3
-                className="text-[10px] uppercase"
-                style={{ fontWeight: "var(--fw-semibold)", letterSpacing: "var(--ls-caps)", color: "var(--text-strong)" }}
-              >
-                {mode === "reformulate" ? t.inputLabelReformulate : t.inputLabelReply}
-              </h3>
-              <span className="text-[10px]" style={{ color: "var(--text-tertiary)" }}>
-                {inputText.length} / {MAX_TEXT_LENGTH} {t.charCount}
-              </span>
-            </div>
-            <div className="relative">
-              <textarea
-                value={inputText}
-                onChange={(e) => setInputText(e.target.value.slice(0, MAX_TEXT_LENGTH))}
-                placeholder={
-                  mode === "reformulate" ? t.inputPlaceholderReformulate : t.inputPlaceholderReply
-                }
-                className="h-[150px] w-full resize-none overflow-y-auto rounded-[var(--radius-input)] border p-2.5 pr-16 text-xs outline-none"
-                style={{
-                  borderColor: "var(--border)",
-                  background: "var(--bg-surface-3)",
-                  color: "var(--text-primary)",
-                }}
-              />
-              <div className="absolute right-2 top-2 flex items-center gap-1">
-                <ResetButton onClick={handleReset} label={t.resetBtn} />
-                <MicButton
-                  isListening={speech.isListening}
-                  isSupported={speech.isSupported}
-                  onClick={handleMicClick}
-                  startLabel={t.micStart}
-                  stopLabel={t.micStop}
-                  unsupportedLabel={t.micUnsupported}
-                />
+            {collapsed ? (
+              <div className="flex items-center justify-between gap-3">
+                <div className="min-w-0">
+                  <h3
+                    className="text-[10px] uppercase"
+                    style={{ fontWeight: "var(--fw-semibold)", letterSpacing: "var(--ls-caps)", color: "var(--text-strong)" }}
+                  >
+                    {mode === "reformulate" ? t.inputLabelReformulate : t.inputLabelReply}
+                  </h3>
+                  <p className="mt-1 truncate text-xs" style={{ color: "var(--text-secondary)" }}>
+                    {inputText}
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setExpanded(true)}
+                  className="press shrink-0 rounded-[var(--radius-chip)] border px-3 py-1 text-xs"
+                  style={{ borderColor: "var(--border-strong)", color: "var(--text-primary)", fontWeight: "var(--fw-semibold)" }}
+                >
+                  Modifier
+                </button>
               </div>
-            </div>
-            <TriggerWordList text={inputText} />
-            <div className="mt-3 flex justify-center">
-              <button
-                type="button"
-                onClick={handleSubmit}
-                disabled={loading}
-                title={loading ? t.submitBtnLoading : t.submitBtn}
-                aria-label={loading ? t.submitBtnLoading : t.submitBtn}
-                className="press inline-flex h-[21px] items-center justify-center gap-1.5 rounded-[var(--radius-button)] px-10 text-[10px] disabled:cursor-not-allowed disabled:opacity-60"
-                style={{
-                  background: "var(--accent)",
-                  color: "var(--on-accent)",
-                  fontWeight: "var(--fw-bold)",
-                  boxShadow: "var(--glow-accent-sm)",
-                }}
-              >
-                {loading ? (
-                  <>
-                    <span className="flex gap-1">
-                      {[0, 1, 2].map((i) => (
-                        <span
-                          key={i}
-                          className="h-1 w-1 rounded-full"
-                          style={{
-                            background: "var(--on-accent)",
-                            animation: `podium-pulse 1s ease-in-out ${i * 0.15}s infinite`,
-                          }}
-                        />
-                      ))}
-                    </span>
-                    {t.submitBtnLoading}
-                  </>
-                ) : (
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                    <path d="M12 2.5c.4 3.3 1.9 4.8 5.2 5.2-3.3.4-4.8 1.9-5.2 5.2-.4-3.3-1.9-4.8-5.2-5.2 3.3-.4 4.8-1.9 5.2-5.2Z" />
-                    <path d="M19 13c.25 2 1 2.75 3 3-2 .25-2.75 1-3 3-.25-2-1-2.75-3-3 2-.25 2.75-1 3-3Z" />
-                  </svg>
+            ) : (
+              <>
+                <div className="mb-2 flex items-center justify-between">
+                  <h3
+                    className="text-[10px] uppercase"
+                    style={{ fontWeight: "var(--fw-semibold)", letterSpacing: "var(--ls-caps)", color: "var(--text-strong)" }}
+                  >
+                    {mode === "reformulate" ? t.inputLabelReformulate : t.inputLabelReply}
+                  </h3>
+                  <span className="text-[10px]" style={{ color: "var(--text-tertiary)" }}>
+                    {inputText.length} / {MAX_TEXT_LENGTH} {t.charCount}
+                  </span>
+                </div>
+                <div className="relative">
+                  <textarea
+                    value={inputText}
+                    onChange={(e) => setInputText(e.target.value.slice(0, MAX_TEXT_LENGTH))}
+                    placeholder={
+                      mode === "reformulate" ? t.inputPlaceholderReformulate : t.inputPlaceholderReply
+                    }
+                    className="h-[150px] w-full resize-none overflow-y-auto rounded-[var(--radius-input)] border p-2.5 pr-16 text-xs outline-none"
+                    style={{
+                      borderColor: "var(--border)",
+                      background: "var(--bg-surface-3)",
+                      color: "var(--text-primary)",
+                    }}
+                  />
+                  <div className="absolute right-2 top-2 flex items-center gap-1">
+                    <ResetButton onClick={handleReset} label={t.resetBtn} />
+                    <MicButton
+                      isListening={speech.isListening}
+                      isSupported={speech.isSupported}
+                      onClick={handleMicClick}
+                      startLabel={t.micStart}
+                      stopLabel={t.micStop}
+                      unsupportedLabel={t.micUnsupported}
+                    />
+                  </div>
+                </div>
+                <TriggerWordList text={inputText} />
+                <div className="mt-3 flex justify-center">
+                  <button
+                    type="button"
+                    onClick={handleSubmit}
+                    disabled={loading}
+                    title={loading ? t.submitBtnLoading : t.submitBtn}
+                    aria-label={loading ? t.submitBtnLoading : t.submitBtn}
+                    className="press inline-flex h-[21px] items-center justify-center gap-1.5 rounded-[var(--radius-button)] px-10 text-[10px] disabled:cursor-not-allowed disabled:opacity-60"
+                    style={{
+                      background: "var(--accent)",
+                      color: "var(--on-accent)",
+                      fontWeight: "var(--fw-bold)",
+                      boxShadow: "var(--glow-accent-sm)",
+                    }}
+                  >
+                    {loading ? (
+                      <>
+                        <span className="flex gap-1">
+                          {[0, 1, 2].map((i) => (
+                            <span
+                              key={i}
+                              className="h-1 w-1 rounded-full"
+                              style={{
+                                background: "var(--on-accent)",
+                                animation: `podium-pulse 1s ease-in-out ${i * 0.15}s infinite`,
+                              }}
+                            />
+                          ))}
+                        </span>
+                        {t.submitBtnLoading}
+                      </>
+                    ) : (
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M12 2.5c.4 3.3 1.9 4.8 5.2 5.2-3.3.4-4.8 1.9-5.2 5.2-.4-3.3-1.9-4.8-5.2-5.2 3.3-.4 4.8-1.9 5.2-5.2Z" />
+                        <path d="M19 13c.25 2 1 2.75 3 3-2 .25-2.75 1-3 3-.25-2-1-2.75-3-3 2-.25 2.75-1 3-3Z" />
+                      </svg>
+                    )}
+                  </button>
+                </div>
+                {error && (
+                  <p className="mt-2 text-xs" style={{ color: "var(--danger)" }}>
+                    {error}
+                  </p>
                 )}
-              </button>
-            </div>
-            {error && (
-              <p className="mt-2 text-xs" style={{ color: "var(--danger)" }}>
-                {error}
-              </p>
+              </>
             )}
           </div>
 
