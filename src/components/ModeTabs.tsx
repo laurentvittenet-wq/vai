@@ -49,7 +49,7 @@ export function ModeTabs({ mode, onChange, t }: ModeTabsProps) {
               borderColor: active ? "var(--accent-line)" : "var(--border)",
               background: active ? "var(--accent-soft)" : "var(--bg-surface)",
               boxShadow: active
-                ? "var(--glow-accent-sm)"
+                ? "0 2px 8px color-mix(in oklch, var(--accent) 18%, transparent)"
                 : "var(--shadow-sm), var(--edge-highlight)",
             }}
           >
