@@ -17,10 +17,10 @@ export const TONE_EXAMPLES_APPUYE: Record<ToneId, string> = {
     "Le livrable présente des anomalies répétées, identiques à celles déjà signalées à plusieurs reprises. Une correction rapide est requise.",
   passif_agressif_elegant:
     "C'est intéressant de retrouver, une fois de plus, exactement les mêmes erreurs que la dernière fois. Je suis certain que la prochaine version sera enfin différente.",
-  trumpette:
-    "Ce travail, très franchement, c'est un désastre. Le pire que j'ai vu. Les mêmes erreurs, encore et encore. Personne ne fait pire, croyez-moi. Il faut que ça change, et vite, believe me.",
+  poetique:
+    "Comme une marée qui revient inlassablement déposer les mêmes débris sur le rivage, ces erreurs reviennent, encore et encore, ternissant ce que nous bâtissons ensemble.",
   crise_contractuel:
     "Ce livrable présente des non-conformités récurrentes par rapport aux exigences convenues. Ces éléments doivent être corrigés sans délai, sans quoi les engagements associés ne pourront être considérés comme remplis.",
-  cadrage_pmo:
-    "Ce livrable comporte des écarts récurrents par rapport aux critères de qualité attendus, ce qui impacte directement le planning. Je souhaite un plan de correction précis dès aujourd'hui.",
+  didactique:
+    "Reprenons point par point : ces erreurs sont désormais récurrentes, ce qui montre une difficulté persistante à intégrer les consignes. Voici ce qui doit changer, clairement et sans détour.",
 };

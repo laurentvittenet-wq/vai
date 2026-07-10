@@ -6,9 +6,9 @@ export type ToneId =
   | "decale"
   | "journalistique"
   | "passif_agressif_elegant"
-  | "trumpette"
+  | "poetique"
   | "crise_contractuel"
-  | "cadrage_pmo";
+  | "didactique";
 
 export interface Tone {
   id: ToneId;
@@ -17,14 +17,6 @@ export interface Tone {
 }
 
 export const TONES: Tone[] = [
-  {
-    id: "cadrage_pmo",
-    label: { fr: "Cadrage PMO", en: "PMO framing" },
-    description: {
-      fr: "Ton managérial centré sur les processus, le respect du planning et les livrables ; non directif mais ferme, toujours orienté recherche de solution et performance.",
-      en: "Managerial tone focused on process, schedule adherence and deliverables; non-directive but firm, always solution- and performance-oriented.",
-    },
-  },
   {
     id: "chirurgical",
     label: { fr: "Chirurgical", en: "Surgical" },
@@ -39,6 +31,14 @@ export const TONES: Tone[] = [
     description: {
       fr: "Formulation originale et inattendue, tout en restant claire.",
       en: "Original, unexpected phrasing, while staying clear.",
+    },
+  },
+  {
+    id: "didactique",
+    label: { fr: "Didactique", en: "Didactic" },
+    description: {
+      fr: "Explique pas à pas, pédagogique et clair, comme pour transmettre un savoir sans jamais infantiliser.",
+      en: "Explains step by step, clear and pedagogical, like passing on knowledge without ever being condescending.",
     },
   },
   {
@@ -74,6 +74,14 @@ export const TONES: Tone[] = [
     },
   },
   {
+    id: "poetique",
+    label: { fr: "Poétique", en: "Poetic" },
+    description: {
+      fr: "Langage imagé, métaphores et rythme : on dit les choses avec grâce et sensibilité, sans jamais perdre le fond.",
+      en: "Imagery-rich language, metaphors and rhythm: things are said with grace and sensitivity, without ever losing the substance.",
+    },
+  },
+  {
     id: "sarcastique",
     label: { fr: "Sarcastique", en: "Sarcastic" },
     description: {
@@ -87,14 +95,6 @@ export const TONES: Tone[] = [
     description: {
       fr: "Ton posé, factuel et professionnel, sans humour.",
       en: "Calm, factual and professional tone, no humor.",
-    },
-  },
-  {
-    id: "trumpette",
-    label: { fr: "Trumpette", en: "Trumpette" },
-    description: {
-      fr: "Phrases courtes et martelées, superlatifs (« the best », « incroyable », « personne ne le fait mieux »), auto-satisfecit, répétitions pour l'effet, un brin de dramatisation.",
-      en: "Short, hammering sentences, superlatives (\"the best\", \"tremendous\", \"nobody does it better\"), self-praise, repetition for effect, a touch of dramatization.",
     },
   },
 ];
