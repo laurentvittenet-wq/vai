@@ -201,7 +201,7 @@ export function DiplomaticoApp() {
       <AppHeader active="home" extraActions={historyButton} />
 
       <main className="mx-auto max-w-5xl px-5 py-6">
-        <section className="mb-6 flex items-center justify-between gap-3">
+        <section className="mb-6">
           <h1
             className="text-lg sm:text-2xl"
             style={{
@@ -233,12 +233,6 @@ export function DiplomaticoApp() {
               </span>
             </span>
           </h1>
-          <img
-            src="/hero-mascot.png"
-            alt="Diplomatico"
-            className="h-16 w-16 shrink-0 rounded-[var(--radius-lg)] object-contain sm:h-28 sm:w-28"
-            style={{ background: "#000000" }}
-          />
         </section>
 
         <section className="surface-card mb-5 rounded-[var(--radius-card)] p-4">
@@ -356,10 +350,12 @@ export function DiplomaticoApp() {
                         {t.submitBtnLoading}
                       </>
                     ) : (
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                        <path d="M12 2.5c.4 3.3 1.9 4.8 5.2 5.2-3.3.4-4.8 1.9-5.2 5.2-.4-3.3-1.9-4.8-5.2-5.2 3.3-.4 4.8-1.9 5.2-5.2Z" />
-                        <path d="M19 13c.25 2 1 2.75 3 3-2 .25-2.75 1-3 3-.25-2-1-2.75-3-3 2-.25 2.75-1 3-3Z" />
-                      </svg>
+                      <span
+                        className="flex h-4 w-4 shrink-0 items-center justify-center overflow-hidden rounded-full"
+                        style={{ background: "#000000" }}
+                      >
+                        <img src="/hero-mascot.png" alt="" className="h-full w-full object-cover" />
+                      </span>
                     )}
                   </button>
                 </div>
