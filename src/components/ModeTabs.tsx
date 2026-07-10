@@ -44,7 +44,7 @@ export function ModeTabs({ mode, onChange, t }: ModeTabsProps) {
             type="button"
             onClick={() => onChange(tab.id)}
             aria-pressed={active}
-            className="press glass-3d flex items-center justify-center gap-2 rounded-[var(--radius-card)] border px-4 py-4"
+            className="press glass-3d flex items-center justify-between gap-2 rounded-full border py-1.5 pl-5 pr-1.5"
             style={{
               borderColor: active ? "rgba(0, 230, 118, 0.4)" : "rgba(255, 255, 255, 0.16)",
               background: active
@@ -55,7 +55,6 @@ export function ModeTabs({ mode, onChange, t }: ModeTabsProps) {
                 : "0 8px 18px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.14), inset 0 -8px 14px rgba(0,0,0,0.2)",
             }}
           >
-            {tab.id === "reformulate" ? <WriteIcon color={color} /> : <ResponseIcon color={color} />}
             <span
               className="text-sm"
               style={{
@@ -66,6 +65,19 @@ export function ModeTabs({ mode, onChange, t }: ModeTabsProps) {
               }}
             >
               {tab.title}
+            </span>
+            <span
+              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full"
+              style={{
+                background: active ? "var(--text-strong)" : "var(--bg-surface-2)",
+                boxShadow: active ? "0 2px 6px rgba(0,0,0,0.25)" : "none",
+              }}
+            >
+              {tab.id === "reformulate" ? (
+                <WriteIcon color={active ? "var(--accent)" : "var(--text-strong)"} />
+              ) : (
+                <ResponseIcon color={active ? "var(--accent)" : "var(--text-strong)"} />
+              )}
             </span>
           </button>
         );
