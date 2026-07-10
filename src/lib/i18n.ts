@@ -18,7 +18,7 @@ export interface Strings {
   inputPlaceholderReformulate: string;
   inputPlaceholderReply: string;
   outputLabel: string;
-  charCount: string;
+  errorTooLong: string;
   submitBtn: string;
   submitBtnLoading: string;
   micStart: string;
@@ -55,7 +55,7 @@ export const STRINGS: Record<Lang, Strings> = {
     inputPlaceholderReformulate: "Écris ou dicte ce que tu as vraiment envie de dire…",
     inputPlaceholderReply: "Colle ici le message agaçant que tu as reçu…",
     outputLabel: "Ma proposition",
-    charCount: "caractères",
+    errorTooLong: "Ton message dépasse la limite de 4000 caractères.",
     submitBtn: "Civiliser",
     submitBtnLoading: "Lancement du scud…",
     micStart: "Dicter",
@@ -90,7 +90,7 @@ export const STRINGS: Record<Lang, Strings> = {
     inputPlaceholderReformulate: "Type or dictate what you really want to say…",
     inputPlaceholderReply: "Paste the annoying message you received here…",
     outputLabel: "Civilized version",
-    charCount: "characters",
+    errorTooLong: "Your message exceeds the 4000 character limit.",
     submitBtn: "Civilize",
     submitBtnLoading: "Civilizing…",
     micStart: "Dictate",

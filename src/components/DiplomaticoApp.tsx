@@ -281,21 +281,23 @@ export function DiplomaticoApp() {
               </div>
             ) : (
               <>
-                <div className="mb-2 flex items-center justify-between">
-                  <h3
-                    className="text-[10px] uppercase"
-                    style={{ fontWeight: "var(--fw-semibold)", letterSpacing: "var(--ls-caps)", color: "var(--text-strong)" }}
-                  >
-                    {mode === "reformulate" ? t.inputLabelReformulate : t.inputLabelReply}
-                  </h3>
-                  <span className="text-[10px]" style={{ color: "var(--text-tertiary)" }}>
-                    {inputText.length} / {MAX_TEXT_LENGTH} {t.charCount}
-                  </span>
-                </div>
+                <h3
+                  className="mb-2 text-center text-[10px] uppercase"
+                  style={{ fontWeight: "var(--fw-semibold)", letterSpacing: "var(--ls-caps)", color: "var(--text-strong)" }}
+                >
+                  {mode === "reformulate" ? t.inputLabelReformulate : t.inputLabelReply}
+                </h3>
                 <div className="relative">
                   <textarea
                     value={inputText}
-                    onChange={(e) => setInputText(e.target.value.slice(0, MAX_TEXT_LENGTH))}
+                    onChange={(e) => {
+                      if (e.target.value.length > MAX_TEXT_LENGTH) {
+                        setError(t.errorTooLong);
+                      } else if (error === t.errorTooLong) {
+                        setError(null);
+                      }
+                      setInputText(e.target.value.slice(0, MAX_TEXT_LENGTH));
+                    }}
                     placeholder={
                       mode === "reformulate" ? t.inputPlaceholderReformulate : t.inputPlaceholderReply
                     }
