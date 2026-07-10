@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState, type ClipboardEvent, type KeyboardEvent } from "react";
 import { useRouter } from "next/navigation";
-import { Logo } from "@/components/Logo";
 
 export function AccessCodePage() {
   const router = useRouter();
@@ -107,8 +106,17 @@ export function AccessCodePage() {
       <div aria-hidden="true" className="bg-grid-dots pointer-events-none absolute inset-0 opacity-[0.3]" />
 
       <div className="animate-rise relative flex flex-col items-center">
-        <div style={{ animation: "podium-pulse 3.2s ease-in-out infinite" }}>
-          <Logo size={56} />
+        <div
+          className="overflow-hidden rounded-[var(--radius-lg)] border-2"
+          style={{
+            width: 88,
+            height: 88,
+            borderColor: "var(--accent)",
+            boxShadow: "var(--glow-accent-sm)",
+            animation: "podium-pulse 3.2s ease-in-out infinite",
+          }}
+        >
+          <img src="/access-mascot.jpg" alt="Diplomatico" className="h-full w-full object-cover" />
         </div>
         <h1
           className="mt-6 text-center text-2xl"
