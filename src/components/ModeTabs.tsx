@@ -37,41 +37,59 @@ export function ModeTabs({ mode, onChange, t }: ModeTabsProps) {
     <div className="grid grid-cols-2 gap-2">
       {tabs.map((tab) => {
         const active = tab.id === mode;
+        const isWrite = tab.id === "reformulate";
         const color = active ? "var(--on-accent)" : "var(--text-strong)";
+
+        const label = (
+          <span
+            className={active ? "text-[11px]" : "text-[9px]"}
+            style={{
+              fontFamily: "var(--font-display)",
+              fontWeight: "var(--fw-extrabold)",
+              letterSpacing: "0.04em",
+              color,
+            }}
+          >
+            {tab.title}
+          </span>
+        );
+        const iconCircle = (
+          <span
+            className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full"
+            style={{
+              background: active ? "var(--on-accent)" : "var(--text-strong)",
+            }}
+          >
+            {isWrite ? (
+              <WriteIcon color={active ? "var(--accent)" : "var(--bg-base)"} />
+            ) : (
+              <ResponseIcon color={active ? "var(--accent)" : "var(--bg-base)"} />
+            )}
+          </span>
+        );
+
         return (
           <button
             key={tab.id}
             type="button"
             onClick={() => onChange(tab.id)}
             aria-pressed={active}
-            className={`neo-brutal flex items-center justify-between gap-2 rounded-full py-1 pl-5 pr-1.5 ${active ? "neo-brutal-active" : ""}`}
+            className={`neo-brutal flex items-center justify-between gap-2 rounded-full py-1 ${isWrite ? "pl-1.5 pr-5" : "pl-5 pr-1.5"} ${active ? "neo-brutal-active" : ""}`}
             style={{
               background: active ? "var(--gradient-cta)" : "var(--bg-surface-3)",
             }}
           >
-            <span
-              className={active ? "text-[11px]" : "text-[10px]"}
-              style={{
-                fontFamily: "var(--font-display)",
-                fontWeight: "var(--fw-extrabold)",
-                letterSpacing: "0.04em",
-                color,
-              }}
-            >
-              {tab.title}
-            </span>
-            <span
-              className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full"
-              style={{
-                background: active ? "var(--on-accent)" : "var(--text-strong)",
-              }}
-            >
-              {tab.id === "reformulate" ? (
-                <WriteIcon color={active ? "var(--accent)" : "var(--bg-base)"} />
-              ) : (
-                <ResponseIcon color={active ? "var(--accent)" : "var(--bg-base)"} />
-              )}
-            </span>
+            {isWrite ? (
+              <>
+                {iconCircle}
+                {label}
+              </>
+            ) : (
+              <>
+                {label}
+                {iconCircle}
+              </>
+            )}
           </button>
         );
       })}
