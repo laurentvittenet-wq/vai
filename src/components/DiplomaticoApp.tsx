@@ -192,7 +192,7 @@ export function DiplomaticoApp() {
   ) : null;
 
   return (
-    <div className="min-h-full" style={{ background: "var(--bg-base)" }}>
+    <div className="min-h-full" style={{ background: "#000000" }}>
       <AppHeader active="home" extraActions={historyButton} />
 
       <main className="mx-auto max-w-5xl px-5 py-6">
@@ -231,7 +231,7 @@ export function DiplomaticoApp() {
           <img
             src="/access-mascot.jpg"
             alt="Diplomatico"
-            className="h-12 w-12 shrink-0 rounded-[var(--radius-lg)] object-cover sm:h-20 sm:w-20"
+            className="h-16 w-16 shrink-0 rounded-[var(--radius-lg)] object-cover sm:h-28 sm:w-28"
           />
         </section>
 
