@@ -8,9 +8,11 @@ import { Logo } from "@/components/Logo";
 interface AppHeaderProps {
   active: "home" | "peace-wall" | "informations";
   extraActions?: ReactNode;
+  langLabel?: string;
+  onToggleLang?: () => void;
 }
 
-export function AppHeader({ active, extraActions }: AppHeaderProps) {
+export function AppHeader({ active, extraActions, langLabel, onToggleLang }: AppHeaderProps) {
   const router = useRouter();
   const [signingOut, setSigningOut] = useState(false);
 
@@ -86,6 +88,16 @@ export function AppHeader({ active, extraActions }: AppHeaderProps) {
             </svg>
           </Link>
           {extraActions}
+          {onToggleLang && (
+            <button
+              type="button"
+              onClick={onToggleLang}
+              className="press rounded-[var(--radius-chip)] border px-3 py-1 text-xs"
+              style={{ borderColor: "var(--border-strong)", color: "var(--text-primary)", fontWeight: "var(--fw-semibold)" }}
+            >
+              {langLabel}
+            </button>
+          )}
           <button
             type="button"
             onClick={handleLogout}
