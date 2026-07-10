@@ -50,7 +50,7 @@ export function ModeTabs({ mode, onChange, t }: ModeTabsProps) {
             }}
           >
             <span
-              className="text-[11px]"
+              className={active ? "text-[11px]" : "text-[10px]"}
               style={{
                 fontFamily: "var(--font-display)",
                 fontWeight: "var(--fw-extrabold)",
