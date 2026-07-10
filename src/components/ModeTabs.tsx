@@ -34,7 +34,7 @@ export function ModeTabs({ mode, onChange, t }: ModeTabsProps) {
   ];
 
   return (
-    <div className="grid grid-cols-2 gap-2">
+    <div className="grid grid-cols-2 gap-2" style={{ perspective: "700px" }}>
       {tabs.map((tab) => {
         const active = tab.id === mode;
         const color = active ? "var(--accent)" : "var(--text-strong)";
@@ -44,13 +44,15 @@ export function ModeTabs({ mode, onChange, t }: ModeTabsProps) {
             type="button"
             onClick={() => onChange(tab.id)}
             aria-pressed={active}
-            className="press flex items-center justify-center gap-2 rounded-[var(--radius-card)] border px-4 py-4 transition-colors"
+            className="press glass-3d flex items-center justify-center gap-2 rounded-[var(--radius-card)] border px-4 py-4"
             style={{
-              borderColor: active ? "var(--accent-line)" : "var(--border)",
-              background: active ? "var(--accent-soft)" : "var(--bg-surface)",
+              borderColor: active ? "rgba(0, 230, 118, 0.4)" : "rgba(255, 255, 255, 0.16)",
+              background: active
+                ? "linear-gradient(135deg, color-mix(in oklch, var(--accent) 32%, transparent) 0%, color-mix(in oklch, var(--accent) 6%, transparent) 100%)"
+                : "linear-gradient(135deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.02) 100%)",
               boxShadow: active
-                ? "0 2px 8px color-mix(in oklch, var(--accent) 18%, transparent)"
-                : "var(--shadow-sm), var(--edge-highlight)",
+                ? "0 10px 24px color-mix(in oklch, var(--accent) 30%, transparent), inset 0 1px 0 rgba(255,255,255,0.35), inset 0 -8px 14px rgba(0,0,0,0.25)"
+                : "0 8px 18px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.14), inset 0 -8px 14px rgba(0,0,0,0.2)",
             }}
           >
             {tab.id === "reformulate" ? <WriteIcon color={color} /> : <ResponseIcon color={color} />}
