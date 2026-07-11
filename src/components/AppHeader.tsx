@@ -22,8 +22,8 @@ export function AppHeader({ active, extraActions, hideInformationsLink }: AppHea
   };
 
   return (
-    <header style={{ borderBottom: "1px solid var(--border)", background: "var(--bg-surface)" }}>
-      <div className="mx-auto flex max-w-5xl items-center justify-between px-5 py-3">
+    <header style={{ borderBottom: "1px solid var(--border)", background: "var(--bg-header)" }}>
+      <div className="mx-auto grid max-w-5xl grid-cols-[auto_1fr_auto] items-center gap-2 px-5 py-3">
         <div className="flex items-center gap-1">
           <Link
             href="/"
@@ -75,7 +75,19 @@ export function AppHeader({ active, extraActions, hideInformationsLink }: AppHea
           )}
         </div>
 
-        <div className="flex items-center gap-1">
+        <div className="text-center">
+          <span
+            className="text-sm"
+            style={{ fontFamily: "var(--font-display)", fontWeight: "var(--fw-extrabold)", color: "var(--text-strong)" }}
+          >
+            Diplomatico
+          </span>
+          <span className="ml-1.5 text-[10px]" style={{ color: "var(--text-tertiary)" }}>
+            v1.0
+          </span>
+        </div>
+
+        <div className="flex items-center justify-end gap-1">
           {extraActions}
           <ThemeToggle />
           <button
