@@ -355,7 +355,7 @@ export function DiplomaticoApp() {
                     placeholder={
                       mode === "reformulate" ? t.inputPlaceholderReformulate : t.inputPlaceholderReply
                     }
-                    className="h-[150px] w-full resize-none overflow-y-auto rounded-[var(--radius-input)] border p-2.5 text-xs outline-none"
+                    className="h-[150px] min-h-[100px] w-full resize-y overflow-y-auto rounded-[var(--radius-input)] border p-2.5 text-xs outline-none"
                     style={{
                       borderColor: "var(--border)",
                       background: "var(--bg-input-flat)",
@@ -423,7 +423,7 @@ export function DiplomaticoApp() {
                     </h3>
                     <div className="relative">
                       <div
-                        className="h-[150px] overflow-y-auto whitespace-pre-wrap rounded-[var(--radius-input)] border p-2.5 pr-10 text-xs"
+                        className="h-[150px] min-h-[100px] resize-y overflow-y-auto whitespace-pre-wrap rounded-[var(--radius-input)] border p-2.5 pr-10 text-xs"
                         style={{
                           borderColor: item.error ? "var(--danger-soft)" : "var(--border)",
                           background: "var(--bg-surface-2)",
