@@ -138,7 +138,7 @@ export async function POST(request: Request) {
       },
       body: JSON.stringify({
         model: ANTHROPIC_MODEL,
-        max_tokens: 1024,
+        max_tokens: 4096,
         system: systemPrompt,
         messages: [{ role: "user", content: text }],
       }),
