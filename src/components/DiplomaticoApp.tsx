@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { AppHeader } from "@/components/AppHeader";
 import { ModeTabs } from "@/components/ModeTabs";
 import { ToneSelector } from "@/components/ToneSelector";
@@ -14,7 +15,7 @@ import { STRINGS, type Lang } from "@/lib/i18n";
 import type { Mode } from "@/lib/modes";
 import { getTone, type ToneId } from "@/lib/tones";
 import { DEFAULT_INTENSITY, type IntensityLevel } from "@/lib/intensity";
-import { DEFAULT_AUDIENCE, type AudienceLevel } from "@/lib/audience";
+import type { AudienceLevel } from "@/lib/audience";
 import { useSpeechRecognition } from "@/lib/useSpeechRecognition";
 import { sharePeaceWallItem } from "@/lib/peaceWall";
 import {
@@ -42,9 +43,9 @@ interface ToneResult {
 export function DiplomaticoApp() {
   const lang: Lang = "fr";
   const [mode, setMode] = useState<Mode>("reformulate");
-  const [tones, setTones] = useState<ToneId[]>(["chirurgical"]);
+  const [tones, setTones] = useState<ToneId[]>([]);
   const [intensity, setIntensity] = useState<IntensityLevel>(DEFAULT_INTENSITY);
-  const [audience, setAudience] = useState<AudienceLevel>(DEFAULT_AUDIENCE);
+  const [audience, setAudience] = useState<AudienceLevel | null>(null);
   const [inputText, setInputText] = useState("");
   const [results, setResults] = useState<ToneResult[]>([]);
   const [loading, setLoading] = useState(false);
@@ -80,6 +81,14 @@ export function DiplomaticoApp() {
 
   const handleSubmit = async () => {
     setError(null);
+    if (tones.length === 0) {
+      setError(t.errorNoTone);
+      return;
+    }
+    if (!audience) {
+      setError(t.errorNoAudience);
+      return;
+    }
     if (!inputText.trim()) {
       setError(t.errorEmptyText);
       return;
@@ -198,7 +207,7 @@ export function DiplomaticoApp() {
 
   return (
     <div className="min-h-full" style={{ background: "var(--bg-base)" }}>
-      <AppHeader active="home" extraActions={historyButton} />
+      <AppHeader active="home" extraActions={historyButton} hideInformationsLink />
 
       <main className="mx-auto max-w-5xl px-5 py-6">
         <section className="mb-6">
@@ -243,12 +252,28 @@ export function DiplomaticoApp() {
         </section>
 
         <section className="surface-card mb-5 rounded-[var(--radius-card)] p-4">
-          <h2
-            className="mb-4 text-center text-[10px] uppercase"
-            style={{ fontWeight: "var(--fw-semibold)", letterSpacing: "var(--ls-caps)", color: "var(--text-strong)" }}
-          >
-            {t.chooseTone} ({tones.length})
-          </h2>
+          <div className="mb-4 flex items-center justify-between">
+            <span className="h-7 w-7 shrink-0" aria-hidden="true" />
+            <h2
+              className="flex-1 text-center text-[10px] uppercase"
+              style={{ fontWeight: "var(--fw-semibold)", letterSpacing: "var(--ls-caps)", color: "var(--text-strong)" }}
+            >
+              {t.chooseTone} ({tones.length})
+            </h2>
+            <Link
+              href="/informations"
+              title="Informations"
+              aria-label="Informations"
+              className="press inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-[var(--radius-chip)]"
+              style={{ color: "var(--text-secondary)" }}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="9" />
+                <path d="M12 11v5.5" />
+                <circle cx="12" cy="7.8" r="0.1" fill="currentColor" stroke="currentColor" strokeWidth="2" />
+              </svg>
+            </Link>
+          </div>
           <ToneSelector values={tones} onChange={setTones} lang={lang} />
           <div className="mt-3">
             <IntensitySlider value={intensity} onChange={setIntensity} lang={lang} label={t.chooseIntensity} />
@@ -330,7 +355,7 @@ export function DiplomaticoApp() {
                     aria-label={loading ? t.submitBtnLoading : t.submitBtn}
                     className="neo-brutal neo-brutal-active flex h-9 w-9 shrink-0 items-center justify-center rounded-full disabled:cursor-not-allowed disabled:opacity-60"
                     style={{
-                      background: "var(--accent)",
+                      background: "var(--gradient-cta)",
                       color: "var(--on-accent)",
                     }}
                   >

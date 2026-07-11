@@ -3,7 +3,7 @@
 import { AUDIENCES, type AudienceLevel } from "@/lib/audience";
 
 interface AudienceSelectorProps {
-  value: AudienceLevel;
+  value: AudienceLevel | null;
   onChange: (level: AudienceLevel) => void;
 }
 
@@ -22,7 +22,7 @@ export function AudienceSelector({ value, onChange }: AudienceSelectorProps) {
             onClick={() => onChange(audience.id)}
             className="press inline-flex shrink-0 items-center rounded-[var(--radius-chip)] border px-3 py-0.5 text-[10px] whitespace-nowrap transition-colors"
             style={{
-              fontWeight: "var(--fw-semibold)",
+              fontWeight: active ? "var(--fw-bold)" : "var(--fw-regular)",
               borderColor: "var(--border-strong)",
               background: "var(--bg-surface-2)",
               color: active ? "var(--accent)" : "var(--text-primary)",

@@ -12,7 +12,9 @@ export function AccessCodePage() {
   const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
 
   useEffect(() => {
-    inputsRef.current[0]?.focus();
+    if (errorTick > 0) {
+      inputsRef.current[0]?.focus();
+    }
   }, [errorTick]);
 
   const submitCode = async (code: string) => {
