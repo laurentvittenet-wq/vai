@@ -15,6 +15,11 @@
   --bg-surface-2:   #1A1F2B;
   --bg-surface-3:   #232A38;
   --bg-overlay:     rgba(6, 9, 14, 0.72);
+  /* Flat surfaces for the input field / selector chips / inactive mode tabs — kept
+     separate from --bg-surface-2/3 so their light-theme override doesn't leak
+     into unrelated components still using those tokens. */
+  --bg-chip-flat:   var(--bg-surface-2);
+  --bg-input-flat:  var(--bg-surface-3);
 
   /* ---- Hairlines & borders ---- */
   --border:         rgba(255, 255, 255, 0.08);
@@ -162,6 +167,8 @@
   --bg-surface-2:   #F0F3F8;
   --bg-surface-3:   #E6EAF1;
   --bg-overlay:     rgba(240, 238, 230, 0.78);
+  --bg-chip-flat:   #F0EEE6;
+  --bg-input-flat:  #F0EEE6;
 
   --border:         rgba(11, 14, 20, 0.09);
   --border-strong:  rgba(11, 14, 20, 0.18);

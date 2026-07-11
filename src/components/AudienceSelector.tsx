@@ -24,7 +24,7 @@ export function AudienceSelector({ value, onChange }: AudienceSelectorProps) {
             style={{
               fontWeight: active ? "var(--fw-bold)" : "var(--fw-regular)",
               borderColor: "var(--border-strong)",
-              background: "var(--bg-surface-2)",
+              background: "var(--bg-chip-flat)",
               color: active ? "var(--accent)" : "var(--text-primary)",
             }}
           >

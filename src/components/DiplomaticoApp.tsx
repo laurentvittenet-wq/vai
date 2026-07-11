@@ -329,7 +329,7 @@ export function DiplomaticoApp() {
                     className="h-[150px] w-full resize-none overflow-y-auto rounded-[var(--radius-input)] border p-2.5 pr-16 text-xs outline-none"
                     style={{
                       borderColor: "var(--border)",
-                      background: "var(--bg-surface-3)",
+                      background: "var(--bg-input-flat)",
                       color: "var(--text-primary)",
                     }}
                   />
