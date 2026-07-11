@@ -157,11 +157,11 @@
    redeclare it here.
    ============================================================ */
 :root[data-theme="light"] {
-  --bg-base:        #F4F6FA;
+  --bg-base:        #F0EEE6;
   --bg-surface:     #FFFFFF;
   --bg-surface-2:   #F0F3F8;
   --bg-surface-3:   #E6EAF1;
-  --bg-overlay:     rgba(244, 246, 250, 0.78);
+  --bg-overlay:     rgba(240, 238, 230, 0.78);
 
   --border:         rgba(11, 14, 20, 0.09);
   --border-strong:  rgba(11, 14, 20, 0.18);
