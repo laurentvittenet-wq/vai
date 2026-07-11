@@ -316,12 +316,31 @@ export function DiplomaticoApp() {
               </div>
             ) : (
               <>
-                <h3
-                  className="mb-2 text-center text-[10px] uppercase"
-                  style={{ fontWeight: "var(--fw-semibold)", letterSpacing: "var(--ls-caps)", color: "var(--text-strong)" }}
-                >
-                  {mode === "reformulate" ? t.inputLabelReformulate : t.inputLabelReply}
-                </h3>
+                <div className="mb-2 flex items-center gap-2">
+                  <span
+                    className="flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-full text-[9px]"
+                    style={{ background: "#D97757", color: "#FFFFFF", fontWeight: "var(--fw-bold)" }}
+                  >
+                    3
+                  </span>
+                  <h3
+                    className="shrink-0 text-[9px] uppercase"
+                    style={{ fontWeight: "var(--fw-semibold)", letterSpacing: "var(--ls-caps)", color: "var(--text-strong)" }}
+                  >
+                    {mode === "reformulate" ? t.inputLabelReformulate : t.inputLabelReply}
+                  </h3>
+                  <div className="flex flex-1 items-center justify-end gap-1">
+                    <ResetButton onClick={handleReset} label={t.resetBtn} />
+                    <MicButton
+                      isListening={speech.isListening}
+                      isSupported={speech.isSupported}
+                      onClick={handleMicClick}
+                      startLabel={t.micStart}
+                      stopLabel={t.micStop}
+                      unsupportedLabel={t.micUnsupported}
+                    />
+                  </div>
+                </div>
                 <div className="relative">
                   <textarea
                     value={inputText}
@@ -336,24 +355,13 @@ export function DiplomaticoApp() {
                     placeholder={
                       mode === "reformulate" ? t.inputPlaceholderReformulate : t.inputPlaceholderReply
                     }
-                    className="h-[150px] w-full resize-none overflow-y-auto rounded-[var(--radius-input)] border p-2.5 pr-16 text-xs outline-none"
+                    className="h-[150px] w-full resize-none overflow-y-auto rounded-[var(--radius-input)] border p-2.5 text-xs outline-none"
                     style={{
                       borderColor: "var(--border)",
                       background: "var(--bg-input-flat)",
                       color: "var(--text-primary)",
                     }}
                   />
-                  <div className="absolute right-2 top-2 flex items-center gap-1">
-                    <ResetButton onClick={handleReset} label={t.resetBtn} />
-                    <MicButton
-                      isListening={speech.isListening}
-                      isSupported={speech.isSupported}
-                      onClick={handleMicClick}
-                      startLabel={t.micStart}
-                      stopLabel={t.micStop}
-                      unsupportedLabel={t.micUnsupported}
-                    />
-                  </div>
                 </div>
                 <TriggerWordList text={inputText} />
                 <div className="mt-3 flex justify-center">
