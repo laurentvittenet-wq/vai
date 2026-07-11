@@ -197,7 +197,7 @@ export function DiplomaticoApp() {
   ) : null;
 
   return (
-    <div className="min-h-full" style={{ background: "#000000" }}>
+    <div className="min-h-full" style={{ background: "var(--bg-base)" }}>
       <AppHeader active="home" extraActions={historyButton} />
 
       <main className="mx-auto max-w-5xl px-5 py-6">

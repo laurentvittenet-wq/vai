@@ -83,7 +83,7 @@ export function AccessCodePage() {
   return (
     <div
       className="relative flex min-h-full flex-col items-center justify-center overflow-hidden px-6 py-16"
-      style={{ background: "#000000" }}
+      style={{ background: "var(--bg-base)" }}
     >
       <div className="animate-rise relative flex flex-col items-center">
         <div

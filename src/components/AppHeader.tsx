@@ -3,6 +3,7 @@
 import { type ReactNode, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 interface AppHeaderProps {
   active: "home" | "peace-wall" | "informations";
@@ -73,6 +74,7 @@ export function AppHeader({ active, extraActions }: AppHeaderProps) {
 
         <div className="flex items-center gap-1">
           {extraActions}
+          <ThemeToggle />
           <button
             type="button"
             onClick={handleLogout}
