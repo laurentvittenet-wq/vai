@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import { AppHeader } from "@/components/AppHeader";
 import { ModeTabs } from "@/components/ModeTabs";
 import { ToneSelector } from "@/components/ToneSelector";
@@ -207,7 +206,7 @@ export function DiplomaticoApp() {
 
   return (
     <div className="min-h-full" style={{ background: "var(--bg-base)" }}>
-      <AppHeader active="home" extraActions={historyButton} hideInformationsLink />
+      <AppHeader active="home" extraActions={historyButton} />
 
       <main className="mx-auto max-w-5xl px-5 py-6">
         <section className="mb-6">
@@ -251,13 +250,13 @@ export function DiplomaticoApp() {
         <section className="surface-card mb-5 rounded-[var(--radius-card)] p-4">
           <div className="flex items-center gap-2">
             <span
-              className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[11px]"
+              className="flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-full text-[9px]"
               style={{ background: "#D97757", color: "#FFFFFF", fontWeight: "var(--fw-bold)" }}
             >
               1
             </span>
             <span
-              className="shrink-0 text-[10px] uppercase"
+              className="shrink-0 text-[9px] uppercase"
               style={{ fontWeight: "var(--fw-semibold)", letterSpacing: "var(--ls-caps)", color: "var(--text-strong)" }}
             >
               Destinataire
@@ -271,13 +270,13 @@ export function DiplomaticoApp() {
         <section className="surface-card mb-5 rounded-[var(--radius-card)] p-4">
           <div className="flex items-center gap-2">
             <span
-              className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[11px]"
+              className="flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-full text-[9px]"
               style={{ background: "#D97757", color: "#FFFFFF", fontWeight: "var(--fw-bold)" }}
             >
               2
             </span>
             <span
-              className="shrink-0 text-[10px] uppercase whitespace-nowrap"
+              className="shrink-0 text-[9px] uppercase whitespace-nowrap"
               style={{ fontWeight: "var(--fw-semibold)", letterSpacing: "var(--ls-caps)", color: "var(--text-strong)" }}
             >
               {t.chooseTone} ({tones.length})
@@ -285,19 +284,6 @@ export function DiplomaticoApp() {
             <div className="min-w-0 flex-1">
               <ToneSelector values={tones} onChange={setTones} lang={lang} />
             </div>
-            <Link
-              href="/informations"
-              title="Informations"
-              aria-label="Informations"
-              className="press inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-[var(--radius-chip)]"
-              style={{ color: "var(--text-secondary)" }}
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="12" cy="12" r="9" />
-                <path d="M12 11v5.5" />
-                <circle cx="12" cy="7.8" r="0.1" fill="currentColor" stroke="currentColor" strokeWidth="2" />
-              </svg>
-            </Link>
           </div>
           <div className="mt-3">
             <IntensitySlider value={intensity} onChange={setIntensity} lang={lang} label={t.chooseIntensity} />
