@@ -248,23 +248,23 @@ export function DiplomaticoApp() {
           <ModeTabs mode={mode} onChange={setMode} t={t} />
         </section>
 
-        <section className="surface-card relative mb-5 rounded-[var(--radius-card)] p-4 pt-5">
-          <div className="absolute -top-3 left-4 flex items-center gap-1.5">
+        <section className="surface-card mb-5 rounded-[var(--radius-card)] p-4">
+          <div className="flex items-center gap-2">
             <span
               className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[11px]"
-              style={{ background: "var(--accent)", color: "var(--on-accent)", fontWeight: "var(--fw-bold)" }}
+              style={{ background: "#D97757", color: "#FFFFFF", fontWeight: "var(--fw-bold)" }}
             >
               1
             </span>
             <span
-              className="text-[10px] uppercase"
+              className="shrink-0 text-[10px] uppercase"
               style={{ fontWeight: "var(--fw-semibold)", letterSpacing: "var(--ls-caps)", color: "var(--text-strong)" }}
             >
               Destinataire
             </span>
-          </div>
-          <div className="pt-2">
-            <AudienceSelector value={audience} onChange={setAudience} />
+            <div className="min-w-0 flex-1">
+              <AudienceSelector value={audience} onChange={setAudience} />
+            </div>
           </div>
         </section>
 

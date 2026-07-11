@@ -9,7 +9,7 @@ interface AudienceSelectorProps {
 
 export function AudienceSelector({ value, onChange }: AudienceSelectorProps) {
   return (
-    <div className="no-scrollbar flex justify-center gap-1.5 overflow-x-auto pb-1" role="radiogroup">
+    <div className="no-scrollbar flex gap-1.5 overflow-x-auto pb-1" role="radiogroup">
       {AUDIENCES.map((audience) => {
         const active = audience.id === value;
         return (
