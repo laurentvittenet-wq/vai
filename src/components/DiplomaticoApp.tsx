@@ -269,14 +269,22 @@ export function DiplomaticoApp() {
         </section>
 
         <section className="surface-card mb-5 rounded-[var(--radius-card)] p-4">
-          <div className="mb-4 flex items-center justify-between">
-            <span className="h-7 w-7 shrink-0" aria-hidden="true" />
-            <h2
-              className="flex-1 text-center text-[10px] uppercase"
+          <div className="flex items-center gap-2">
+            <span
+              className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[11px]"
+              style={{ background: "#D97757", color: "#FFFFFF", fontWeight: "var(--fw-bold)" }}
+            >
+              2
+            </span>
+            <span
+              className="shrink-0 text-[10px] uppercase whitespace-nowrap"
               style={{ fontWeight: "var(--fw-semibold)", letterSpacing: "var(--ls-caps)", color: "var(--text-strong)" }}
             >
               {t.chooseTone} ({tones.length})
-            </h2>
+            </span>
+            <div className="min-w-0 flex-1">
+              <ToneSelector values={tones} onChange={setTones} lang={lang} />
+            </div>
             <Link
               href="/informations"
               title="Informations"
@@ -291,7 +299,6 @@ export function DiplomaticoApp() {
               </svg>
             </Link>
           </div>
-          <ToneSelector values={tones} onChange={setTones} lang={lang} />
           <div className="mt-3">
             <IntensitySlider value={intensity} onChange={setIntensity} lang={lang} label={t.chooseIntensity} />
           </div>
