@@ -179,6 +179,9 @@
   --accent-soft:    rgba(4, 146, 86, 0.12);
   --accent-line:    rgba(4, 146, 86, 0.35);
   --on-accent:      #FFFFFF;
+  --gradient-cta-1: #D97757;
+  --gradient-cta-2: #D4A27F;
+  --gradient-cta-3: #E8E0D8;
 
   --pop:            #E01E5A;
   --danger:         #D8283B;
