@@ -158,7 +158,7 @@ export function PeaceWallGallery() {
                   disabled={deleting.has(item.id)}
                   title="Supprimer ce scud"
                   aria-label="Supprimer ce scud"
-                  className="press absolute right-2 top-2 z-10 flex h-6 w-6 items-center justify-center rounded-[var(--radius-full)] disabled:cursor-not-allowed disabled:opacity-50"
+                  className="press absolute right-2 top-2 z-10 flex h-11 w-11 items-center justify-center rounded-[var(--radius-full)] disabled:cursor-not-allowed disabled:opacity-50"
                   style={{ color: "var(--danger)", background: "var(--danger-soft)" }}
                 >
                   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
@@ -282,7 +282,10 @@ export function PeaceWallGallery() {
                     className="press inline-flex items-center gap-1 rounded-[var(--radius-chip)] border px-2 py-1 text-xs"
                     style={{ borderColor: "var(--border-strong)", color: "var(--text-primary)" }}
                   >
-                    ❤️ {item.likesCount}
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M19 14c1.5-1.5 3-3.4 3-5.5A4.5 4.5 0 0 0 13.5 5C13 5 12 5.5 12 6.5 12 5.5 11 5 10.5 5A4.5 4.5 0 0 0 6 9.5C6 15 12 19 12 19s3.5-2 7-5Z" />
+                    </svg>
+                    {item.likesCount}
                   </button>
                 </div>
               </div>

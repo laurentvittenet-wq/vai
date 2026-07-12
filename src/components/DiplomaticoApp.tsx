@@ -329,7 +329,7 @@ export function DiplomaticoApp() {
                   >
                     {mode === "reformulate" ? t.inputLabelReformulate : t.inputLabelReply}
                   </h3>
-                  <div className="flex flex-1 items-center justify-end gap-1">
+                  <div className="flex flex-1 items-center justify-end gap-2">
                     <ResetButton onClick={handleReset} label={t.resetBtn} />
                     <MicButton
                       isListening={speech.isListening}
@@ -355,7 +355,7 @@ export function DiplomaticoApp() {
                     placeholder={
                       mode === "reformulate" ? t.inputPlaceholderReformulate : t.inputPlaceholderReply
                     }
-                    className="h-[150px] min-h-[100px] w-full resize-y overflow-y-auto rounded-[var(--radius-input)] border p-2.5 text-xs outline-none"
+                    className="h-[150px] min-h-[100px] w-full resize-y overflow-y-auto rounded-[var(--radius-input)] border p-2.5 text-sm outline-none"
                     style={{
                       borderColor: "var(--border)",
                       background: "var(--bg-input-flat)",
@@ -423,7 +423,7 @@ export function DiplomaticoApp() {
                     </h3>
                     <div className="relative">
                       <div
-                        className="h-[150px] min-h-[100px] resize-y overflow-y-auto whitespace-pre-wrap rounded-[var(--radius-input)] border p-2.5 pr-10 text-xs"
+                        className="h-[150px] min-h-[100px] resize-y overflow-y-auto whitespace-pre-wrap rounded-[var(--radius-input)] border p-2.5 pr-16 text-sm"
                         style={{
                           borderColor: item.error ? "var(--danger-soft)" : "var(--border)",
                           background: "var(--bg-surface-2)",
@@ -446,7 +446,7 @@ export function DiplomaticoApp() {
                         disabled={!item.output}
                         title={item.copied ? t.copiedBtn : t.copyBtn}
                         aria-label={item.copied ? t.copiedBtn : t.copyBtn}
-                        className="press absolute right-2 top-2 inline-flex h-6 w-6 items-center justify-center rounded-[var(--radius-chip)] border disabled:cursor-not-allowed disabled:opacity-40"
+                        className="press absolute right-2 top-2 inline-flex h-11 w-11 items-center justify-center rounded-[var(--radius-chip)] border disabled:cursor-not-allowed disabled:opacity-40"
                         style={{
                           borderColor: item.copied ? "var(--accent-line)" : "var(--border-strong)",
                           background: item.copied ? "var(--accent-soft)" : "var(--bg-surface-2)",

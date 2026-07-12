@@ -12,7 +12,7 @@ export function ResetButton({ onClick, label }: ResetButtonProps) {
       onClick={onClick}
       title={label}
       aria-label={label}
-      className="press inline-flex h-6 w-6 items-center justify-center rounded-[var(--radius-chip)] border"
+      className="press inline-flex h-8 w-8 items-center justify-center rounded-[var(--radius-chip)] border"
       style={{ borderColor: "var(--border-strong)", color: "var(--text-secondary)", background: "var(--bg-surface-2)" }}
     >
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">

@@ -27,7 +27,7 @@ export function MicButton({
       title={label}
       aria-label={label}
       aria-pressed={isListening}
-      className="press relative inline-flex h-6 w-6 items-center justify-center rounded-[var(--radius-chip)] border transition-colors disabled:cursor-not-allowed disabled:opacity-40"
+      className="press relative inline-flex h-8 w-8 items-center justify-center rounded-[var(--radius-chip)] border transition-colors disabled:cursor-not-allowed disabled:opacity-40"
       style={{
         borderColor: isListening ? "transparent" : "var(--border-strong)",
         background: isListening ? "var(--pop-soft)" : "var(--bg-surface-2)",

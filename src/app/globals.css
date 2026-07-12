@@ -97,6 +97,8 @@
   --text-5xl:  60px;
   --text-6xl:  72px;
 
+  --ls-caps: 0.06em;
+
   --lh-tight:  1.05;
   --lh-snug:   1.2;
   --lh-normal: 1.45;
@@ -154,6 +156,14 @@
   --ease-out:    cubic-bezier(0.22, 1, 0.36, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* ---- Neo-brutal border/shadow (theme-aware) ----
+     Dark-mode defaults are light-on-dark so the effect stays visible;
+     the light-theme override below restores the original hard-black look. ---- */
+  --border-brutal:        #E9EDF3;
+  --shadow-brutal:        rgba(233, 237, 243, 0.28);
+  --border-brutal-active: #04140A;
+  --shadow-brutal-active: var(--accent-hover);
 }
 
 /* ============================================================
@@ -190,7 +200,7 @@
   --on-accent:      #FFFFFF;
   --gradient-cta-1: #D97757;
   --gradient-cta-2: #D4A27F;
-  --gradient-cta-3: #E8E0D8;
+  --gradient-cta-3: #8A6A2E;
 
   --pop:            #E01E5A;
   --danger:         #D8283B;
@@ -202,6 +212,11 @@
   --shadow-md:  0 6px 20px rgba(11, 14, 20, 0.10);
   --shadow-lg:  0 18px 48px rgba(11, 14, 20, 0.14);
   --shadow-sheet: 0 -12px 40px rgba(11, 14, 20, 0.12);
+
+  --border-brutal:        #000000;
+  --shadow-brutal:        rgba(0, 0, 0, 0.55);
+  --border-brutal-active: #012912;
+  --shadow-brutal-active: #012912;
 }
 
 
@@ -345,27 +360,27 @@ button, input, textarea {
 }
 
 .neo-brutal {
-  border: 2px solid #000;
-  box-shadow: 4px 4px 0 0 rgba(0, 0, 0, 0.55);
+  border: 2px solid var(--border-brutal);
+  box-shadow: 4px 4px 0 0 var(--shadow-brutal);
   transition: transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
 }
 .neo-brutal:hover {
   transform: translate(-2px, -2px);
-  box-shadow: 6px 6px 0 0 rgba(0, 0, 0, 0.55);
+  box-shadow: 6px 6px 0 0 var(--shadow-brutal);
 }
 .neo-brutal:active {
   transform: translate(0, 0);
-  box-shadow: 2px 2px 0 0 rgba(0, 0, 0, 0.55);
+  box-shadow: 2px 2px 0 0 var(--shadow-brutal);
 }
 .neo-brutal-active {
-  border-color: #012912;
-  box-shadow: 4px 4px 0 0 #012912;
+  border-color: var(--border-brutal-active);
+  box-shadow: 4px 4px 0 0 var(--shadow-brutal-active);
 }
 .neo-brutal-active:hover {
-  box-shadow: 6px 6px 0 0 #012912;
+  box-shadow: 6px 6px 0 0 var(--shadow-brutal-active);
 }
 .neo-brutal-active:active {
-  box-shadow: 2px 2px 0 0 #012912;
+  box-shadow: 2px 2px 0 0 var(--shadow-brutal-active);
 }
 
 @media (prefers-reduced-motion: reduce) {
