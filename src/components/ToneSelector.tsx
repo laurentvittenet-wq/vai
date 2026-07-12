@@ -21,7 +21,7 @@ export function ToneSelector({ values, onChange, lang }: ToneSelectorProps) {
   };
 
   return (
-    <div className="no-scrollbar flex gap-1.5 overflow-x-auto pb-1" role="group">
+    <div className="flex flex-wrap gap-1.5" role="group">
       {TONES.map((tone) => {
         const active = values.includes(tone.id);
         return (

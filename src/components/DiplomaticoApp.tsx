@@ -268,7 +268,7 @@ export function DiplomaticoApp() {
         </section>
 
         <section className="surface-card mb-5 rounded-[var(--radius-card)] p-4">
-          <div className="flex items-center gap-2">
+          <div className="mb-3 flex items-center gap-2">
             <span
               className="flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-full text-[9px]"
               style={{ background: "#D97757", color: "#FFFFFF", fontWeight: "var(--fw-bold)" }}
@@ -281,10 +281,8 @@ export function DiplomaticoApp() {
             >
               {t.chooseTone} ({tones.length})
             </span>
-            <div className="min-w-0 flex-1">
-              <ToneSelector values={tones} onChange={setTones} lang={lang} />
-            </div>
           </div>
+          <ToneSelector values={tones} onChange={setTones} lang={lang} />
           <div className="mt-3">
             <IntensitySlider value={intensity} onChange={setIntensity} lang={lang} label={t.chooseIntensity} />
           </div>
