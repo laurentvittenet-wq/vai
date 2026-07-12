@@ -7,7 +7,6 @@ export type ToneId =
   | "journalistique"
   | "passif_agressif_elegant"
   | "poetique"
-  | "crise_contractuel"
   | "didactique";
 
 export interface Tone {
@@ -47,14 +46,6 @@ export const TONES: Tone[] = [
     description: {
       fr: "Une touche d'humour léger et bienveillant.",
       en: "A touch of light, good-natured humor.",
-    },
-  },
-  {
-    id: "crise_contractuel",
-    label: { fr: "Gestion de crise", en: "Crisis management" },
-    description: {
-      fr: "Ton totalement froid, factuel et juridiquement prudent : aucun engagement de responsabilité contractuelle, on désamorce le conflit sans rien concéder sur le fond.",
-      en: "Fully cold, factual and legally cautious tone: no admission of contractual liability, defuses the conflict without conceding anything on substance.",
     },
   },
   {

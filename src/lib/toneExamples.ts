@@ -19,8 +19,6 @@ export const TONE_EXAMPLES_APPUYE: Record<ToneId, string> = {
     "C'est intéressant de retrouver, une fois de plus, exactement les mêmes erreurs que la dernière fois. Je suis certain que la prochaine version sera enfin différente.",
   poetique:
     "Comme une marée qui revient inlassablement déposer les mêmes débris sur le rivage, ces erreurs reviennent, encore et encore, ternissant ce que nous bâtissons ensemble.",
-  crise_contractuel:
-    "Ce livrable présente des non-conformités récurrentes par rapport aux exigences convenues. Ces éléments doivent être corrigés sans délai, sans quoi les engagements associés ne pourront être considérés comme remplis.",
   didactique:
     "Reprenons point par point : ces erreurs sont désormais récurrentes, ce qui montre une difficulté persistante à intégrer les consignes. Voici ce qui doit changer, clairement et sans détour.",
 };
