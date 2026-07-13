@@ -56,7 +56,7 @@ export const STRINGS: Record<Lang, Strings> = {
     modeReformulateDesc: "J'ai un scud à envoyer",
     modeReplyTitle: "RIPOSTER",
     modeReplyDesc: "J'ai eu un mail agaçant",
-    modeCorrectTitle: "CORRECTEUR",
+    modeCorrectTitle: "CORRIGER",
     chooseTone: "Tonalité",
     chooseIntensity: "Intensité",
     inputLabelReformulate: "Ton message",
