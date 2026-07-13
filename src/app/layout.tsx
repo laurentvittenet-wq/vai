@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { Providers } from "@/components/Providers";
 
 export const metadata: Metadata = {
   title: "Diplomatico — Reformule sans te trahir",
@@ -21,9 +22,16 @@ export default function RootLayout({
               "(function(){try{var t=localStorage.getItem('theme');if(t!=='light'&&t!=='dark'){t=window.matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();",
           }}
         />
+        {/* Captured before Next's own client bundle/router can touch the URL — needed
+            for the Chaudron SSO handoff (#access_token=...) to survive hydration. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: "window.__ssoHandoffHash = window.location.hash;",
+          }}
+        />
       </head>
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

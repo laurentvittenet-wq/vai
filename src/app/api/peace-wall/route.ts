@@ -1,5 +1,5 @@
 import { getSupabaseClient } from "@/lib/supabase";
-import { hasValidSession } from "@/lib/access";
+import { getAuthenticatedUser } from "@/lib/authServer";
 
 export const runtime = "nodejs";
 
@@ -28,8 +28,8 @@ function toPeaceWallItem(row: PeaceWallRow) {
   };
 }
 
-export async function GET() {
-  if (!(await hasValidSession())) {
+export async function GET(request: Request) {
+  if (!(await getAuthenticatedUser(request))) {
     return Response.json({ error: "Accès non autorisé." }, { status: 401 });
   }
 
@@ -60,7 +60,7 @@ interface SharePeaceWallBody {
 }
 
 export async function POST(request: Request) {
-  if (!(await hasValidSession())) {
+  if (!(await getAuthenticatedUser(request))) {
     return Response.json({ error: "Accès non autorisé." }, { status: 401 });
   }
 

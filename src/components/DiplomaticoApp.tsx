@@ -16,6 +16,7 @@ import { getTone, type ToneId } from "@/lib/tones";
 import { DEFAULT_INTENSITY, type IntensityLevel } from "@/lib/intensity";
 import type { AudienceLevel } from "@/lib/audience";
 import { useSpeechRecognition } from "@/lib/useSpeechRecognition";
+import { authFetch } from "@/lib/authFetch";
 import { sharePeaceWallItem } from "@/lib/peaceWall";
 import {
   fetchHistory,
@@ -123,7 +124,7 @@ export function DiplomaticoApp() {
       const settled = await Promise.all(
         runIds.map(async (toneId) => {
           try {
-            const res = await fetch("/api/civilize", {
+            const res = await authFetch("/api/civilize", {
               method: "POST",
               headers: { "content-type": "application/json" },
               body: JSON.stringify({

@@ -1,6 +1,7 @@
 import type { Mode } from "./modes";
 import type { ToneId } from "./tones";
 import type { IntensityLevel } from "./intensity";
+import { authFetch } from "./authFetch";
 
 export interface HistoryItem {
   id: string;
@@ -14,7 +15,7 @@ export interface HistoryItem {
 
 export async function fetchHistory(): Promise<HistoryItem[]> {
   try {
-    const res = await fetch("/api/history");
+    const res = await authFetch("/api/history");
     if (!res.ok) return [];
     const data = await res.json();
     return Array.isArray(data.items) ? data.items : [];
@@ -25,7 +26,7 @@ export async function fetchHistory(): Promise<HistoryItem[]> {
 
 export async function clearHistoryRemote(): Promise<void> {
   try {
-    await fetch("/api/history", { method: "DELETE" });
+    await authFetch("/api/history", { method: "DELETE" });
   } catch {
     // Non-blocking: the UI already clears locally.
   }
@@ -33,7 +34,7 @@ export async function clearHistoryRemote(): Promise<void> {
 
 export async function deleteHistoryItemRemote(id: string): Promise<void> {
   try {
-    await fetch(`/api/history/${encodeURIComponent(id)}`, { method: "DELETE" });
+    await authFetch(`/api/history/${encodeURIComponent(id)}`, { method: "DELETE" });
   } catch {
     // Non-blocking: the UI already removes it locally.
   }

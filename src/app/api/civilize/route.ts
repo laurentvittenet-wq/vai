@@ -4,7 +4,7 @@ import { getTone, type Tone } from "@/lib/tones";
 import { DEFAULT_INTENSITY, getIntensity, type Intensity } from "@/lib/intensity";
 import { DEFAULT_AUDIENCE, getAudience, type Audience } from "@/lib/audience";
 import { getSupabaseClient } from "@/lib/supabase";
-import { hasValidSession } from "@/lib/access";
+import { getAuthenticatedUser } from "@/lib/authServer";
 import type { HistoryItem } from "@/lib/history";
 
 export const runtime = "nodejs";
@@ -68,7 +68,7 @@ async function persistHistoryItem(
 }
 
 export async function POST(request: Request) {
-  if (!(await hasValidSession())) {
+  if (!(await getAuthenticatedUser(request))) {
     return Response.json({ error: "Accès non autorisé." }, { status: 401 });
   }
 

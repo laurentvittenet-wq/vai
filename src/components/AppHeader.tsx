@@ -2,8 +2,8 @@
 
 import { type ReactNode, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { useAuth } from "@/lib/AuthContext";
 
 interface AppHeaderProps {
   active: "home" | "peace-wall" | "informations";
@@ -11,13 +11,12 @@ interface AppHeaderProps {
 }
 
 export function AppHeader({ active, extraActions }: AppHeaderProps) {
-  const router = useRouter();
+  const { signOut } = useAuth();
   const [signingOut, setSigningOut] = useState(false);
 
   const handleLogout = async () => {
     setSigningOut(true);
-    await fetch("/api/auth", { method: "DELETE" });
-    router.refresh();
+    await signOut();
   };
 
   return (

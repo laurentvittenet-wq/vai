@@ -1,13 +1,10 @@
-import { hasValidSession } from "@/lib/access";
-import { AccessCodePage } from "@/components/AccessCodePage";
+import { AuthGate } from "@/components/AuthGate";
 import { DiplomaticoApp } from "@/components/DiplomaticoApp";
 
-export default async function Home() {
-  const authed = await hasValidSession();
-
-  if (!authed) {
-    return <AccessCodePage />;
-  }
-
-  return <DiplomaticoApp />;
+export default function Home() {
+  return (
+    <AuthGate>
+      <DiplomaticoApp />
+    </AuthGate>
+  );
 }

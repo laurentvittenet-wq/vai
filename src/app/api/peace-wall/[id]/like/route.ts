@@ -1,13 +1,13 @@
 import { getSupabaseClient } from "@/lib/supabase";
-import { hasValidSession } from "@/lib/access";
+import { getAuthenticatedUser } from "@/lib/authServer";
 
 export const runtime = "nodejs";
 
 export async function PATCH(
-  _request: Request,
+  request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  if (!(await hasValidSession())) {
+  if (!(await getAuthenticatedUser(request))) {
     return Response.json({ error: "Accès non autorisé." }, { status: 401 });
   }
 

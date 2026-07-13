@@ -1,13 +1,10 @@
-import { hasValidSession } from "@/lib/access";
-import { AccessCodePage } from "@/components/AccessCodePage";
+import { AuthGate } from "@/components/AuthGate";
 import { PeaceWallPage } from "@/components/PeaceWallPage";
 
-export default async function MurDeLaPaix() {
-  const authed = await hasValidSession();
-
-  if (!authed) {
-    return <AccessCodePage />;
-  }
-
-  return <PeaceWallPage />;
+export default function MurDeLaPaix() {
+  return (
+    <AuthGate>
+      <PeaceWallPage />
+    </AuthGate>
+  );
 }
