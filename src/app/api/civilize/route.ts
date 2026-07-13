@@ -1,8 +1,8 @@
 import { isMode } from "@/lib/modes";
 import { buildSystemPrompt } from "@/lib/prompts";
-import { getTone } from "@/lib/tones";
-import { DEFAULT_INTENSITY, getIntensity } from "@/lib/intensity";
-import { DEFAULT_AUDIENCE, getAudience } from "@/lib/audience";
+import { getTone, type Tone } from "@/lib/tones";
+import { DEFAULT_INTENSITY, getIntensity, type Intensity } from "@/lib/intensity";
+import { DEFAULT_AUDIENCE, getAudience, type Audience } from "@/lib/audience";
 import { getSupabaseClient } from "@/lib/supabase";
 import { hasValidSession } from "@/lib/access";
 import type { HistoryItem } from "@/lib/history";
@@ -96,23 +96,29 @@ export async function POST(request: Request) {
     return Response.json({ error: "Mode invalide." }, { status: 400 });
   }
 
-  const tone = getTone(typeof toneId === "string" ? toneId : undefined);
-  if (!tone) {
-    return Response.json({ error: "Tonalité invalide." }, { status: 400 });
-  }
+  let tone: Tone | null = null;
+  let intensity: Intensity | null = null;
+  let audience: Audience | null = null;
 
-  const intensity = getIntensity(
-    typeof intensityId === "string" ? intensityId : DEFAULT_INTENSITY
-  );
-  if (!intensity) {
-    return Response.json({ error: "Intensité invalide." }, { status: 400 });
-  }
+  if (mode !== "correct") {
+    tone = getTone(typeof toneId === "string" ? toneId : undefined) ?? null;
+    if (!tone) {
+      return Response.json({ error: "Tonalité invalide." }, { status: 400 });
+    }
 
-  const audience = getAudience(
-    typeof audienceId === "string" ? audienceId : DEFAULT_AUDIENCE
-  );
-  if (!audience) {
-    return Response.json({ error: "Destinataire invalide." }, { status: 400 });
+    intensity = getIntensity(
+      typeof intensityId === "string" ? intensityId : DEFAULT_INTENSITY
+    ) ?? null;
+    if (!intensity) {
+      return Response.json({ error: "Intensité invalide." }, { status: 400 });
+    }
+
+    audience = getAudience(
+      typeof audienceId === "string" ? audienceId : DEFAULT_AUDIENCE
+    ) ?? null;
+    if (!audience) {
+      return Response.json({ error: "Destinataire invalide." }, { status: 400 });
+    }
   }
 
   if (typeof text !== "string" || !text.trim()) {
@@ -164,13 +170,16 @@ export async function POST(request: Request) {
     }
 
     const trimmedResult = result.trim();
-    const historyItem = await persistHistoryItem({
-      mode,
-      tone: tone.id,
-      intensity: intensity.id,
-      input: text,
-      output: trimmedResult,
-    });
+    const historyItem =
+      mode !== "correct" && tone && intensity
+        ? await persistHistoryItem({
+            mode,
+            tone: tone.id,
+            intensity: intensity.id,
+            input: text,
+            output: trimmedResult,
+          })
+        : null;
 
     return Response.json({ result: trimmedResult, historyItem });
   } catch (err) {

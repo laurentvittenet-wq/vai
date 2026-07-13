@@ -16,12 +16,28 @@ const NATURAL_WRITING_RULES = `Style d'écriture — rends le texte indiscernabl
 - Une fois la reformulation faite, relis-la mentalement : si une phrase pourrait sortir de n'importe quel autre texte généré par IA sur un sujet complètement différent, réécris-la ou coupe-la.
 - Ne signale jamais que tu as reformulé un texte, ne commente pas ton propre travail : rends uniquement le texte final.`;
 
+const CORRECTOR_PROMPT = `Tu es Diplomatico, un correcteur qui corrige uniquement l'orthographe, la grammaire, la conjugaison et la ponctuation d'un texte.
+
+Règles strictes :
+- Ne change jamais le sens, le ton, le style ou le vocabulaire du texte : corrige uniquement ce qui est objectivement incorrect (orthographe, grammaire, accords, conjugaison, ponctuation).
+- Ne reformule pas les phrases qui sont déjà correctes, même si une autre formulation te semble meilleure ou plus élégante.
+- Conserve la mise en forme d'origine (sauts de ligne, majuscules, choix de style d'écriture).
+- Réponds uniquement avec le texte corrigé, dans la même langue que le texte d'origine, sans préambule, sans guillemets, sans explication.`;
+
 export function buildSystemPrompt(
   mode: Mode,
-  tone: Tone,
-  intensity: Intensity,
-  audience: Audience
+  tone: Tone | null,
+  intensity: Intensity | null,
+  audience: Audience | null
 ): string {
+  if (mode === "correct") {
+    return CORRECTOR_PROMPT;
+  }
+
+  if (!tone || !intensity || !audience) {
+    throw new Error("tone, intensity and audience are required for reformulate/reply modes");
+  }
+
   const toneLine = `${tone.label.fr} — ${tone.description.fr}`;
   const intensityLine = `${intensity.label.fr} — ${intensity.description.fr}`;
   const audienceLine = `${audience.label} — ${audience.description}`;

@@ -31,7 +31,7 @@ const MAX_TEXT_LENGTH = 4000;
 const SHOW_HISTORY_BUTTON = false;
 
 interface ToneResult {
-  toneId: ToneId;
+  toneId: ToneId | null;
   output: string;
   error?: string;
   copied: boolean;
@@ -57,6 +57,25 @@ export function DiplomaticoApp() {
   const speech = useSpeechRecognition("fr-FR");
   const showOutput = inputText.trim().length > 0 && (loading || results.length > 0);
   const collapsed = !expanded && showOutput;
+  const isCorrect = mode === "correct";
+  const inputLabel = isCorrect
+    ? t.inputLabelCorrect
+    : mode === "reformulate"
+      ? t.inputLabelReformulate
+      : t.inputLabelReply;
+  const inputPlaceholder = isCorrect
+    ? t.inputPlaceholderCorrect
+    : mode === "reformulate"
+      ? t.inputPlaceholderReformulate
+      : t.inputPlaceholderReply;
+  const messageStepNumber = isCorrect ? 1 : 3;
+  const submitLabel = loading
+    ? isCorrect
+      ? t.submitBtnLoadingCorrect
+      : t.submitBtnLoading
+    : isCorrect
+      ? t.submitBtnCorrect
+      : t.submitBtn;
 
   useEffect(() => {
     let cancelled = false;
@@ -80,13 +99,15 @@ export function DiplomaticoApp() {
 
   const handleSubmit = async () => {
     setError(null);
-    if (tones.length === 0) {
-      setError(t.errorNoTone);
-      return;
-    }
-    if (!audience) {
-      setError(t.errorNoAudience);
-      return;
+    if (!isCorrect) {
+      if (tones.length === 0) {
+        setError(t.errorNoTone);
+        return;
+      }
+      if (!audience) {
+        setError(t.errorNoAudience);
+        return;
+      }
     }
     if (!inputText.trim()) {
       setError(t.errorEmptyText);
@@ -94,17 +115,24 @@ export function DiplomaticoApp() {
     }
 
     setLoading(true);
+    const runIds: (ToneId | null)[] = isCorrect ? [null] : tones;
     setResults(
-      tones.map((toneId) => ({ toneId, output: "", copied: false, sharing: false, shared: false }))
+      runIds.map((toneId) => ({ toneId, output: "", copied: false, sharing: false, shared: false }))
     );
     try {
       const settled = await Promise.all(
-        tones.map(async (toneId) => {
+        runIds.map(async (toneId) => {
           try {
             const res = await fetch("/api/civilize", {
               method: "POST",
               headers: { "content-type": "application/json" },
-              body: JSON.stringify({ mode, tone: toneId, intensity, audience, text: inputText }),
+              body: JSON.stringify({
+                mode,
+                tone: toneId ?? undefined,
+                intensity,
+                audience: audience ?? undefined,
+                text: inputText,
+              }),
             });
             const data = await res.json();
             if (!res.ok) {
@@ -135,7 +163,8 @@ export function DiplomaticoApp() {
     }
   };
 
-  const handleShare = async (toneId: ToneId) => {
+  const handleShare = async (toneId: ToneId | null) => {
+    if (!toneId) return;
     const item = results.find((r) => r.toneId === toneId);
     if (!inputText.trim() || !item?.output.trim() || item.sharing) return;
     setResults((prev) => prev.map((r) => (r.toneId === toneId ? { ...r, sharing: true } : r)));
@@ -150,7 +179,7 @@ export function DiplomaticoApp() {
     );
   };
 
-  const handleCopy = async (toneId: ToneId) => {
+  const handleCopy = async (toneId: ToneId | null) => {
     const item = results.find((r) => r.toneId === toneId);
     if (!item?.output) return;
     await navigator.clipboard.writeText(item.output);
@@ -247,46 +276,50 @@ export function DiplomaticoApp() {
           <ModeTabs mode={mode} onChange={setMode} t={t} />
         </section>
 
-        <section className="surface-card mb-5 rounded-[var(--radius-card)] p-4">
-          <div className="flex items-center gap-2">
-            <span
-              className="flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-full text-[9px]"
-              style={{ background: "#D97757", color: "#FFFFFF", fontWeight: "var(--fw-bold)" }}
-            >
-              1
-            </span>
-            <span
-              className="shrink-0 text-[9px] uppercase"
-              style={{ fontWeight: "var(--fw-semibold)", letterSpacing: "var(--ls-caps)", color: "var(--text-strong)" }}
-            >
-              Destinataire
-            </span>
-            <div className="min-w-0 flex-1">
-              <AudienceSelector value={audience} onChange={setAudience} />
+        {!isCorrect && (
+          <section className="surface-card mb-5 rounded-[var(--radius-card)] p-4">
+            <div className="flex items-center gap-2">
+              <span
+                className="flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-full text-[9px]"
+                style={{ background: "#D97757", color: "#FFFFFF", fontWeight: "var(--fw-bold)" }}
+              >
+                1
+              </span>
+              <span
+                className="shrink-0 text-[9px] uppercase"
+                style={{ fontWeight: "var(--fw-semibold)", letterSpacing: "var(--ls-caps)", color: "var(--text-strong)" }}
+              >
+                Destinataire
+              </span>
+              <div className="min-w-0 flex-1">
+                <AudienceSelector value={audience} onChange={setAudience} />
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        )}
 
-        <section className="surface-card mb-5 rounded-[var(--radius-card)] p-4">
-          <div className="mb-3 flex items-center gap-2">
-            <span
-              className="flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-full text-[9px]"
-              style={{ background: "#D97757", color: "#FFFFFF", fontWeight: "var(--fw-bold)" }}
-            >
-              2
-            </span>
-            <span
-              className="shrink-0 text-[9px] uppercase whitespace-nowrap"
-              style={{ fontWeight: "var(--fw-semibold)", letterSpacing: "var(--ls-caps)", color: "var(--text-strong)" }}
-            >
-              {t.chooseTone} ({tones.length})
-            </span>
-          </div>
-          <ToneSelector values={tones} onChange={setTones} lang={lang} />
-          <div className="mt-3">
-            <IntensitySlider value={intensity} onChange={setIntensity} lang={lang} label={t.chooseIntensity} />
-          </div>
-        </section>
+        {!isCorrect && (
+          <section className="surface-card mb-5 rounded-[var(--radius-card)] p-4">
+            <div className="mb-3 flex items-center gap-2">
+              <span
+                className="flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-full text-[9px]"
+                style={{ background: "#D97757", color: "#FFFFFF", fontWeight: "var(--fw-bold)" }}
+              >
+                2
+              </span>
+              <span
+                className="shrink-0 text-[9px] uppercase whitespace-nowrap"
+                style={{ fontWeight: "var(--fw-semibold)", letterSpacing: "var(--ls-caps)", color: "var(--text-strong)" }}
+              >
+                {t.chooseTone} ({tones.length})
+              </span>
+            </div>
+            <ToneSelector values={tones} onChange={setTones} lang={lang} />
+            <div className="mt-3">
+              <IntensitySlider value={intensity} onChange={setIntensity} lang={lang} label={t.chooseIntensity} />
+            </div>
+          </section>
+        )}
 
         <section className={`grid grid-cols-1 gap-4 ${showOutput && !collapsed ? "lg:grid-cols-2" : ""}`}>
           <div className="surface-card rounded-[var(--radius-card)] p-4">
@@ -297,7 +330,7 @@ export function DiplomaticoApp() {
                     className="text-[10px] uppercase"
                     style={{ fontWeight: "var(--fw-semibold)", letterSpacing: "var(--ls-caps)", color: "var(--text-strong)" }}
                   >
-                    {mode === "reformulate" ? t.inputLabelReformulate : t.inputLabelReply}
+                    {inputLabel}
                   </h3>
                   <p className="mt-1 truncate text-xs" style={{ color: "var(--text-secondary)" }}>
                     {inputText}
@@ -319,13 +352,13 @@ export function DiplomaticoApp() {
                     className="flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-full text-[9px]"
                     style={{ background: "#D97757", color: "#FFFFFF", fontWeight: "var(--fw-bold)" }}
                   >
-                    3
+                    {messageStepNumber}
                   </span>
                   <h3
                     className="shrink-0 text-[9px] uppercase"
                     style={{ fontWeight: "var(--fw-semibold)", letterSpacing: "var(--ls-caps)", color: "var(--text-strong)" }}
                   >
-                    {mode === "reformulate" ? t.inputLabelReformulate : t.inputLabelReply}
+                    {inputLabel}
                   </h3>
                   <div className="flex flex-1 items-center justify-end gap-2">
                     <ResetButton onClick={handleReset} label={t.resetBtn} />
@@ -350,9 +383,7 @@ export function DiplomaticoApp() {
                       }
                       setInputText(e.target.value.slice(0, MAX_TEXT_LENGTH));
                     }}
-                    placeholder={
-                      mode === "reformulate" ? t.inputPlaceholderReformulate : t.inputPlaceholderReply
-                    }
+                    placeholder={inputPlaceholder}
                     className="h-[150px] min-h-[100px] w-full resize-y overflow-y-auto rounded-[var(--radius-input)] border p-2.5 text-sm outline-none"
                     style={{
                       borderColor: "var(--border)",
@@ -361,14 +392,14 @@ export function DiplomaticoApp() {
                     }}
                   />
                 </div>
-                <TriggerWordList text={inputText} />
+                {!isCorrect && <TriggerWordList text={inputText} />}
                 <div className="mt-3 flex justify-center">
                   <button
                     type="button"
                     onClick={handleSubmit}
                     disabled={loading}
-                    title={loading ? t.submitBtnLoading : t.submitBtn}
-                    aria-label={loading ? t.submitBtnLoading : t.submitBtn}
+                    title={submitLabel}
+                    aria-label={submitLabel}
                     className="neo-brutal neo-brutal-active flex h-9 w-9 shrink-0 items-center justify-center rounded-full disabled:cursor-not-allowed disabled:opacity-60"
                     style={{
                       background: "var(--gradient-cta)",
@@ -407,14 +438,14 @@ export function DiplomaticoApp() {
           {showOutput && (
             <div className="flex flex-col gap-4">
               {results.map((item) => {
-                const tone = getTone(item.toneId);
+                const tone = getTone(item.toneId ?? undefined);
                 return (
-                  <div key={item.toneId} className="surface-card rounded-[var(--radius-card)] p-4">
+                  <div key={item.toneId ?? "correction"} className="surface-card rounded-[var(--radius-card)] p-4">
                     <h3
                       className="mb-2 flex items-center gap-1.5 text-[10px] uppercase"
                       style={{ fontWeight: "var(--fw-semibold)", letterSpacing: "var(--ls-caps)", color: "var(--text-strong)" }}
                     >
-                      {t.outputLabel}
+                      {isCorrect ? t.outputLabelCorrect : t.outputLabel}
                       {tone && (
                         <span style={{ color: "var(--accent)" }}>· {tone.label[lang]}</span>
                       )}
@@ -434,7 +465,7 @@ export function DiplomaticoApp() {
                           item.output
                         ) : (
                           <span className="italic" style={{ color: "var(--text-tertiary)" }}>
-                            {t.submitBtnLoading}
+                            {isCorrect ? t.submitBtnLoadingCorrect : t.submitBtnLoading}
                           </span>
                         )}
                       </div>
@@ -463,7 +494,7 @@ export function DiplomaticoApp() {
                         )}
                       </button>
                     </div>
-                    {item.output && (
+                    {item.output && item.toneId && (
                       <button
                         type="button"
                         onClick={() => handleShare(item.toneId)}
