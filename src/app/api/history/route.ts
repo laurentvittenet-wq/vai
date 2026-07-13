@@ -1,5 +1,4 @@
-import { getSupabaseClient } from "@/lib/supabase";
-import { getAuthenticatedUser } from "@/lib/authServer";
+import { getAuthenticatedContext } from "@/lib/authServer";
 import type { HistoryItem } from "@/lib/history";
 
 export const runtime = "nodejs";
@@ -29,18 +28,15 @@ function toHistoryItem(row: HistoryRow): HistoryItem {
 }
 
 export async function GET(request: Request) {
-  if (!(await getAuthenticatedUser(request))) {
+  const auth = await getAuthenticatedContext(request);
+  if (!auth) {
     return Response.json({ error: "Accès non autorisé." }, { status: 401 });
   }
 
-  const supabase = getSupabaseClient();
-  if (!supabase) {
-    return Response.json({ items: [] as HistoryItem[] });
-  }
-
-  const { data, error } = await supabase
+  const { data, error } = await auth.supabase
     .from("history_items")
     .select("*")
+    .eq("user_id", auth.user.id)
     .order("created_at", { ascending: false })
     .limit(MAX_ITEMS);
 
@@ -53,19 +49,15 @@ export async function GET(request: Request) {
 }
 
 export async function DELETE(request: Request) {
-  if (!(await getAuthenticatedUser(request))) {
+  const auth = await getAuthenticatedContext(request);
+  if (!auth) {
     return Response.json({ error: "Accès non autorisé." }, { status: 401 });
   }
 
-  const supabase = getSupabaseClient();
-  if (!supabase) {
-    return Response.json({ ok: true });
-  }
-
-  const { error } = await supabase
+  const { error } = await auth.supabase
     .from("history_items")
     .delete()
-    .not("id", "is", null);
+    .eq("user_id", auth.user.id);
 
   if (error) {
     console.error("Failed to clear history", error);

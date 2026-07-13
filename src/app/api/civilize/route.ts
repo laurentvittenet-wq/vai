@@ -3,8 +3,8 @@ import { buildSystemPrompt } from "@/lib/prompts";
 import { getTone, type Tone } from "@/lib/tones";
 import { DEFAULT_INTENSITY, getIntensity, type Intensity } from "@/lib/intensity";
 import { DEFAULT_AUDIENCE, getAudience, type Audience } from "@/lib/audience";
-import { getSupabaseClient } from "@/lib/supabase";
-import { getAuthenticatedUser } from "@/lib/authServer";
+import type { SupabaseClient } from "@supabase/supabase-js";
+import { getAuthenticatedContext } from "@/lib/authServer";
 import type { HistoryItem } from "@/lib/history";
 
 export const runtime = "nodejs";
@@ -30,18 +30,16 @@ interface AnthropicResponse {
 }
 
 async function persistHistoryItem(
+  supabase: SupabaseClient,
+  userId: string,
   item: Omit<HistoryItem, "id" | "createdAt">
 ): Promise<HistoryItem> {
-  const supabase = getSupabaseClient();
   const fallback: HistoryItem = { ...item, id: crypto.randomUUID(), createdAt: Date.now() };
-
-  if (!supabase) {
-    return fallback;
-  }
 
   const { data, error } = await supabase
     .from("history_items")
     .insert({
+      user_id: userId,
       mode: item.mode,
       tone: item.tone,
       intensity: item.intensity,
@@ -68,7 +66,8 @@ async function persistHistoryItem(
 }
 
 export async function POST(request: Request) {
-  if (!(await getAuthenticatedUser(request))) {
+  const auth = await getAuthenticatedContext(request);
+  if (!auth) {
     return Response.json({ error: "Accès non autorisé." }, { status: 401 });
   }
 
@@ -172,7 +171,7 @@ export async function POST(request: Request) {
     const trimmedResult = result.trim();
     const historyItem =
       mode !== "correct" && tone && intensity
-        ? await persistHistoryItem({
+        ? await persistHistoryItem(auth.supabase, auth.user.id, {
             mode,
             tone: tone.id,
             intensity: intensity.id,

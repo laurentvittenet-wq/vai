@@ -1,5 +1,4 @@
-import { getSupabaseClient } from "@/lib/supabase";
-import { getAuthenticatedUser } from "@/lib/authServer";
+import { getAuthenticatedContext } from "@/lib/authServer";
 
 export const runtime = "nodejs";
 
@@ -7,18 +6,18 @@ export async function DELETE(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  if (!(await getAuthenticatedUser(request))) {
+  const auth = await getAuthenticatedContext(request);
+  if (!auth) {
     return Response.json({ error: "Accès non autorisé." }, { status: 401 });
   }
 
   const { id } = await params;
 
-  const supabase = getSupabaseClient();
-  if (!supabase) {
-    return Response.json({ ok: true });
-  }
-
-  const { error } = await supabase.from("history_items").delete().eq("id", id);
+  const { error } = await auth.supabase
+    .from("history_items")
+    .delete()
+    .eq("id", id)
+    .eq("user_id", auth.user.id);
 
   if (error) {
     console.error("Failed to delete history item", error);

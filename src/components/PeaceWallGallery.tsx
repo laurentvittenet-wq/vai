@@ -1,19 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import {
-  fetchPeaceWall,
-  likePeaceWallItem,
-  deletePeaceWallItem,
-  type PeaceWallItem,
-} from "@/lib/peaceWall";
+import { fetchPeaceWall, deletePeaceWallItem, type PeaceWallItem } from "@/lib/peaceWall";
 import { TONES } from "@/lib/tones";
 
 export function PeaceWallGallery() {
   const [items, setItems] = useState<PeaceWallItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [flipped, setFlipped] = useState<Set<string>>(new Set());
-  const [liking, setLiking] = useState<Set<string>>(new Set());
   const [deleting, setDeleting] = useState<Set<string>>(new Set());
   const [toneFilter, setToneFilter] = useState<string | null>(null);
 
@@ -40,25 +34,6 @@ export function PeaceWallGallery() {
       }
       return next;
     });
-  };
-
-  const handleLike = async (id: string) => {
-    if (liking.has(id)) return;
-    setLiking((prev) => new Set(prev).add(id));
-    setItems((prev) =>
-      prev.map((item) => (item.id === id ? { ...item, likesCount: item.likesCount + 1 } : item))
-    );
-    const newCount = await likePeaceWallItem(id);
-    setLiking((prev) => {
-      const next = new Set(prev);
-      next.delete(id);
-      return next;
-    });
-    if (newCount !== null) {
-      setItems((prev) =>
-        prev.map((item) => (item.id === id ? { ...item, likesCount: newCount } : item))
-      );
-    }
   };
 
   const handleDelete = async (id: string) => {
@@ -261,32 +236,19 @@ export function PeaceWallGallery() {
                 <p className="text-[10px]" style={{ color: "var(--text-tertiary)" }}>
                   Clique sur la carte pour la retourner
                 </p>
-                <div className="mt-auto flex items-center justify-between pt-1">
-                  <div className="flex flex-wrap gap-1">
-                    <span
-                      className="rounded-[var(--radius-chip)] px-2 py-0.5 text-[10px]"
-                      style={{ background: "var(--bg-surface-3)", color: "var(--text-secondary)" }}
-                    >
-                      {item.toneCategory}
-                    </span>
-                    <span
-                      className="rounded-[var(--radius-chip)] px-2 py-0.5 text-[10px]"
-                      style={{ background: "var(--bg-surface-3)", color: "var(--text-secondary)" }}
-                    >
-                      {item.intensityLevel}
-                    </span>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => handleLike(item.id)}
-                    className="press inline-flex items-center gap-1 rounded-[var(--radius-chip)] border px-2 py-1 text-xs"
-                    style={{ borderColor: "var(--border-strong)", color: "var(--text-primary)" }}
+                <div className="mt-auto flex flex-wrap gap-1 pt-1">
+                  <span
+                    className="rounded-[var(--radius-chip)] px-2 py-0.5 text-[10px]"
+                    style={{ background: "var(--bg-surface-3)", color: "var(--text-secondary)" }}
                   >
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                      <path d="M19 14c1.5-1.5 3-3.4 3-5.5A4.5 4.5 0 0 0 13.5 5C13 5 12 5.5 12 6.5 12 5.5 11 5 10.5 5A4.5 4.5 0 0 0 6 9.5C6 15 12 19 12 19s3.5-2 7-5Z" />
-                    </svg>
-                    {item.likesCount}
-                  </button>
+                    {item.toneCategory}
+                  </span>
+                  <span
+                    className="rounded-[var(--radius-chip)] px-2 py-0.5 text-[10px]"
+                    style={{ background: "var(--bg-surface-3)", color: "var(--text-secondary)" }}
+                  >
+                    {item.intensityLevel}
+                  </span>
                 </div>
               </div>
             );

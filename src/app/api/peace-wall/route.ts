@@ -1,5 +1,4 @@
-import { getSupabaseClient } from "@/lib/supabase";
-import { getAuthenticatedUser } from "@/lib/authServer";
+import { getAuthenticatedContext } from "@/lib/authServer";
 
 export const runtime = "nodejs";
 
@@ -12,7 +11,6 @@ interface PeaceWallRow {
   diplomatic_text: string;
   tone_category: string;
   intensity_level: string;
-  likes_count: number;
   created_at: string;
 }
 
@@ -23,24 +21,20 @@ function toPeaceWallItem(row: PeaceWallRow) {
     diplomaticText: row.diplomatic_text,
     toneCategory: row.tone_category,
     intensityLevel: row.intensity_level,
-    likesCount: row.likes_count,
     createdAt: new Date(row.created_at).getTime(),
   };
 }
 
 export async function GET(request: Request) {
-  if (!(await getAuthenticatedUser(request))) {
+  const auth = await getAuthenticatedContext(request);
+  if (!auth) {
     return Response.json({ error: "Accès non autorisé." }, { status: 401 });
   }
 
-  const supabase = getSupabaseClient();
-  if (!supabase) {
-    return Response.json({ items: [] });
-  }
-
-  const { data, error } = await supabase
+  const { data, error } = await auth.supabase
     .from("peace_wall")
     .select("*")
+    .eq("user_id", auth.user.id)
     .order("created_at", { ascending: false })
     .limit(MAX_ITEMS);
 
@@ -60,7 +54,8 @@ interface SharePeaceWallBody {
 }
 
 export async function POST(request: Request) {
-  if (!(await getAuthenticatedUser(request))) {
+  const auth = await getAuthenticatedContext(request);
+  if (!auth) {
     return Response.json({ error: "Accès non autorisé." }, { status: 401 });
   }
 
@@ -90,15 +85,8 @@ export async function POST(request: Request) {
     return Response.json({ error: "Intensité invalide." }, { status: 400 });
   }
 
-  const supabase = getSupabaseClient();
-  if (!supabase) {
-    return Response.json(
-      { error: "Le service de persistance n'est pas configuré." },
-      { status: 500 }
-    );
-  }
-
-  const { error } = await supabase.from("peace_wall").insert({
+  const { error } = await auth.supabase.from("peace_wall").insert({
+    user_id: auth.user.id,
     scud_text: scudText,
     diplomatic_text: diplomaticText,
     tone_category: toneCategory,

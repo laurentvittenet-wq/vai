@@ -6,7 +6,6 @@ export interface PeaceWallItem {
   diplomaticText: string;
   toneCategory: string;
   intensityLevel: string;
-  likesCount: number;
   createdAt: number;
 }
 
@@ -38,19 +37,6 @@ export async function sharePeaceWallItem(input: SharePeaceWallInput): Promise<bo
     return res.ok;
   } catch {
     return false;
-  }
-}
-
-export async function likePeaceWallItem(id: string): Promise<number | null> {
-  try {
-    const res = await authFetch(`/api/peace-wall/${encodeURIComponent(id)}/like`, {
-      method: "PATCH",
-    });
-    if (!res.ok) return null;
-    const data = await res.json();
-    return typeof data.likesCount === "number" ? data.likesCount : null;
-  } catch {
-    return null;
   }
 }
 
