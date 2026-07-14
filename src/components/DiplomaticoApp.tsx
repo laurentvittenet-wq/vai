@@ -235,11 +235,18 @@ export function DiplomaticoApp() {
   ) : null;
 
   return (
-    <div className="min-h-full" style={{ background: "var(--bg-base)" }}>
+    <div className="diplomatico-bg min-h-full">
       <AppHeader active="home" extraActions={historyButton} />
 
       <main className="mx-auto max-w-5xl px-5 py-6">
         <section className="mb-6">
+          <div
+            className="mb-3 inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs"
+            style={{ borderColor: "var(--border)", background: "var(--bg-surface)", color: "var(--text-secondary)" }}
+          >
+            <span className="size-1.5 rounded-full" style={{ background: "var(--accent)" }} />
+            Reformulation en un clic
+          </div>
           <h1
             className="text-lg sm:text-2xl"
             style={{
@@ -401,7 +408,7 @@ export function DiplomaticoApp() {
                     disabled={loading}
                     title={submitLabel}
                     aria-label={submitLabel}
-                    className="neo-brutal neo-brutal-active flex h-9 w-9 shrink-0 items-center justify-center rounded-full disabled:cursor-not-allowed disabled:opacity-60"
+                    className="tab-pill tab-pill-active flex h-9 w-9 shrink-0 items-center justify-center rounded-full disabled:cursor-not-allowed disabled:opacity-60"
                     style={{
                       background: "var(--gradient-cta)",
                       color: "var(--on-accent)",

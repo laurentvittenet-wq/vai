@@ -13,7 +13,6 @@ export function Logo({ size = 36, className }: LogoProps) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={className}
-      style={{ filter: "drop-shadow(var(--glow-accent-sm))" }}
       aria-hidden="true"
     >
       <rect width="36" height="36" rx="10" fill="var(--accent)" />

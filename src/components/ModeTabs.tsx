@@ -54,7 +54,7 @@ export function ModeTabs({ mode, onChange, t }: ModeTabsProps) {
             type="button"
             onClick={() => onChange(id)}
             aria-pressed={active}
-            className={`neo-brutal flex items-center justify-center gap-1 rounded-full py-1 pl-1.5 pr-2 ${active ? "neo-brutal-active" : ""}`}
+            className={`tab-pill flex items-center justify-center gap-1 rounded-full py-1 pl-1.5 pr-2 ${active ? "tab-pill-active" : ""}`}
             style={{
               background: active ? "var(--gradient-cta)" : "var(--bg-input-flat)",
             }}

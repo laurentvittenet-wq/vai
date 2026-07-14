@@ -2,6 +2,7 @@
 
 import { type ReactNode, useState } from "react";
 import Link from "next/link";
+import { Logo } from "@/components/Logo";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { useAuth } from "@/lib/AuthContext";
 
@@ -21,17 +22,27 @@ export function AppHeader({ active, extraActions }: AppHeaderProps) {
 
   return (
     <header style={{ borderBottom: "1px solid var(--border)", background: "var(--bg-header)" }}>
-      <div className="mx-auto grid max-w-5xl grid-cols-[auto_1fr_auto] items-center gap-2 px-5 py-3">
+      <div className="mx-auto flex max-w-5xl items-center justify-between gap-2 px-5 py-3">
+        <Link href="/" className="flex items-center gap-2">
+          <Logo size={28} />
+          <span
+            className="text-sm"
+            style={{ fontFamily: "var(--font-display)", fontWeight: "var(--fw-extrabold)", color: "var(--text-strong)" }}
+          >
+            Diplomatico
+          </span>
+          <span className="text-[10px]" style={{ color: "var(--text-tertiary)" }}>
+            v1.0
+          </span>
+        </Link>
+
         <div className="flex items-center gap-1">
           <Link
             href="/"
             title="Accueil"
             aria-label="Accueil"
-            className="press inline-flex h-8 w-8 items-center justify-center rounded-[var(--radius-chip)]"
-            style={{
-              color: active === "home" ? "var(--accent)" : "var(--text-secondary)",
-              background: active === "home" ? "var(--accent-soft)" : "transparent",
-            }}
+            className="icon-btn press inline-flex h-8 w-8 items-center justify-center rounded-full"
+            style={active === "home" ? { color: "var(--accent)", background: "var(--accent-soft)" } : undefined}
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
               <path d="M3 10.5 12 3l9 7.5" />
@@ -42,11 +53,8 @@ export function AppHeader({ active, extraActions }: AppHeaderProps) {
             href="/mur-de-la-paix"
             title="Mur de la paix"
             aria-label="Mur de la paix"
-            className="press inline-flex h-8 w-8 items-center justify-center rounded-[var(--radius-chip)]"
-            style={{
-              color: active === "peace-wall" ? "var(--accent)" : "var(--text-secondary)",
-              background: active === "peace-wall" ? "var(--accent-soft)" : "transparent",
-            }}
+            className="icon-btn press inline-flex h-8 w-8 items-center justify-center rounded-full"
+            style={active === "peace-wall" ? { color: "var(--accent)", background: "var(--accent-soft)" } : undefined}
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
               <path d="M12 17v5" />
@@ -57,11 +65,8 @@ export function AppHeader({ active, extraActions }: AppHeaderProps) {
             href="/informations"
             title="Informations"
             aria-label="Informations"
-            className="press inline-flex h-8 w-8 items-center justify-center rounded-[var(--radius-chip)]"
-            style={{
-              color: active === "informations" ? "var(--accent)" : "var(--text-secondary)",
-              background: active === "informations" ? "var(--accent-soft)" : "transparent",
-            }}
+            className="icon-btn press inline-flex h-8 w-8 items-center justify-center rounded-full"
+            style={active === "informations" ? { color: "var(--accent)", background: "var(--accent-soft)" } : undefined}
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="12" cy="12" r="9" />
@@ -69,21 +74,7 @@ export function AppHeader({ active, extraActions }: AppHeaderProps) {
               <circle cx="12" cy="7.8" r="0.1" fill="currentColor" stroke="currentColor" strokeWidth="2" />
             </svg>
           </Link>
-        </div>
 
-        <div className="text-center">
-          <span
-            className="text-sm"
-            style={{ fontFamily: "var(--font-display)", fontWeight: "var(--fw-extrabold)", color: "var(--text-strong)" }}
-          >
-            Diplomatico
-          </span>
-          <span className="ml-1.5 text-[10px]" style={{ color: "var(--text-tertiary)" }}>
-            v1.0
-          </span>
-        </div>
-
-        <div className="flex items-center justify-end gap-1">
           {extraActions}
           <ThemeToggle />
           <button
@@ -92,7 +83,7 @@ export function AppHeader({ active, extraActions }: AppHeaderProps) {
             disabled={signingOut}
             title="Quitter"
             aria-label="Quitter"
-            className="press inline-flex h-8 w-8 items-center justify-center rounded-[var(--radius-chip)] disabled:cursor-not-allowed disabled:opacity-60"
+            className="icon-btn press inline-flex h-8 w-8 items-center justify-center rounded-full disabled:cursor-not-allowed disabled:opacity-60"
             style={{ color: "var(--danger)" }}
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">

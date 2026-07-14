@@ -3,6 +3,8 @@
 import { useState } from "react";
 import type { FormEvent } from "react";
 import { useAuth } from "@/lib/AuthContext";
+import { Logo } from "@/components/Logo";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 export function Auth() {
   const { signIn, signUp } = useAuth();
@@ -30,56 +32,79 @@ export function Auth() {
   }
 
   return (
-    <div
-      className="relative flex min-h-full flex-col items-center justify-center overflow-hidden px-6 py-16"
-      style={{ background: "var(--bg-base)" }}
-    >
-      <div className="animate-rise relative flex flex-col items-center">
-        <div
-          className="overflow-hidden rounded-[var(--radius-lg)]"
-          style={{ width: 176, height: 176, animation: "podium-pulse 3.2s ease-in-out infinite" }}
-        >
-          <img src="/access-mascot.jpg" alt="Diplomatico" className="h-full w-full object-cover" />
+    <div className="diplomatico-bg relative flex min-h-full flex-col items-center overflow-hidden px-4 py-16">
+      <div className="fixed right-4 top-4 z-10">
+        <ThemeToggle />
+      </div>
+
+      <div className="animate-rise relative z-10 flex flex-col items-center gap-5 text-center">
+        <div className="flex items-center gap-2">
+          <Logo size={28} />
+          <span
+            className="text-lg"
+            style={{ fontFamily: "var(--font-display)", fontWeight: "var(--fw-bold)", color: "var(--text-strong)" }}
+          >
+            Diplomatico
+          </span>
         </div>
-        <h1
-          className="mt-6 text-center text-2xl"
-          style={{ fontFamily: "var(--font-display)", fontWeight: "var(--fw-extrabold)", color: "var(--text-strong)" }}
+
+        <div
+          className="inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-sm"
+          style={{ borderColor: "var(--border)", background: "var(--bg-surface)", color: "var(--text-secondary)" }}
         >
-          Diplomatico
+          <span className="size-1.5 rounded-full" style={{ background: "var(--accent)" }} />
+          Balance tes scuds, je fournis les silencieux
+        </div>
+
+        <h1
+          className="max-w-sm text-2xl sm:text-3xl"
+          style={{
+            fontFamily: "var(--font-display)",
+            fontWeight: "var(--fw-extrabold)",
+            lineHeight: "var(--lh-tight)",
+            letterSpacing: "-0.02em",
+            color: "var(--text-strong)",
+          }}
+        >
+          Reformule sans jamais te trahir
         </h1>
-        <p className="mt-1 max-w-sm text-center text-xs" style={{ color: "var(--text-tertiary)" }}>
-          Balance tes scuds, je fournis les silencieux.
-        </p>
-        <p className="mt-2 max-w-sm text-center text-sm" style={{ color: "var(--text-secondary)" }}>
+        <p className="max-w-sm text-sm" style={{ color: "var(--text-secondary)" }}>
           {mode === "signin" ? "Connecte-toi pour continuer." : "Crée un compte pour continuer."}
         </p>
 
         <form
           onSubmit={handleSubmit}
-          className="surface-card mt-8 flex w-72 flex-col gap-4 rounded-[var(--radius-card)] p-6"
+          className="mt-2 flex w-full max-w-sm flex-col gap-4 rounded-[var(--radius-card)] border p-6 text-left"
+          style={{ borderColor: "var(--border)", background: "var(--bg-surface)" }}
         >
-          <label className="flex flex-col gap-1.5 text-left text-sm" style={{ color: "var(--text-secondary)" }}>
+          <label className="flex flex-col gap-1.5 text-sm" style={{ color: "var(--text-secondary)" }}>
             Email
             <input
               type="email"
               required
+              autoComplete="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="rounded-[var(--radius-input)] border px-3 py-2 text-sm outline-none"
-              style={{ borderColor: "var(--border)", background: "var(--bg-surface-3)", color: "var(--text-strong)" }}
+              className="rounded-[var(--radius-input)] border bg-transparent px-3 py-2 text-sm outline-none transition-colors"
+              style={{ borderColor: "var(--border)", color: "var(--text-strong)" }}
+              onFocus={(e) => (e.currentTarget.style.borderColor = "var(--accent)")}
+              onBlur={(e) => (e.currentTarget.style.borderColor = "var(--border)")}
             />
           </label>
 
-          <label className="flex flex-col gap-1.5 text-left text-sm" style={{ color: "var(--text-secondary)" }}>
+          <label className="flex flex-col gap-1.5 text-sm" style={{ color: "var(--text-secondary)" }}>
             Mot de passe
             <input
               type="password"
               required
               minLength={6}
+              autoComplete={mode === "signin" ? "current-password" : "new-password"}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="rounded-[var(--radius-input)] border px-3 py-2 text-sm outline-none"
-              style={{ borderColor: "var(--border)", background: "var(--bg-surface-3)", color: "var(--text-strong)" }}
+              className="rounded-[var(--radius-input)] border bg-transparent px-3 py-2 text-sm outline-none transition-colors"
+              style={{ borderColor: "var(--border)", color: "var(--text-strong)" }}
+              onFocus={(e) => (e.currentTarget.style.borderColor = "var(--accent)")}
+              onBlur={(e) => (e.currentTarget.style.borderColor = "var(--border)")}
             />
           </label>
 
@@ -97,13 +122,8 @@ export function Auth() {
           <button
             type="submit"
             disabled={submitting}
-            className="press mt-1 inline-flex items-center justify-center rounded-[var(--radius-button)] px-6 py-3 text-sm disabled:cursor-not-allowed disabled:opacity-60"
-            style={{
-              background: "var(--accent)",
-              color: "var(--on-accent)",
-              fontWeight: "var(--fw-bold)",
-              boxShadow: "var(--glow-accent-sm)",
-            }}
+            className="press mt-1 inline-flex items-center justify-center rounded-[var(--radius-button)] px-6 py-2.5 text-sm disabled:cursor-not-allowed disabled:opacity-60"
+            style={{ background: "var(--accent)", color: "var(--on-accent)", fontWeight: "var(--fw-semibold)" }}
           >
             {mode === "signin" ? "Se connecter" : "S'inscrire"}
           </button>
@@ -115,7 +135,7 @@ export function Auth() {
               setError(null);
               setInfo(null);
             }}
-            className="text-xs underline"
+            className="text-center text-xs underline underline-offset-2"
             style={{ color: "var(--text-tertiary)" }}
           >
             {mode === "signin" ? "Pas de compte ? S'inscrire" : "Déjà un compte ? Se connecter"}

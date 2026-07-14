@@ -1,67 +1,66 @@
-@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Space+Mono:wght@400;700&display=swap');
 @import "tailwindcss";
 
 /* ============================================================
-   DESIGN SYSTEM (ported from Podium) — dark "stadium-night" base
-   + electric accent + medal palette. Three swappable accent
-   themes: Volt (default), Sunset, Royal. Set on a wrapper:
-   <div data-theme="sunset"> … </div>
+   DESIGN SYSTEM — ported from Chaudron/MesNotes: oklch violet
+   palette on a near-white / near-black surface, Geist type,
+   flat bordered cards (no neon glow, no hard shadows).
    ============================================================ */
 
 :root {
-  /* ---- Base surfaces (stadium night) ---- */
-  --bg-base:        #0B0E14;
-  --bg-surface:     #12161F;
-  --bg-surface-2:   #1A1F2B;
-  --bg-surface-3:   #232A38;
-  --bg-overlay:     rgba(6, 9, 14, 0.72);
+  /* ---- Base surfaces (dark, default) ---- */
+  --bg-base:        oklch(0.17 0.025 295);
+  --bg-surface:     oklch(0.22 0.03 295);
+  --bg-surface-2:   oklch(0.27 0.03 295);
+  --bg-surface-3:   oklch(0.29 0.04 295);
+  --bg-overlay:     oklch(0.17 0.025 295 / 72%);
   /* Flat surfaces for the input field / selector chips / inactive mode tabs — kept
      separate from --bg-surface-2/3 so their light-theme override doesn't leak
      into unrelated components still using those tokens. */
   --bg-chip-flat:   var(--bg-surface-2);
   --bg-input-flat:  var(--bg-surface-3);
-  --bg-header:      var(--bg-surface);
+  --bg-header:      var(--bg-base);
 
   /* ---- Hairlines & borders ---- */
-  --border:         rgba(255, 255, 255, 0.08);
-  --border-strong:  rgba(255, 255, 255, 0.16);
+  --border:         oklch(1 0 0 / 12%);
+  --border-strong:  oklch(1 0 0 / 20%);
   --border-accent:  color-mix(in oklch, var(--accent) 55%, transparent);
 
   /* ---- Text ---- */
-  --text-strong:    #FFFFFF;
-  --text-primary:   #E9EDF3;
-  --text-secondary: #9BA5B4;
-  --text-tertiary:  #626C7C;
-  --text-disabled:  #454E5C;
-  --text-inverse:   #0B0E14;
+  --text-strong:    oklch(0.96 0.01 300);
+  --text-primary:   oklch(0.96 0.01 300);
+  --text-secondary: oklch(0.68 0.03 295);
+  --text-tertiary:  oklch(0.55 0.03 295);
+  --text-disabled:  oklch(0.4 0.02 295);
+  --text-inverse:   oklch(0.16 0.03 295);
 
-  /* ---- Accent (Volt — electric green) ---- */
-  --accent:         #00E676;
-  --accent-hover:   #24F08C;
-  --accent-press:   #00C464;
-  --accent-soft:    rgba(0, 230, 118, 0.14);
-  --accent-line:    rgba(0, 230, 118, 0.32);
-  --on-accent:      #05230F;
-  /* Dégradé "concours du jour" (ported from Podium) */
-  --gradient-cta-1: #22E573;
-  --gradient-cta-2: #A3CC00;
-  --gradient-cta-3: #D9AD00;
-  --gradient-cta:   linear-gradient(135deg, var(--gradient-cta-1) 0%, var(--gradient-cta-2) 55%, var(--gradient-cta-3) 100%);
+  /* ---- Accent (Chaudron violet primary) ---- */
+  --accent:         oklch(0.75 0.15 295);
+  --accent-hover:   oklch(0.8 0.15 295);
+  --accent-press:   oklch(0.7 0.15 295);
+  --accent-soft:    oklch(0.75 0.15 295 / 16%);
+  --accent-line:    oklch(0.75 0.15 295 / 38%);
+  --on-accent:      oklch(0.16 0.03 295);
+  /* CTA gradient flattened to solid brand color; the 3-stop variant is only
+     used by the intensity slider track (low → mid → high). */
+  --gradient-cta-1: oklch(0.72 0.15 250);
+  --gradient-cta-2: var(--accent);
+  --gradient-cta-3: oklch(0.7 0.16 340);
+  --gradient-cta:   var(--accent);
 
   /* ---- Secondary pop (used for live / highlights) ---- */
-  --pop:            #FF3D71;
-  --pop-soft:       rgba(255, 61, 113, 0.14);
+  --pop:            oklch(0.7 0.16 340);
+  --pop-soft:       oklch(0.7 0.16 340 / 16%);
 
   /* ---- Semantic ---- */
-  --success:        #00E676;
-  --success-soft:   rgba(0, 230, 118, 0.14);
-  --danger:         #FF4D5E;
-  --danger-soft:    rgba(255, 77, 94, 0.14);
-  --warning:        #FFB020;
-  --warning-soft:   rgba(255, 176, 32, 0.15);
-  --info:           #3D9DFF;
-  --info-soft:      rgba(61, 157, 255, 0.14);
-  --live:           #FF3D71;
+  --success:        oklch(0.7 0.17 155);
+  --success-soft:   oklch(0.7 0.17 155 / 16%);
+  --danger:         oklch(0.704 0.191 22.216);
+  --danger-soft:    oklch(0.704 0.191 22.216 / 16%);
+  --warning:        oklch(0.78 0.13 85);
+  --warning-soft:   oklch(0.78 0.13 85 / 16%);
+  --info:           oklch(0.72 0.15 250);
+  --info-soft:      oklch(0.72 0.15 250 / 16%);
+  --live:           var(--pop);
 
   /* ---- Semantic aliases (use these in components) ---- */
   --surface-app:      var(--bg-base);
@@ -74,9 +73,9 @@
   --focus-ring:       color-mix(in oklch, var(--accent) 60%, transparent);
 
   /* ---- Typography ---- */
-  --font-display: 'Sora', 'Plus Jakarta Sans', system-ui, sans-serif;
-  --font-ui:      'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-  --font-mono:    'Space Mono', 'SFMono-Regular', ui-monospace, monospace;
+  --font-display: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-ui:      var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono:    var(--font-geist-mono), ui-monospace, monospace;
 
   --fw-regular:   400;
   --fw-medium:    500;
@@ -122,30 +121,30 @@
   --pad-card-lg:   20px;
   --tap-min:       44px;
 
-  /* ---- Radius ---- */
+  /* ---- Radius (base 0.75rem/12px, same scale as Chaudron) ---- */
   --radius-xs:   6px;
-  --radius-sm:   10px;
-  --radius-md:   14px;
-  --radius-lg:   20px;
-  --radius-xl:   28px;
-  --radius-2xl:  36px;
+  --radius-sm:   7px;
+  --radius-md:   10px;
+  --radius-lg:   12px;
+  --radius-xl:   17px;
+  --radius-2xl:  22px;
   --radius-full: 999px;
-  --radius-button: 14px;
-  --radius-input:  14px;
-  --radius-card:   8px;
-  --radius-sheet:  28px;
+  --radius-button: 8px;
+  --radius-input:  8px;
+  --radius-card:   12px;
+  --radius-sheet:  22px;
   --radius-chip:   999px;
   --radius-badge:  999px;
 
-  /* ---- Elevation & glow ---- */
-  --shadow-sm:  0 1px 2px rgba(0,0,0,0.4);
-  --shadow-md:  0 6px 20px rgba(0,0,0,0.45);
-  --shadow-lg:  0 18px 48px rgba(0,0,0,0.55);
-  --shadow-sheet: 0 -12px 40px rgba(0,0,0,0.5);
-  --edge-highlight: inset 0 1px 0 rgba(255,255,255,0.05);
-  --glow-accent: 0 8px 28px color-mix(in oklch, var(--accent) 40%, transparent);
-  --glow-accent-sm: 0 4px 16px color-mix(in oklch, var(--accent) 32%, transparent);
-  --glow-pop:    0 8px 28px color-mix(in oklch, var(--pop) 40%, transparent);
+  /* ---- Elevation & glow (flat, no neon — subtle only) ---- */
+  --shadow-sm:  0 1px 2px oklch(0 0 0 / 40%);
+  --shadow-md:  0 6px 20px oklch(0 0 0 / 35%);
+  --shadow-lg:  0 18px 48px oklch(0 0 0 / 45%);
+  --shadow-sheet: 0 -12px 40px oklch(0 0 0 / 40%);
+  --edge-highlight: inset 0 1px 0 oklch(1 0 0 / 5%);
+  --glow-accent: 0 4px 14px color-mix(in oklch, var(--accent) 22%, transparent);
+  --glow-accent-sm: 0 2px 8px color-mix(in oklch, var(--accent) 18%, transparent);
+  --glow-pop:    0 4px 14px color-mix(in oklch, var(--pop) 22%, transparent);
   --ring: 0 0 0 3px var(--focus-ring);
 
   /* ---- Motion ---- */
@@ -156,14 +155,6 @@
   --ease-out:    cubic-bezier(0.22, 1, 0.36, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
-
-  /* ---- Neo-brutal border/shadow (theme-aware) ----
-     Dark-mode defaults are light-on-dark so the effect stays visible;
-     the light-theme override below restores the original hard-black look. ---- */
-  --border-brutal:        #E9EDF3;
-  --shadow-brutal:        rgba(233, 237, 243, 0.28);
-  --border-brutal-active: #04140A;
-  --shadow-brutal-active: var(--accent-hover);
 }
 
 /* ============================================================
@@ -173,50 +164,51 @@
    redeclare it here.
    ============================================================ */
 :root[data-theme="light"] {
-  --bg-base:        #F0EEE6;
-  --bg-surface:     #E8E0D8;
-  --bg-surface-2:   #F0F3F8;
-  --bg-surface-3:   #E6EAF1;
-  --bg-overlay:     rgba(240, 238, 230, 0.78);
-  --bg-chip-flat:   #F0EEE6;
-  --bg-input-flat:  #F0EEE6;
-  --bg-header:      #F0EEE6;
+  --bg-base:        oklch(0.99 0.006 300);
+  --bg-surface:     oklch(1 0 0);
+  --bg-surface-2:   oklch(0.96 0.015 300);
+  --bg-surface-3:   oklch(0.94 0.03 300);
+  --bg-overlay:     oklch(0.99 0.006 300 / 78%);
+  --bg-chip-flat:   var(--bg-surface-2);
+  --bg-input-flat:  var(--bg-surface-3);
+  --bg-header:      var(--bg-base);
 
-  --border:         rgba(11, 14, 20, 0.09);
-  --border-strong:  rgba(11, 14, 20, 0.18);
+  --border:         oklch(0.9 0.025 300);
+  --border-strong:  oklch(0.8 0.03 300);
 
-  --text-strong:    #0B0E14;
-  --text-primary:   #1C2230;
-  --text-secondary: #5B6472;
-  --text-tertiary:  #838C9A;
-  --text-disabled:  #C0C6D0;
-  --text-inverse:   #FFFFFF;
+  --text-strong:    oklch(0.22 0.03 295);
+  --text-primary:   oklch(0.22 0.03 295);
+  --text-secondary: oklch(0.5 0.04 295);
+  --text-tertiary:  oklch(0.6 0.03 295);
+  --text-disabled:  oklch(0.75 0.02 300);
+  --text-inverse:   oklch(1 0 0);
 
-  --accent:         #049256;
-  --accent-hover:   #06A863;
-  --accent-press:   #037A46;
-  --accent-soft:    rgba(4, 146, 86, 0.12);
-  --accent-line:    rgba(4, 146, 86, 0.35);
-  --on-accent:      #FFFFFF;
-  --gradient-cta-1: #D97757;
-  --gradient-cta-2: #D4A27F;
-  --gradient-cta-3: #8A6A2E;
+  --accent:         oklch(0.42 0.19 295);
+  --accent-hover:   oklch(0.36 0.19 295);
+  --accent-press:   oklch(0.32 0.19 295);
+  --accent-soft:    oklch(0.42 0.19 295 / 12%);
+  --accent-line:    oklch(0.42 0.19 295 / 35%);
+  --on-accent:      oklch(0.98 0.01 300);
+  --gradient-cta-1: oklch(0.62 0.17 250);
+  --gradient-cta-2: var(--accent);
+  --gradient-cta-3: oklch(0.72 0.17 340);
 
-  --pop:            #E01E5A;
-  --danger:         #D8283B;
-  --warning:        #B0740A;
-  --info:           #1C7ED6;
+  --pop:            oklch(0.72 0.17 340);
+  --pop-soft:       oklch(0.72 0.17 340 / 14%);
+  --success:        oklch(0.72 0.17 155);
+  --success-soft:   oklch(0.72 0.17 155 / 14%);
+  --danger:         oklch(0.577 0.245 27.325);
+  --danger-soft:    oklch(0.577 0.245 27.325 / 12%);
+  --warning:        oklch(0.8 0.14 85);
+  --warning-soft:   oklch(0.8 0.14 85 / 15%);
+  --info:           oklch(0.62 0.17 250);
+  --info-soft:      oklch(0.62 0.17 250 / 14%);
 
-  --edge-highlight: inset 0 1px 0 rgba(11, 14, 20, 0.04);
-  --shadow-sm:  0 1px 2px rgba(11, 14, 20, 0.08);
-  --shadow-md:  0 6px 20px rgba(11, 14, 20, 0.10);
-  --shadow-lg:  0 18px 48px rgba(11, 14, 20, 0.14);
-  --shadow-sheet: 0 -12px 40px rgba(11, 14, 20, 0.12);
-
-  --border-brutal:        #000000;
-  --shadow-brutal:        rgba(0, 0, 0, 0.55);
-  --border-brutal-active: #012912;
-  --shadow-brutal-active: #012912;
+  --edge-highlight: inset 0 1px 0 oklch(0 0 0 / 4%);
+  --shadow-sm:  0 1px 2px oklch(0 0 0 / 8%);
+  --shadow-md:  0 6px 20px oklch(0 0 0 / 10%);
+  --shadow-lg:  0 18px 48px oklch(0 0 0 / 14%);
+  --shadow-sheet: 0 -12px 40px oklch(0 0 0 / 12%);
 }
 
 
@@ -307,11 +299,6 @@ button, input, textarea {
   50% { opacity: .35; transform: scale(.7); }
 }
 
-@keyframes drift {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(-4%, 4%) scale(1.05); }
-}
-
 @keyframes rise {
   from { opacity: 0; transform: translateY(14px) scale(0.98); }
   to { opacity: 1; transform: translateY(0) scale(1); }
@@ -337,6 +324,19 @@ button, input, textarea {
   background-size: 24px 24px;
 }
 
+/* Dotted grid + soft violet glow, matching the Chaudron portal background. */
+.diplomatico-bg {
+  background-image:
+    radial-gradient(color-mix(in oklch, var(--accent) 16%, transparent), transparent 60%),
+    radial-gradient(var(--border-strong) 1px, transparent 1px);
+  background-size:
+    100% 100%,
+    22px 22px;
+  background-position:
+    top center,
+    0 0;
+}
+
 .otp-input {
   transition: border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
 }
@@ -346,41 +346,27 @@ button, input, textarea {
   transform: translateY(-2px);
 }
 
-.glass-3d {
-  backdrop-filter: blur(16px) saturate(160%);
-  -webkit-backdrop-filter: blur(16px) saturate(160%);
-  transform: translateZ(0) rotateX(0deg);
-  transition: transform var(--dur-base) var(--ease-spring), box-shadow var(--dur-base) var(--ease-out);
+.icon-btn {
+  color: var(--text-secondary);
+  transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
 }
-.glass-3d:hover {
-  transform: translateY(-2px) rotateX(6deg);
-}
-.glass-3d:active {
-  transform: translateY(0) rotateX(0deg) scale(0.97);
+.icon-btn:hover {
+  background: var(--bg-surface-2);
+  color: var(--text-strong);
 }
 
-.neo-brutal {
-  border: 2px solid var(--border-brutal);
-  box-shadow: 4px 4px 0 0 var(--shadow-brutal);
-  transition: transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+.tab-pill {
+  border: 1px solid var(--border);
+  transition: border-color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out);
 }
-.neo-brutal:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 6px 6px 0 0 var(--shadow-brutal);
+.tab-pill:hover {
+  border-color: var(--border-strong);
 }
-.neo-brutal:active {
-  transform: translate(0, 0);
-  box-shadow: 2px 2px 0 0 var(--shadow-brutal);
+.tab-pill:active {
+  transform: scale(0.97);
 }
-.neo-brutal-active {
-  border-color: var(--border-brutal-active);
-  box-shadow: 4px 4px 0 0 var(--shadow-brutal-active);
-}
-.neo-brutal-active:hover {
-  box-shadow: 6px 6px 0 0 var(--shadow-brutal-active);
-}
-.neo-brutal-active:active {
-  box-shadow: 2px 2px 0 0 var(--shadow-brutal-active);
+.tab-pill-active {
+  border-color: var(--accent-line);
 }
 
 @media (prefers-reduced-motion: reduce) {
